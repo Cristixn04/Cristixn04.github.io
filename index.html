@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cristian Camilo Muñoz | Desarrollador de Software</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- CURSOR PERSONALIZADO -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- PARTÍCULAS DE FONDO -->
+  <canvas id="particles" class="particles-canvas"></canvas>
+
+  <!-- ───────── NAVBAR ───────── -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo">
+        <span class="logo-bracket">&lt;</span>CCM<span class="logo-bracket">/&gt;</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#sobre-mi" class="nav-link">Sobre mí</a></li>
+        <li><a href="#habilidades" class="nav-link">Habilidades</a></li>
+        <li><a href="#proyectos" class="nav-link">Proyectos</a></li>
+        <li><a href="#educacion" class="nav-link">Educación</a></li>
+        <li><a href="#vision-mision" class="nav-link">Visión & Misión</a></li>
+        <li><a href="#contacto" class="nav-link nav-cta">Contacto</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ───────── HERO ───────── -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <div class="hero-tag" data-aos="fade-down">
+        <span class="tag-dot"></span>Disponible para trabajar
+      </div>
+      <h1 class="hero-title" data-aos="fade-up" data-aos-delay="100">
+        Hola, soy<br/>
+        <span class="hero-name">Cristian Camilo</span><br/>
+        <span class="hero-role" id="typingText"></span><span class="typing-cursor">|</span>
+      </h1>
+      <p class="hero-desc" data-aos="fade-up" data-aos-delay="200">
+        Desarrollador Full Stack con enfoque en <span class="highlight">back end</span>, 
+        automatización e <span class="highlight">inteligencia artificial</span>. 
+        Construyo soluciones que generan impacto real.
+      </p>
+      <div class="hero-actions" data-aos="fade-up" data-aos-delay="300">
+        <a href="#proyectos" class="btn btn-primary">Ver proyectos</a>
+        <a href="#contacto" class="btn btn-ghost">Contáctame</a>
+      </div>
+      <div class="hero-stats" data-aos="fade-up" data-aos-delay="400">
+        <div class="stat">
+          <span class="stat-num">3+</span>
+          <span class="stat-label">Proyectos</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">7+</span>
+          <span class="stat-label">Tecnologías</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">100%</span>
+          <span class="stat-label">Compromiso</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual" data-aos="fade-left" data-aos-delay="200">
+      <div class="hero-photo-wrapper">
+        <!-- COLOCA TU FOTO AQUÍ: reemplaza el src por img/foto.jpg -->
+        <div class="photo-placeholder">
+          <img src="img/cristian.png" alt="perfil">
+        </div>
+        <div class="photo-ring"></div>
+        <div class="photo-glow"></div>
+      </div>
+      <!-- Código flotante decorativo -->
+      <div class="code-card code-card-1">
+        <span class="code-line"><span class="c-kw">const</span> <span class="c-var">dev</span> = <span class="c-str">"Cristian"</span>;</span>
+        <span class="code-line"><span class="c-kw">dev</span>.<span class="c-fn">buildSolutions</span>();</span>
+      </div>
+      <div class="code-card code-card-2">
+        <span class="code-line"><span class="c-cm">// IA + Automatización</span></span>
+        <span class="code-line"><span class="c-kw">return</span> <span class="c-str">"impacto real"</span>;</span>
+      </div>
+    </div>
+    <div class="hero-scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ───────── SOBRE MÍ ───────── -->
+  <section class="section sobre-mi" id="sobre-mi">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">01 — Sobre mí</span>
+        <h2 class="section-title">¿Quién soy?</h2>
+      </div>
+      <div class="sobre-grid">
+        <div class="sobre-text" data-aos="fade-right">
+          <p class="sobre-bio">
+            Soy desarrollador de software <strong>Full Stack</strong> con enfoque en desarrollo 
+            <strong>back end</strong> y una gran pasión por crear soluciones escalables que generen 
+            impacto real. Disfruto resolver problemas mediante el desarrollo de aplicaciones web, 
+            la automatización de procesos y la implementación de <strong>agentes de inteligencia artificial</strong>.
+          </p>
+          <p class="sobre-bio">
+            Me caracterizo por aprender con rapidez, adaptarme a nuevos desafíos y mantenerme en 
+            constante actualización para aportar soluciones innovadoras y eficientes.
+          </p>
+          <div class="sobre-tags">
+            <span class="stag">🚀 Backend-first</span>
+            <span class="stag">🤖 IA & Automatización</span>
+            <span class="stag">🌐 Full Stack</span>
+            <span class="stag">⚡ Aprendizaje continuo</span>
+          </div>
+        </div>
+        <div class="sobre-info" data-aos="fade-left">
+          <div class="info-card">
+            <div class="info-row">
+              <span class="info-label">Nombre</span>
+              <span class="info-val">Cristian Camilo Muñoz R.</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Rol</span>
+              <span class="info-val">Desarrollador Full Stack</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Enfoque</span>
+              <span class="info-val">Back End / IA / Automatización</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Disponibilidad</span>
+              <span class="info-val available"><span class="dot-green"></span>Disponible</span>
+            </div>
+            <a href="mailto:7b.munoz.cristian@gmail.com" class="btn btn-primary btn-full">
+              Enviar mensaje
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── HABILIDADES ───────── -->
+  <section class="section habilidades" id="habilidades">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">02 — Habilidades</span>
+        <h2 class="section-title">Stack técnico & habilidades blandas</h2>
+      </div>
+
+      <div class="skills-grid">
+        <!-- Técnicas -->
+        <div class="skills-col" data-aos="fade-right">
+          <h3 class="skills-col-title">
+            <span class="col-icon">⚙️</span> Habilidades técnicas
+          </h3>
+          <div class="tech-skills">
+            <div class="tech-item">
+              <div class="tech-info">
+                <span class="tech-name">JavaScript</span>
+                <span class="tech-pct">85%</span>
+              </div>
+              <div class="tech-bar"><div class="tech-fill" data-width="85"></div></div>
+            </div>
+            <div class="tech-item">
+              <div class="tech-info">
+                <span class="tech-name">Python</span>
+                <span class="tech-pct">80%</span>
+              </div>
+              <div class="tech-bar"><div class="tech-fill" data-width="80"></div></div>
+            </div>
+            <div class="tech-item">
+              <div class="tech-info">
+                <span class="tech-name">HTML & CSS</span>
+                <span class="tech-pct">90%</span>
+              </div>
+              <div class="tech-bar"><div class="tech-fill" data-width="90"></div></div>
+            </div>
+            <div class="tech-item">
+              <div class="tech-info">
+                <span class="tech-name">MySQL</span>
+                <span class="tech-pct">75%</span>
+              </div>
+              <div class="tech-bar"><div class="tech-fill" data-width="75"></div></div>
+            </div>
+            <div class="tech-item">
+              <div class="tech-info">
+                <span class="tech-name">Git</span>
+                <span class="tech-pct">80%</span>
+              </div>
+              <div class="tech-bar"><div class="tech-fill" data-width="80"></div></div>
+            </div>
+            <div class="tech-item">
+              <div class="tech-info">
+                <span class="tech-name">n8n (Automatización)</span>
+                <span class="tech-pct">78%</span>
+              </div>
+              <div class="tech-bar"><div class="tech-fill" data-width="78"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Blandas -->
+        <div class="skills-col" data-aos="fade-left">
+          <h3 class="skills-col-title">
+            <span class="col-icon">🧠</span> Habilidades blandas
+          </h3>
+          <div class="soft-skills">
+            <div class="soft-item" data-aos="zoom-in" data-aos-delay="0">
+              <div class="soft-icon">🎯</div>
+              <div class="soft-text">
+                <strong>Liderazgo</strong>
+                <span>Capacidad de guiar equipos hacia objetivos comunes</span>
+              </div>
+            </div>
+            <div class="soft-item" data-aos="zoom-in" data-aos-delay="50">
+              <div class="soft-icon">🤝</div>
+              <div class="soft-text">
+                <strong>Trabajo en equipo</strong>
+                <span>Colaboración efectiva en entornos dinámicos</span>
+              </div>
+            </div>
+            <div class="soft-item" data-aos="zoom-in" data-aos-delay="100">
+              <div class="soft-icon">💬</div>
+              <div class="soft-text">
+                <strong>Comunicación efectiva</strong>
+                <span>Ideas claras, escucha activa y feedback constructivo</span>
+              </div>
+            </div>
+            <div class="soft-item" data-aos="zoom-in" data-aos-delay="150">
+              <div class="soft-icon">💡</div>
+              <div class="soft-text">
+                <strong>Creatividad</strong>
+                <span>Soluciones originales ante problemas complejos</span>
+              </div>
+            </div>
+            <div class="soft-item" data-aos="zoom-in" data-aos-delay="200">
+              <div class="soft-icon">🔄</div>
+              <div class="soft-text">
+                <strong>Adaptabilidad</strong>
+                <span>Respuesta ágil ante cambios y nuevos retos</span>
+              </div>
+            </div>
+            <div class="soft-item" data-aos="zoom-in" data-aos-delay="250">
+              <div class="soft-icon">🧩</div>
+              <div class="soft-text">
+                <strong>Resolución de problemas</strong>
+                <span>Análisis estructurado y toma de decisiones efectiva</span>
+              </div>
+            </div>
+            <div class="soft-item" data-aos="zoom-in" data-aos-delay="300">
+              <div class="soft-icon">❤️</div>
+              <div class="soft-text">
+                <strong>Empatía & Tolerancia</strong>
+                <span>Comprensión genuina del entorno y las personas</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── PROYECTOS ───────── -->
+  <section class="section proyectos" id="proyectos">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">03 — Proyectos</span>
+        <h2 class="section-title">Lo que he construido</h2>
+      </div>
+      <div class="projects-grid">
+
+        <!-- Proyecto 1 -->
+        <article class="project-card" data-aos="fade-up" data-aos-delay="0">
+          <div class="project-img-wrap">
+            <!-- COLOCA IMAGEN: img/proyecto1.jpg -->
+            <div class="project-img-placeholder">
+              <img src="img/ecommerce.png" alt="Ecommerce">
+              
+            </div>
+            <div class="project-overlay">
+              <a href="https://github.com/TuMinipeka/Proyecto-Ecommerce-Ropa" target="_blank" rel="noopener" class="overlay-btn">
+                Ver en GitHub →
+              </a>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="ptag">HTML</span>
+              <span class="ptag">CSS</span>
+              <span class="ptag">JavaScript</span>
+            </div>
+            <h3 class="project-title">Ecommerce Ropa</h3>
+            <p class="project-desc">
+              Tienda de ropa en línea donde el usuario puede explorar prendas, añadirlas al carrito 
+              y completar el proceso de compra de forma sencilla e intuitiva.
+            </p>
+            <a href="https://github.com/TuMinipeka/Proyecto-Ecommerce-Ropa" target="_blank" rel="noopener" class="project-link">
+              Ver repositorio <span class="arrow">→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Proyecto 2 -->
+        <article class="project-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="project-img-wrap">
+            <!-- COLOCA IMAGEN: img/proyecto2.jpg -->
+            <div class="project-img-placeholder">
+              <img src="img/acme-bank.png" alt="acme-bank">
+            </div>
+            <div class="project-overlay">
+              <a href="https://github.com/Cristixn04/ACME-BANK-PROYECT" target="_blank" rel="noopener" class="overlay-btn">
+                Ver en GitHub →
+              </a>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="ptag">HTML</span>
+              <span class="ptag">CSS</span>
+              <span class="ptag">JavaScript</span>
+            </div>
+            <h3 class="project-title">ACME Bank</h3>
+            <p class="project-desc">
+              Interfaz bancaria completa donde el usuario puede iniciar sesión, consultar movimientos, 
+              retirar, consignar dinero y pagar facturas de manera segura.
+            </p>
+            <a href="https://github.com/Cristixn04/ACME-BANK-PROYECT" target="_blank" rel="noopener" class="project-link">
+              Ver repositorio <span class="arrow">→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Proyecto 3 — placeholder -->
+        <article class="project-card project-card--coming" data-aos="fade-up" data-aos-delay="200">
+          <div class="project-img-wrap">
+            <div class="project-img-placeholder coming">
+              <img src="img/registro_notas.png" alt="registro_notas">
+            </div>
+            <div class="project-overlay">
+              <a href="https://github.com/Cristixn04/Pagina-de-gestion-de-notas" target="_blank" rel="noopener" class="overlay-btn">
+                Ver en GitHub →
+              </a>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="ptag">HTML</span>
+              <span class="ptag">CSS</span>
+              <span class="ptag">JavaScript</span>
+            </div>
+            <h3 class="project-title">Herramienta de registro de notas</h3>
+            <p class="project-desc">
+              Herramienta que recibe las notas de cursos y las guarda, a la vez que califica por promedio y genera un ranking de estudiantes con mejor promedio
+            </p>
+            <a href="https://github.com/Cristixn04/Pagina-de-gestion-de-notas" target="_blank" rel="noopener" class="project-link">
+              Ver repositorio <span class="arrow">→</span>
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── EDUCACIÓN ───────── -->
+  <section class="section educacion" id="educacion">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">04 — Educación</span>
+        <h2 class="section-title">Mi formación</h2>
+      </div>
+      <div class="timeline">
+
+        <div class="timeline-item" data-aos="fade-right">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <span class="timeline-year">Actual</span>
+            <h3 class="timeline-title">Técnico en Desarrollo de Software</h3>
+            <p class="timeline-place">Formación técnica en programación, bases de datos y desarrollo de aplicaciones web.</p>
+            <div class="timeline-tags">
+              <span class="ptag">Software</span>
+              <span class="ptag">Full Stack</span>
+              <span class="ptag">IA</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-aos="fade-right" data-aos-delay="100">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <span class="timeline-year">Previo</span>
+            <h3 class="timeline-title">Técnico en BPO</h3>
+            <p class="timeline-place">Formación en gestión de procesos de negocio, atención al cliente y operaciones empresariales.</p>
+            <div class="timeline-tags">
+              <span class="ptag">Procesos</span>
+              <span class="ptag">Gestión</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-aos="fade-right" data-aos-delay="200">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <span class="timeline-year">Base</span>
+            <h3 class="timeline-title">Bachiller</h3>
+            <p class="timeline-place">Educación media completa — fundamento de mi formación académica y profesional.</p>
+            <div class="timeline-tags">
+              <span class="ptag">Graduado</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── VISIÓN & MISIÓN ───────── -->
+  <section class="section vision-mision" id="vision-mision">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">05 — Propósito</span>
+        <h2 class="section-title">Visión & Misión</h2>
+      </div>
+      <div class="vm-grid">
+        <div class="vm-card vm-mision" data-aos="fade-right">
+          <div class="vm-icon">🎯</div>
+          <h3 class="vm-title">Misión</h3>
+          <p class="vm-text">
+            Desarrollar soluciones tecnológicas innovadoras mediante software, automatización e 
+            inteligencia artificial, creando herramientas eficientes que resuelvan problemas reales 
+            y generen valor para las personas y las empresas.
+          </p>
+        </div>
+        <div class="vm-card vm-vision" data-aos="fade-left">
+          <div class="vm-icon">🔭</div>
+          <h3 class="vm-title">Visión</h3>
+          <p class="vm-text">
+            Consolidarme como un desarrollador de software e inteligencia artificial reconocido por 
+            crear soluciones escalables e innovadoras, contribuyendo a la transformación digital de 
+            las organizaciones mientras continúo creciendo profesional y personalmente.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── CONTACTO ───────── -->
+  <section class="section contacto" id="contacto">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">06 — Contacto</span>
+        <h2 class="section-title">Hablemos</h2>
+        <p class="section-sub">¿Tienes un proyecto en mente? Estoy disponible para colaborar.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-links" data-aos="fade-up">
+          <a href="mailto:7b.munoz.cristian@gmail.com" class="contact-card">
+            <div class="contact-icon">📧</div>
+            <div class="contact-info">
+              <span class="contact-label">Email</span>
+              <span class="contact-val">7b.munoz.cristian@gmail.com</span>
+            </div>
+            <span class="contact-arrow">→</span>
+          </a>
+          <a href="https://www.linkedin.com/in/cristian-muñoz-159980409" target="_blank" rel="noopener" class="contact-card">
+            <div class="contact-icon">💼</div>
+            <div class="contact-info">
+              <span class="contact-label">LinkedIn</span>
+              <span class="contact-val">cristian-muñoz-159980409</span>
+            </div>
+            <span class="contact-arrow">→</span>
+          </a>
+          <a href="https://github.com/Cristixn04" target="_blank" rel="noopener" class="contact-card">
+            <div class="contact-icon">🐙</div>
+            <div class="contact-info">
+              <span class="contact-label">GitHub</span>
+              <span class="contact-val">github.com/Cristixn04</span>
+            </div>
+            <span class="contact-arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── FOOTER ───────── -->
+  <footer class="footer">
+    <div class="footer-container">
+      <a href="#hero" class="footer-logo">
+        <span class="logo-bracket">&lt;</span>CCM<span class="logo-bracket">/&gt;</span>
+      </a>
+      <p class="footer-copy">© 2025 Cristian Camilo Muñoz Rodríguez — Todos los derechos reservados.</p>
+      <div class="footer-social">
+        <a href="https://github.com/Cristixn04" target="_blank" rel="noopener" aria-label="GitHub">GH</a>
+        <a href="https://www.linkedin.com/in/cristian-muñoz-159980409" target="_blank" rel="noopener" aria-label="LinkedIn">LI</a>
+        <a href="mailto:7b.munoz.cristian@gmail.com" aria-label="Email">EM</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/particles.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
