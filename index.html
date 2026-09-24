@@ -3,11 +3,64 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cristian Camilo Muñoz | Desarrollador de Software</title>
+  <title>Cristian Camilo Muñoz | Desarrollador Full Stack & IA</title>
+  <meta name="description" content="Portafolio de Cristian Camilo Muñoz, Desarrollador Full Stack con enfoque en Back End, Automatización con Inteligencia Artificial y soluciones escalables." />
+  <meta name="keywords" content="Desarrollador Software, Full Stack, Backend Developer, Inteligencia Artificial, n8n, Automatización, Python, JavaScript, MySQL, Cristian Camilo Muñoz" />
+  <meta name="author" content="Cristian Camilo Muñoz" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="color-scheme" content="dark" />
+  
+  <!-- Open Graph / Redes Sociales (LinkedIn, WhatsApp, Facebook) -->
+  <meta property="og:site_name" content="Cristian Camilo Muñoz Portfolio" />
+  <meta property="og:type" content="profile" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:title" content="Cristian Camilo Muñoz | Desarrollador Full Stack & IA" />
+  <meta property="og:description" content="Desarrollador Full Stack con enfoque en Back End, Automatización e Inteligencia Artificial. Construyo soluciones que generan impacto real." />
+  <meta property="og:image" content="img/cristian.png" />
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Cristian Camilo Muñoz | Desarrollador Full Stack & IA" />
+  <meta name="twitter:description" content="Desarrollador Full Stack con enfoque en Back End, Automatización e Inteligencia Artificial." />
+  <meta name="twitter:image" content="img/cristian.png" />
+  
+  <!-- Favicon SVG con estética dev neón -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0a0a'/%3E%3Ctext x='50' y='65' font-family='monospace' font-weight='bold' font-size='38' fill='%2300ff90' text-anchor='middle'%3E%26lt;C/%26gt;%3C/text%3E%3C/svg%3E" />
+
   <link rel="stylesheet" href="css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Datos estructurados JSON-LD (Schema.org) para motores de búsqueda -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Cristian Camilo Muñoz Rodríguez",
+    "alternateName": "Cristian Muñoz",
+    "jobTitle": "Full Stack & AI Developer",
+    "description": "Desarrollador Full Stack con enfoque en Back End, Automatización con Inteligencia Artificial y soluciones escalables.",
+    "email": "mailto:7b.munoz.cristian@gmail.com",
+    "sameAs": [
+      "https://github.com/Cristixn04",
+      "https://www.linkedin.com/in/cristian-muñoz-159980409"
+    ],
+    "knowsAbout": [
+      "Software Development",
+      "Full Stack Development",
+      "Backend Architecture",
+      "Artificial Intelligence",
+      "n8n Workflow Automation",
+      "Python",
+      "JavaScript",
+      "MySQL",
+      "PostgreSQL"
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -24,62 +77,75 @@
       <a href="#hero" class="nav-logo">
         <span class="logo-bracket">&lt;</span>CCM<span class="logo-bracket">/&gt;</span>
       </a>
-      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
-        <span></span><span></span><span></span>
-      </button>
+
       <ul class="nav-links" id="navLinks">
-        <li><a href="#sobre-mi" class="nav-link">Sobre mí</a></li>
-        <li><a href="#habilidades" class="nav-link">Habilidades</a></li>
-        <li><a href="#proyectos" class="nav-link">Proyectos</a></li>
-        <li><a href="#educacion" class="nav-link">Educación</a></li>
-        <li><a href="#vision-mision" class="nav-link">Visión & Misión</a></li>
-        <li><a href="#contacto" class="nav-link nav-cta">Contacto</a></li>
+        <li><a href="#sobre-mi" class="nav-link" data-i18n="nav.about">Sobre mí</a></li>
+        <li><a href="#habilidades" class="nav-link" data-i18n="nav.skills">Habilidades</a></li>
+        <li><a href="#proyectos" class="nav-link" data-i18n="nav.projects">Proyectos</a></li>
+        <li><a href="#educacion" class="nav-link" data-i18n="nav.education">Educación</a></li>
+        <li><a href="#vision-mision" class="nav-link" data-i18n="nav.vision">Visión & Misión</a></li>
+        <li><a href="#contacto" class="nav-link nav-cta" data-i18n="nav.contact">Contacto</a></li>
       </ul>
+
+      <div class="nav-actions">
+        <!-- SELECTOR DE IDIOMA ES / EN -->
+        <div class="lang-switch" id="langSwitch" role="group" aria-label="Language Selector">
+          <button type="button" class="lang-btn active" data-lang="es" aria-pressed="true" title="Español">ES</button>
+          <span class="lang-sep">/</span>
+          <button type="button" class="lang-btn" data-lang="en" aria-pressed="false" title="English">EN</button>
+        </div>
+
+        <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
   </nav>
 
   <!-- ───────── HERO ───────── -->
   <section class="hero" id="hero">
     <div class="hero-content">
-      <div class="hero-tag" data-aos="fade-down">
+      <div class="hero-tag" data-aos="fade-down" data-i18n="hero.available">
         <span class="tag-dot"></span>Disponible para trabajar
       </div>
       <h1 class="hero-title" data-aos="fade-up" data-aos-delay="100">
-        Hola, soy<br/>
+        <span data-i18n="hero.greeting">Hola, soy</span><br/>
         <span class="hero-name">Cristian Camilo</span><br/>
         <span class="hero-role" id="typingText"></span><span class="typing-cursor">|</span>
       </h1>
-      <p class="hero-desc" data-aos="fade-up" data-aos-delay="200">
+      <p class="hero-desc" data-aos="fade-up" data-aos-delay="200" data-i18n="hero.desc">
         Desarrollador Full Stack con enfoque en <span class="highlight">back end</span>, 
         automatización e <span class="highlight">inteligencia artificial</span>. 
         Construyo soluciones que generan impacto real.
       </p>
       <div class="hero-actions" data-aos="fade-up" data-aos-delay="300">
-        <a href="#proyectos" class="btn btn-primary">Ver proyectos</a>
-        <a href="#contacto" class="btn btn-ghost">Contáctame</a>
+        <a href="#proyectos" class="btn btn-primary" data-i18n="hero.btnProjects">Ver proyectos</a>
+        <a href="#contacto" class="btn btn-ghost" data-i18n="hero.btnContact">Contáctame</a>
+        <a href="docs/CV_Cristian_Munoz.pdf" download="CV_Cristian_Munoz.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-outline-glow">
+          <span class="btn-icon">📄</span> <span data-i18n="hero.btnCv">Descargar CV</span>
+        </a>
       </div>
       <div class="hero-stats" data-aos="fade-up" data-aos-delay="400">
         <div class="stat">
           <span class="stat-num">3+</span>
-          <span class="stat-label">Proyectos</span>
+          <span class="stat-label" data-i18n="hero.statProjects">Proyectos</span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat">
           <span class="stat-num">7+</span>
-          <span class="stat-label">Tecnologías</span>
+          <span class="stat-label" data-i18n="hero.statTech">Tecnologías</span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat">
           <span class="stat-num">100%</span>
-          <span class="stat-label">Compromiso</span>
+          <span class="stat-label" data-i18n="hero.statCommitment">Compromiso</span>
         </div>
       </div>
     </div>
     <div class="hero-visual" data-aos="fade-left" data-aos-delay="200">
       <div class="hero-photo-wrapper">
-        <!-- COLOCA TU FOTO AQUÍ: reemplaza el src por img/foto.jpg -->
         <div class="photo-placeholder">
-          <img src="img/cristian.png" alt="perfil">
+          <img src="img/cristian.png" alt="Foto de perfil de Cristian Camilo Muñoz" width="300" height="300">
         </div>
         <div class="photo-ring"></div>
         <div class="photo-glow"></div>
@@ -90,12 +156,12 @@
         <span class="code-line"><span class="c-kw">dev</span>.<span class="c-fn">buildSolutions</span>();</span>
       </div>
       <div class="code-card code-card-2">
-        <span class="code-line"><span class="c-cm">// IA + Automatización</span></span>
-        <span class="code-line"><span class="c-kw">return</span> <span class="c-str">"impacto real"</span>;</span>
+        <span class="code-line"><span class="c-cm" data-i18n="hero.codeCardComment">// IA + Automatización</span></span>
+        <span class="code-line"><span class="c-kw">return</span> <span class="c-str" data-i18n="hero.codeCardReturn">"impacto real"</span>;</span>
       </div>
     </div>
     <div class="hero-scroll-hint">
-      <span>Scroll</span>
+      <span data-i18n="hero.scroll">Scroll</span>
       <div class="scroll-line"></div>
     </div>
   </section>
@@ -104,49 +170,54 @@
   <section class="section sobre-mi" id="sobre-mi">
     <div class="container">
       <div class="section-header" data-aos="fade-up">
-        <span class="section-tag">01 — Sobre mí</span>
-        <h2 class="section-title">¿Quién soy?</h2>
+        <span class="section-tag" data-i18n="about.tag">01 — Sobre mí</span>
+        <h2 class="section-title" data-i18n="about.title">¿Quién soy?</h2>
       </div>
       <div class="sobre-grid">
         <div class="sobre-text" data-aos="fade-right">
-          <p class="sobre-bio">
+          <p class="sobre-bio" data-i18n="about.bio1">
             Soy desarrollador de software <strong>Full Stack</strong> con enfoque en desarrollo 
             <strong>back end</strong> y una gran pasión por crear soluciones escalables que generen 
             impacto real. Disfruto resolver problemas mediante el desarrollo de aplicaciones web, 
             la automatización de procesos y la implementación de <strong>agentes de inteligencia artificial</strong>.
           </p>
-          <p class="sobre-bio">
+          <p class="sobre-bio" data-i18n="about.bio2">
             Me caracterizo por aprender con rapidez, adaptarme a nuevos desafíos y mantenerme en 
             constante actualización para aportar soluciones innovadoras y eficientes.
           </p>
           <div class="sobre-tags">
-            <span class="stag">🚀 Backend-first</span>
-            <span class="stag">🤖 IA & Automatización</span>
-            <span class="stag">🌐 Full Stack</span>
-            <span class="stag">⚡ Aprendizaje continuo</span>
+            <span class="stag" data-i18n="about.tagBackend">🚀 Backend-first</span>
+            <span class="stag" data-i18n="about.tagAi">🤖 IA & Automatización</span>
+            <span class="stag" data-i18n="about.tagFullstack">🌐 Full Stack</span>
+            <span class="stag" data-i18n="about.tagLearning">⚡ Aprendizaje continuo</span>
           </div>
         </div>
         <div class="sobre-info" data-aos="fade-left">
           <div class="info-card">
             <div class="info-row">
-              <span class="info-label">Nombre</span>
+              <span class="info-label" data-i18n="about.infoName">Nombre</span>
               <span class="info-val">Cristian Camilo Muñoz R.</span>
             </div>
             <div class="info-row">
-              <span class="info-label">Rol</span>
-              <span class="info-val">Desarrollador Full Stack</span>
+              <span class="info-label" data-i18n="about.infoRole">Rol</span>
+              <span class="info-val" data-i18n="about.infoRoleVal">Desarrollador Full Stack</span>
             </div>
             <div class="info-row">
-              <span class="info-label">Enfoque</span>
-              <span class="info-val">Back End / IA / Automatización</span>
+              <span class="info-label" data-i18n="about.infoFocus">Enfoque</span>
+              <span class="info-val" data-i18n="about.infoFocusVal">Back End / IA / Automatización</span>
             </div>
             <div class="info-row">
-              <span class="info-label">Disponibilidad</span>
-              <span class="info-val available"><span class="dot-green"></span>Disponible</span>
+              <span class="info-label" data-i18n="about.infoAvail">Disponibilidad</span>
+              <span class="info-val available" data-i18n="about.infoAvailVal"><span class="dot-green"></span>Disponible</span>
             </div>
-            <a href="mailto:7b.munoz.cristian@gmail.com" class="btn btn-primary btn-full">
-              Enviar mensaje
-            </a>
+            <div class="info-actions">
+              <a href="mailto:7b.munoz.cristian@gmail.com" class="btn btn-primary btn-full" data-i18n="about.btnMessage">
+                Enviar mensaje
+              </a>
+              <a href="docs/CV_Cristian_Munoz.pdf" download="CV_Cristian_Munoz.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-full" data-i18n="about.btnCv">
+                <span class="btn-icon">📄</span> Descargar CV
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -157,115 +228,151 @@
   <section class="section habilidades" id="habilidades">
     <div class="container">
       <div class="section-header" data-aos="fade-up">
-        <span class="section-tag">02 — Habilidades</span>
-        <h2 class="section-title">Stack técnico & habilidades blandas</h2>
+        <span class="section-tag" data-i18n="skills.tag">02 — Habilidades</span>
+        <h2 class="section-title" data-i18n="skills.title">Stack técnico & habilidades blandas</h2>
       </div>
 
       <div class="skills-grid">
-        <!-- Técnicas -->
+        <!-- Técnicas por Categorías -->
         <div class="skills-col" data-aos="fade-right">
-          <h3 class="skills-col-title">
-            <span class="col-icon">⚙️</span> Habilidades técnicas
+          <h3 class="skills-col-title" data-i18n="skills.techColTitle">
+            <span class="col-icon">⚙️</span> Habilidades técnicas por área
           </h3>
-          <div class="tech-skills">
-            <div class="tech-item">
-              <div class="tech-info">
-                <span class="tech-name">JavaScript</span>
-                <span class="tech-pct">85%</span>
+          <div class="tech-categories">
+
+            <!-- Categoría 1: Backend & Bases de Datos -->
+            <div class="tech-cat-card">
+              <div class="tech-cat-header">
+                <h4 class="tech-cat-title">
+                  <span>🗄️</span> <span data-i18n="skills.catBackendTitle">Backend & Bases de Datos</span>
+                </h4>
+                <span class="tech-cat-badge" data-i18n="skills.catBackendBadge">Especialidad</span>
               </div>
-              <div class="tech-bar"><div class="tech-fill" data-width="85"></div></div>
-            </div>
-            <div class="tech-item">
-              <div class="tech-info">
-                <span class="tech-name">Python</span>
-                <span class="tech-pct">80%</span>
+              <p class="tech-cat-desc" data-i18n="skills.catBackendDesc">
+                Diseño de APIs RESTful, lógica de negocio y arquitectura de datos relacionales.
+              </p>
+              <div class="tech-cat-pills">
+                <span class="tech-pill"><span class="tech-pill-dot"></span>Python</span>
+                <span class="tech-pill"><span class="tech-pill-dot"></span>JavaScript (Node.js)</span>
+                <span class="tech-pill"><span class="tech-pill-dot"></span>MySQL</span>
+                <span class="tech-pill"><span class="tech-pill-dot"></span>PostgreSQL</span>
+                <span class="tech-pill"><span class="tech-pill-dot"></span>REST APIs</span>
               </div>
-              <div class="tech-bar"><div class="tech-fill" data-width="80"></div></div>
             </div>
-            <div class="tech-item">
-              <div class="tech-info">
-                <span class="tech-name">HTML & CSS</span>
-                <span class="tech-pct">90%</span>
+
+            <!-- Categoría 2: Frontend & Interfaces Web -->
+            <div class="tech-cat-card">
+              <div class="tech-cat-header">
+                <h4 class="tech-cat-title">
+                  <span>💻</span> <span data-i18n="skills.catFrontendTitle">Frontend & Interfaces Web</span>
+                </h4>
+                <span class="tech-cat-badge" data-i18n="skills.catFrontendBadge">UI / UX</span>
               </div>
-              <div class="tech-bar"><div class="tech-fill" data-width="90"></div></div>
-            </div>
-            <div class="tech-item">
-              <div class="tech-info">
-                <span class="tech-name">MySQL</span>
-                <span class="tech-pct">75%</span>
+              <p class="tech-cat-desc" data-i18n="skills.catFrontendDesc">
+                Creación de experiencias web dinámicas, componentes accesibles y diseño responsivo.
+              </p>
+              <div class="tech-cat-pills">
+                <span class="tech-pill"><span class="tech-pill-dot"></span>HTML5</span>
+                <span class="tech-pill"><span class="tech-pill-dot"></span>CSS3</span>
+                <span class="tech-pill"><span class="tech-pill-dot"></span>JavaScript (ES6+)</span>
+                <span class="tech-pill"><span class="tech-pill-dot"></span>Responsive Design</span>
               </div>
-              <div class="tech-bar"><div class="tech-fill" data-width="75"></div></div>
             </div>
-            <div class="tech-item">
-              <div class="tech-info">
-                <span class="tech-name">Git</span>
-                <span class="tech-pct">80%</span>
+
+            <!-- Categoría 3: Automatización & IA -->
+            <div class="tech-cat-card">
+              <div class="tech-cat-header">
+                <h4 class="tech-cat-title">
+                  <span>🤖</span> <span data-i18n="skills.catAutomationTitle">Automatización & IA</span>
+                </h4>
+                <span class="tech-cat-badge" data-i18n="skills.catAutomationBadge">Enfoque</span>
               </div>
-              <div class="tech-bar"><div class="tech-fill" data-width="80"></div></div>
-            </div>
-            <div class="tech-item">
-              <div class="tech-info">
-                <span class="tech-name">n8n (Automatización)</span>
-                <span class="tech-pct">78%</span>
+              <p class="tech-cat-desc" data-i18n="skills.catAutomationDesc">
+                Desarrollo de flujos de automatización con n8n y despliegue de agentes inteligentes.
+              </p>
+              <div class="tech-cat-pills">
+                <span class="tech-pill"><span class="tech-pill-dot"></span>n8n Workflows</span>
+                <span class="tech-pill"><span class="tech-pill-dot"></span>Agentes IA</span>
+                <span class="tech-pill"><span class="tech-pill-dot"></span>Integración LLMs</span>
+                <span class="tech-pill"><span class="tech-pill-dot"></span>Webhooks</span>
               </div>
-              <div class="tech-bar"><div class="tech-fill" data-width="78"></div></div>
             </div>
+
+            <!-- Categoría 4: Herramientas & Entorno -->
+            <div class="tech-cat-card">
+              <div class="tech-cat-header">
+                <h4 class="tech-cat-title">
+                  <span>🛠️</span> <span data-i18n="skills.catToolsTitle">Herramientas & Entorno</span>
+                </h4>
+                <span class="tech-cat-badge" data-i18n="skills.catToolsBadge">Flujo de trabajo</span>
+              </div>
+              <p class="tech-cat-desc" data-i18n="skills.catToolsDesc">
+                Control de versiones, sistemas Linux, gestión de repositorios y trabajo colaborativo.
+              </p>
+              <div class="tech-cat-pills">
+                <span class="tech-pill"><span class="tech-pill-dot"></span>Git & GitHub</span>
+                <span class="tech-pill"><span class="tech-pill-dot"></span>Linux / Bash</span>
+                <span class="tech-pill"><span class="tech-pill-dot"></span>Postman</span>
+                <span class="tech-pill"><span class="tech-pill-dot"></span>Contenedores</span>
+              </div>
+            </div>
+
           </div>
         </div>
 
         <!-- Blandas -->
         <div class="skills-col" data-aos="fade-left">
-          <h3 class="skills-col-title">
+          <h3 class="skills-col-title" data-i18n="skills.softColTitle">
             <span class="col-icon">🧠</span> Habilidades blandas
           </h3>
           <div class="soft-skills">
             <div class="soft-item" data-aos="zoom-in" data-aos-delay="0">
               <div class="soft-icon">🎯</div>
               <div class="soft-text">
-                <strong>Liderazgo</strong>
-                <span>Capacidad de guiar equipos hacia objetivos comunes</span>
+                <strong data-i18n="skills.soft1.title">Liderazgo</strong>
+                <span data-i18n="skills.soft1.desc">Capacidad de guiar equipos hacia objetivos comunes</span>
               </div>
             </div>
             <div class="soft-item" data-aos="zoom-in" data-aos-delay="50">
               <div class="soft-icon">🤝</div>
               <div class="soft-text">
-                <strong>Trabajo en equipo</strong>
-                <span>Colaboración efectiva en entornos dinámicos</span>
+                <strong data-i18n="skills.soft2.title">Trabajo en equipo</strong>
+                <span data-i18n="skills.soft2.desc">Colaboración efectiva en entornos dinámicos</span>
               </div>
             </div>
             <div class="soft-item" data-aos="zoom-in" data-aos-delay="100">
               <div class="soft-icon">💬</div>
               <div class="soft-text">
-                <strong>Comunicación efectiva</strong>
-                <span>Ideas claras, escucha activa y feedback constructivo</span>
+                <strong data-i18n="skills.soft3.title">Comunicación efectiva</strong>
+                <span data-i18n="skills.soft3.desc">Ideas claras, escucha activa y feedback constructivo</span>
               </div>
             </div>
             <div class="soft-item" data-aos="zoom-in" data-aos-delay="150">
               <div class="soft-icon">💡</div>
               <div class="soft-text">
-                <strong>Creatividad</strong>
-                <span>Soluciones originales ante problemas complejos</span>
+                <strong data-i18n="skills.soft4.title">Creatividad</strong>
+                <span data-i18n="skills.soft4.desc">Soluciones originales ante problemas complejos</span>
               </div>
             </div>
             <div class="soft-item" data-aos="zoom-in" data-aos-delay="200">
               <div class="soft-icon">🔄</div>
               <div class="soft-text">
-                <strong>Adaptabilidad</strong>
-                <span>Respuesta ágil ante cambios y nuevos retos</span>
+                <strong data-i18n="skills.soft5.title">Adaptabilidad</strong>
+                <span data-i18n="skills.soft5.desc">Respuesta ágil ante cambios y nuevos retos</span>
               </div>
             </div>
             <div class="soft-item" data-aos="zoom-in" data-aos-delay="250">
               <div class="soft-icon">🧩</div>
               <div class="soft-text">
-                <strong>Resolución de problemas</strong>
-                <span>Análisis estructurado y toma de decisiones efectiva</span>
+                <strong data-i18n="skills.soft6.title">Resolución de problemas</strong>
+                <span data-i18n="skills.soft6.desc">Análisis estructurado y toma de decisiones efectiva</span>
               </div>
             </div>
             <div class="soft-item" data-aos="zoom-in" data-aos-delay="300">
               <div class="soft-icon">❤️</div>
               <div class="soft-text">
-                <strong>Empatía & Tolerancia</strong>
-                <span>Comprensión genuina del entorno y las personas</span>
+                <strong data-i18n="skills.soft7.title">Empatía & Tolerancia</strong>
+                <span data-i18n="skills.soft7.desc">Comprensión genuina del entorno y las personas</span>
               </div>
             </div>
           </div>
@@ -278,21 +385,19 @@
   <section class="section proyectos" id="proyectos">
     <div class="container">
       <div class="section-header" data-aos="fade-up">
-        <span class="section-tag">03 — Proyectos</span>
-        <h2 class="section-title">Lo que he construido</h2>
+        <span class="section-tag" data-i18n="projects.tag">03 — Proyectos</span>
+        <h2 class="section-title" data-i18n="projects.title">Lo que he construido</h2>
       </div>
       <div class="projects-grid">
 
         <!-- Proyecto 1 -->
         <article class="project-card" data-aos="fade-up" data-aos-delay="0">
           <div class="project-img-wrap">
-            <!-- COLOCA IMAGEN: img/proyecto1.jpg -->
             <div class="project-img-placeholder">
-              <img src="img/ecommerce.png" alt="Ecommerce">
-              
+              <img src="img/ecommerce.png" alt="Proyecto Ecommerce Ropa" loading="lazy" decoding="async">
             </div>
             <div class="project-overlay">
-              <a href="https://github.com/TuMinipeka/Proyecto-Ecommerce-Ropa" target="_blank" rel="noopener" class="overlay-btn">
+              <a href="https://github.com/TuMinipeka/Proyecto-Ecommerce-Ropa" target="_blank" rel="noopener noreferrer" class="overlay-btn" data-i18n="projects.overlayBtn">
                 Ver en GitHub →
               </a>
             </div>
@@ -303,12 +408,12 @@
               <span class="ptag">CSS</span>
               <span class="ptag">JavaScript</span>
             </div>
-            <h3 class="project-title">Ecommerce Ropa</h3>
-            <p class="project-desc">
+            <h3 class="project-title" data-i18n="projects.p1.title">Ecommerce Ropa</h3>
+            <p class="project-desc" data-i18n="projects.p1.desc">
               Tienda de ropa en línea donde el usuario puede explorar prendas, añadirlas al carrito 
               y completar el proceso de compra de forma sencilla e intuitiva.
             </p>
-            <a href="https://github.com/TuMinipeka/Proyecto-Ecommerce-Ropa" target="_blank" rel="noopener" class="project-link">
+            <a href="https://github.com/TuMinipeka/Proyecto-Ecommerce-Ropa" target="_blank" rel="noopener noreferrer" class="project-link" data-i18n="projects.repoLink">
               Ver repositorio <span class="arrow">→</span>
             </a>
           </div>
@@ -317,12 +422,11 @@
         <!-- Proyecto 2 -->
         <article class="project-card" data-aos="fade-up" data-aos-delay="100">
           <div class="project-img-wrap">
-            <!-- COLOCA IMAGEN: img/proyecto2.jpg -->
             <div class="project-img-placeholder">
-              <img src="img/acme-bank.png" alt="acme-bank">
+              <img src="img/acme-bank.png" alt="Proyecto ACME Bank" loading="lazy" decoding="async">
             </div>
             <div class="project-overlay">
-              <a href="https://github.com/Cristixn04/ACME-BANK-PROYECT" target="_blank" rel="noopener" class="overlay-btn">
+              <a href="https://github.com/Cristixn04/ACME-BANK-PROYECT" target="_blank" rel="noopener noreferrer" class="overlay-btn" data-i18n="projects.overlayBtn">
                 Ver en GitHub →
               </a>
             </div>
@@ -333,25 +437,25 @@
               <span class="ptag">CSS</span>
               <span class="ptag">JavaScript</span>
             </div>
-            <h3 class="project-title">ACME Bank</h3>
-            <p class="project-desc">
+            <h3 class="project-title" data-i18n="projects.p2.title">ACME Bank</h3>
+            <p class="project-desc" data-i18n="projects.p2.desc">
               Interfaz bancaria completa donde el usuario puede iniciar sesión, consultar movimientos, 
               retirar, consignar dinero y pagar facturas de manera segura.
             </p>
-            <a href="https://github.com/Cristixn04/ACME-BANK-PROYECT" target="_blank" rel="noopener" class="project-link">
+            <a href="https://github.com/Cristixn04/ACME-BANK-PROYECT" target="_blank" rel="noopener noreferrer" class="project-link" data-i18n="projects.repoLink">
               Ver repositorio <span class="arrow">→</span>
             </a>
           </div>
         </article>
 
-        <!-- Proyecto 3 — placeholder -->
-        <article class="project-card project-card--coming" data-aos="fade-up" data-aos-delay="200">
+        <!-- Proyecto 3 -->
+        <article class="project-card" data-aos="fade-up" data-aos-delay="200">
           <div class="project-img-wrap">
-            <div class="project-img-placeholder coming">
-              <img src="img/registro_notas.png" alt="registro_notas">
+            <div class="project-img-placeholder">
+              <img src="img/registro_notas.png" alt="Proyecto Herramienta de registro de notas" loading="lazy" decoding="async">
             </div>
             <div class="project-overlay">
-              <a href="https://github.com/Cristixn04/Pagina-de-gestion-de-notas" target="_blank" rel="noopener" class="overlay-btn">
+              <a href="https://github.com/Cristixn04/Pagina-de-gestion-de-notas" target="_blank" rel="noopener noreferrer" class="overlay-btn" data-i18n="projects.overlayBtn">
                 Ver en GitHub →
               </a>
             </div>
@@ -362,11 +466,11 @@
               <span class="ptag">CSS</span>
               <span class="ptag">JavaScript</span>
             </div>
-            <h3 class="project-title">Herramienta de registro de notas</h3>
-            <p class="project-desc">
-              Herramienta que recibe las notas de cursos y las guarda, a la vez que califica por promedio y genera un ranking de estudiantes con mejor promedio
+            <h3 class="project-title" data-i18n="projects.p3.title">Herramienta de registro de notas</h3>
+            <p class="project-desc" data-i18n="projects.p3.desc">
+              Herramienta que recibe las notas de cursos y las guarda, a la vez que califica por promedio y genera un ranking de estudiantes con mejor promedio.
             </p>
-            <a href="https://github.com/Cristixn04/Pagina-de-gestion-de-notas" target="_blank" rel="noopener" class="project-link">
+            <a href="https://github.com/Cristixn04/Pagina-de-gestion-de-notas" target="_blank" rel="noopener noreferrer" class="project-link" data-i18n="projects.repoLink">
               Ver repositorio <span class="arrow">→</span>
             </a>
           </div>
@@ -380,21 +484,21 @@
   <section class="section educacion" id="educacion">
     <div class="container">
       <div class="section-header" data-aos="fade-up">
-        <span class="section-tag">04 — Educación</span>
-        <h2 class="section-title">Mi formación</h2>
+        <span class="section-tag" data-i18n="education.tag">04 — Educación</span>
+        <h2 class="section-title" data-i18n="education.title">Mi formación</h2>
       </div>
       <div class="timeline">
 
         <div class="timeline-item" data-aos="fade-right">
           <div class="timeline-dot"></div>
           <div class="timeline-card">
-            <span class="timeline-year">Actual</span>
-            <h3 class="timeline-title">Técnico en Desarrollo de Software</h3>
-            <p class="timeline-place">Formación técnica en programación, bases de datos y desarrollo de aplicaciones web.</p>
+            <span class="timeline-year" data-i18n="education.item1.year">Actual</span>
+            <h3 class="timeline-title" data-i18n="education.item1.title">Técnico en Desarrollo de Software</h3>
+            <p class="timeline-place" data-i18n="education.item1.place">Formación técnica en programación, bases de datos y desarrollo de aplicaciones web.</p>
             <div class="timeline-tags">
               <span class="ptag">Software</span>
               <span class="ptag">Full Stack</span>
-              <span class="ptag">IA</span>
+              <span class="ptag" data-i18n="education.item1.tagAi">IA</span>
             </div>
           </div>
         </div>
@@ -402,12 +506,12 @@
         <div class="timeline-item" data-aos="fade-right" data-aos-delay="100">
           <div class="timeline-dot"></div>
           <div class="timeline-card">
-            <span class="timeline-year">Previo</span>
-            <h3 class="timeline-title">Técnico en BPO</h3>
-            <p class="timeline-place">Formación en gestión de procesos de negocio, atención al cliente y operaciones empresariales.</p>
+            <span class="timeline-year" data-i18n="education.item2.year">Previo</span>
+            <h3 class="timeline-title" data-i18n="education.item2.title">Técnico en BPO</h3>
+            <p class="timeline-place" data-i18n="education.item2.place">Formación en gestión de procesos de negocio, atención al cliente y operaciones empresariales.</p>
             <div class="timeline-tags">
-              <span class="ptag">Procesos</span>
-              <span class="ptag">Gestión</span>
+              <span class="ptag" data-i18n="education.item2.tagProcesses">Procesos</span>
+              <span class="ptag" data-i18n="education.item2.tagManagement">Gestión</span>
             </div>
           </div>
         </div>
@@ -415,11 +519,11 @@
         <div class="timeline-item" data-aos="fade-right" data-aos-delay="200">
           <div class="timeline-dot"></div>
           <div class="timeline-card">
-            <span class="timeline-year">Base</span>
-            <h3 class="timeline-title">Bachiller</h3>
-            <p class="timeline-place">Educación media completa — fundamento de mi formación académica y profesional.</p>
+            <span class="timeline-year" data-i18n="education.item3.year">Base</span>
+            <h3 class="timeline-title" data-i18n="education.item3.title">Bachiller</h3>
+            <p class="timeline-place" data-i18n="education.item3.place">Educación media completa — fundamento de mi formación académica y profesional.</p>
             <div class="timeline-tags">
-              <span class="ptag">Graduado</span>
+              <span class="ptag" data-i18n="education.item3.tagGraduated">Graduado</span>
             </div>
           </div>
         </div>
@@ -432,14 +536,14 @@
   <section class="section vision-mision" id="vision-mision">
     <div class="container">
       <div class="section-header" data-aos="fade-up">
-        <span class="section-tag">05 — Propósito</span>
-        <h2 class="section-title">Visión & Misión</h2>
+        <span class="section-tag" data-i18n="vm.tag">05 — Propósito</span>
+        <h2 class="section-title" data-i18n="vm.title">Visión & Misión</h2>
       </div>
       <div class="vm-grid">
         <div class="vm-card vm-mision" data-aos="fade-right">
           <div class="vm-icon">🎯</div>
-          <h3 class="vm-title">Misión</h3>
-          <p class="vm-text">
+          <h3 class="vm-title" data-i18n="vm.missionTitle">Misión</h3>
+          <p class="vm-text" data-i18n="vm.missionText">
             Desarrollar soluciones tecnológicas innovadoras mediante software, automatización e 
             inteligencia artificial, creando herramientas eficientes que resuelvan problemas reales 
             y generen valor para las personas y las empresas.
@@ -447,8 +551,8 @@
         </div>
         <div class="vm-card vm-vision" data-aos="fade-left">
           <div class="vm-icon">🔭</div>
-          <h3 class="vm-title">Visión</h3>
-          <p class="vm-text">
+          <h3 class="vm-title" data-i18n="vm.visionTitle">Visión</h3>
+          <p class="vm-text" data-i18n="vm.visionText">
             Consolidarme como un desarrollador de software e inteligencia artificial reconocido por 
             crear soluciones escalables e innovadoras, contribuyendo a la transformación digital de 
             las organizaciones mientras continúo creciendo profesional y personalmente.
@@ -462,21 +566,21 @@
   <section class="section contacto" id="contacto">
     <div class="container">
       <div class="section-header" data-aos="fade-up">
-        <span class="section-tag">06 — Contacto</span>
-        <h2 class="section-title">Hablemos</h2>
-        <p class="section-sub">¿Tienes un proyecto en mente? Estoy disponible para colaborar.</p>
+        <span class="section-tag" data-i18n="contact.tag">06 — Contacto</span>
+        <h2 class="section-title" data-i18n="contact.title">Hablemos</h2>
+        <p class="section-sub" data-i18n="contact.sub">¿Tienes un proyecto en mente? Estoy disponible para colaborar.</p>
       </div>
       <div class="contact-grid">
         <div class="contact-links" data-aos="fade-up">
           <a href="mailto:7b.munoz.cristian@gmail.com" class="contact-card">
             <div class="contact-icon">📧</div>
             <div class="contact-info">
-              <span class="contact-label">Email</span>
+              <span class="contact-label" data-i18n="contact.emailLabel">Email</span>
               <span class="contact-val">7b.munoz.cristian@gmail.com</span>
             </div>
             <span class="contact-arrow">→</span>
           </a>
-          <a href="https://www.linkedin.com/in/cristian-muñoz-159980409" target="_blank" rel="noopener" class="contact-card">
+          <a href="https://www.linkedin.com/in/cristian-muñoz-159980409" target="_blank" rel="noopener noreferrer" class="contact-card">
             <div class="contact-icon">💼</div>
             <div class="contact-info">
               <span class="contact-label">LinkedIn</span>
@@ -484,7 +588,7 @@
             </div>
             <span class="contact-arrow">→</span>
           </a>
-          <a href="https://github.com/Cristixn04" target="_blank" rel="noopener" class="contact-card">
+          <a href="https://github.com/Cristixn04" target="_blank" rel="noopener noreferrer" class="contact-card">
             <div class="contact-icon">🐙</div>
             <div class="contact-info">
               <span class="contact-label">GitHub</span>
@@ -503,15 +607,16 @@
       <a href="#hero" class="footer-logo">
         <span class="logo-bracket">&lt;</span>CCM<span class="logo-bracket">/&gt;</span>
       </a>
-      <p class="footer-copy">© 2025 Cristian Camilo Muñoz Rodríguez — Todos los derechos reservados.</p>
+      <p class="footer-copy" data-i18n="footer.copy">© 2026 Cristian Camilo Muñoz Rodríguez — Todos los derechos reservados.</p>
       <div class="footer-social">
-        <a href="https://github.com/Cristixn04" target="_blank" rel="noopener" aria-label="GitHub">GH</a>
-        <a href="https://www.linkedin.com/in/cristian-muñoz-159980409" target="_blank" rel="noopener" aria-label="LinkedIn">LI</a>
+        <a href="https://github.com/Cristixn04" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GH</a>
+        <a href="https://www.linkedin.com/in/cristian-muñoz-159980409" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LI</a>
         <a href="mailto:7b.munoz.cristian@gmail.com" aria-label="Email">EM</a>
       </div>
     </div>
   </footer>
 
+  <script src="js/i18n.js"></script>
   <script src="js/particles.js"></script>
   <script src="js/main.js"></script>
 </body>

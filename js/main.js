@@ -51,7 +51,10 @@
   toggle.addEventListener('click', () => {
     const open = links.classList.toggle('open');
     toggle.classList.toggle('open', open);
-    toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    const lang = (window.i18n && typeof window.i18n.getLanguage === 'function') ? window.i18n.getLanguage() : 'es';
+    const closeLabel = lang === 'en' ? 'Close menu' : 'Cerrar menú';
+    const openLabel = lang === 'en' ? 'Open menu' : 'Abrir menú';
+    toggle.setAttribute('aria-label', open ? closeLabel : openLabel);
   });
 
   links.querySelectorAll('a').forEach(a => {
@@ -87,22 +90,25 @@
   const el = document.getElementById('typingText');
   if (!el) return;
 
-  const roles = [
-    'Desarrollador Full Stack',
-    'Backend Developer',
-    'Automatización con IA',
-    'Builder de Soluciones'
-  ];
+  let roles = (window.i18n && typeof window.i18n.getTypingRoles === 'function')
+    ? window.i18n.getTypingRoles()
+    : [
+        'Desarrollador Full Stack',
+        'Backend Developer',
+        'Automatización con IA',
+        'Constructor de Soluciones'
+      ];
 
   let ri = 0, ci = 0, deleting = false;
+  let timerId = null;
 
   function type() {
-    const current = roles[ri];
+    const current = roles[ri] || '';
     if (!deleting) {
       el.textContent = current.slice(0, ci + 1);
       ci++;
       if (ci === current.length) {
-        setTimeout(() => { deleting = true; tick(); }, 2200);
+        timerId = setTimeout(() => { deleting = true; tick(); }, 2200);
         return;
       }
     } else {
@@ -113,11 +119,21 @@
         ri = (ri + 1) % roles.length;
       }
     }
-    setTimeout(tick, deleting ? 50 : 80);
+    timerId = setTimeout(tick, deleting ? 50 : 80);
   }
 
   function tick() { type(); }
   tick();
+
+  window.setTypingRoles = function (newRoles) {
+    if (!Array.isArray(newRoles) || newRoles.length === 0) return;
+    roles = newRoles;
+    ri = 0;
+    ci = 0;
+    deleting = false;
+    if (timerId) clearTimeout(timerId);
+    tick();
+  };
 })();
 
 

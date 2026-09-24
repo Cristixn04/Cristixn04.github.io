@@ -129,7 +129,29 @@ img { max-width: 100%; display: block; }
   color: var(--green);
   transform: translateY(-2px);
 }
-.btn-full { width: 100%; justify-content: center; margin-top: 20px; }
+.btn-full { width: 100%; justify-content: center; }
+.btn-outline-glow {
+  background: rgba(0, 255, 144, 0.05);
+  color: var(--green);
+  border: 1.5px solid rgba(0, 255, 144, 0.35);
+}
+.btn-outline-glow:hover {
+  background: var(--green);
+  color: #000;
+  border-color: var(--green);
+  box-shadow: 0 0 24px var(--green-glow);
+  transform: translateY(-2px);
+}
+.btn-icon {
+  font-size: 15px;
+  line-height: 1;
+}
+.info-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
 
 /* ── Sección header común ── */
 .section-header { text-align: center; margin-bottom: 64px; }
@@ -215,6 +237,63 @@ img { max-width: 100%; display: block; }
 }
 .nav-cta:hover { background: var(--green-glow); border-color: var(--green); }
 .nav-cta::after { display: none; }
+
+/* ── Acciones del navbar & Switch de idioma ── */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 3px 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.lang-switch:hover {
+  border-color: rgba(0, 255, 144, 0.4);
+  box-shadow: 0 0 14px var(--green-glow);
+}
+.lang-btn {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-family: var(--font-code);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: color var(--transition), background var(--transition), box-shadow var(--transition);
+  outline: none;
+}
+.lang-btn:hover {
+  color: var(--text);
+}
+.lang-btn.active {
+  background: var(--green);
+  color: #000;
+  font-weight: 700;
+  box-shadow: 0 0 8px rgba(0, 255, 144, 0.4);
+}
+.lang-sep {
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 11px;
+  font-family: var(--font-code);
+  user-select: none;
+  margin: 0 1px;
+}
+
+@media (min-width: 769px) {
+  .nav-links {
+    margin-left: auto;
+    margin-right: 28px;
+  }
+}
 
 /* Hamburger */
 .nav-toggle {
@@ -489,32 +568,87 @@ img { max-width: 100%; display: block; }
 }
 .col-icon { font-size: 20px; }
 
-/* Barras técnicas */
-.tech-skills { display: flex; flex-direction: column; gap: 20px; }
-.tech-item {
-    
-}
-.tech-info {
+/* ── Categorías Técnicas ── */
+.tech-categories {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  font-size: 14px;
+  flex-direction: column;
+  gap: 16px;
 }
-.tech-name { color: var(--text); font-weight: 500; }
-.tech-pct { color: var(--green); font-family: var(--font-code); font-weight: 600; }
-.tech-bar {
-  height: 6px;
+.tech-cat-card {
   background: var(--bg3);
-  border-radius: 3px;
-  overflow: hidden;
   border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
 }
-.tech-fill {
-  height: 100%;
-  width: 0;
-  background: linear-gradient(90deg, var(--green-dim), var(--green));
-  border-radius: 3px;
-  transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+.tech-cat-card:hover {
+  border-color: rgba(0, 255, 144, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 255, 144, 0.06);
+}
+.tech-cat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.tech-cat-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tech-cat-badge {
+  font-family: var(--font-code);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--green);
+  background: rgba(0, 255, 144, 0.08);
+  border: 1px solid rgba(0, 255, 144, 0.25);
+  padding: 2px 9px;
+  border-radius: 20px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.tech-cat-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.tech-cat-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.tech-pill {
+  font-family: var(--font-code);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border2);
+  padding: 4px 10px;
+  border-radius: 6px;
+  transition: all var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.tech-pill:hover {
+  color: var(--green);
+  border-color: rgba(0, 255, 144, 0.35);
+  background: rgba(0, 255, 144, 0.06);
+}
+.tech-pill-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--green);
+  opacity: 0.8;
 }
 
 /* Habilidades blandas */
