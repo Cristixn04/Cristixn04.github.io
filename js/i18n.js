@@ -125,6 +125,10 @@
         p3: {
           title: "Herramienta de registro de notas",
           desc: "Herramienta que recibe las notas de cursos y las guarda, a la vez que califica por promedio y genera un ranking de estudiantes con mejor promedio."
+        },
+        p4: {
+          title: "Gestión de Seguridad SICA-ACME",
+          desc: "Software de escritorio para control de acceso, registro de personal e incidentes, flujo de visitas mediante máquina de estados y auditoría inmutable en tiempo real."
         }
       },
       education: {
@@ -286,6 +290,10 @@
         p3: {
           title: "Grade Management Tool",
           desc: "Academic application that records course grades, computes grade point averages, and generates an automated student ranking."
+        },
+        p4: {
+          title: "SICA-ACME Security & Access Management",
+          desc: "Enterprise desktop software for access control, personnel registration, incident management, state-machine visitor workflows, and real-time immutable auditing."
         }
       },
       education: {
