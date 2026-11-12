@@ -95,7 +95,7 @@ export default function Hero() {
           {/* Left Column: Lead & Action */}
           <div className="hero-text-col">
             {/* Live Operational Status */}
-            <motion.div variants={itemVariants} style={{ marginBottom: '20px' }}>
+            <motion.div variants={itemVariants} className="hero-status-wrap" style={{ marginBottom: '20px' }}>
               <div
                 className="status-pill"
                 style={{
