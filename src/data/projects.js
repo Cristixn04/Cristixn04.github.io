@@ -7,10 +7,9 @@ export const projectsData = [
     subtitle: "Centro de Gestión Operativa & Triaje IA para Campus",
     summaryEs: "Sistema centralizado de operaciones de campus con triaje inteligente asistido por Google Gemini, control de aforo por aula en tiempo real y generación de credenciales QR de acceso.",
     summaryEn: "Central AI-assisted campus operations management platform featuring automated room capacity monitoring, Gemini structured incident triage, and real-time QR access passes.",
-    image: "img/registro_notas.png", // Stand-in image hasta que el usuario entregue las fotos finales
+    image: "img/campuslands-opscenter.png",
     gallery: [
-      "img/registro_notas.png",
-      "img/sica-acme.png"
+      "img/campuslands-opscenter.png"
     ],
     tags: ["FastAPI", "React 19", "TypeScript", "PostgreSQL", "Gemini 3.8 Flash", "Docker"],
     repoUrl: "https://github.com/Cristixn04/Campuslands-OpsCenter-",
@@ -44,10 +43,9 @@ export const projectsData = [
     subtitle: "Plataforma de Renta de Maquinaria Pesada & Herramientas",
     summaryEs: "Marketplace B2B/B2C con arquitectura hexagonal y Domain-Driven Design (DDD). Gestión de reservas con bloqueo pesimista (Pessimistic Locking), inspección física técnica y facturación electrónica OpenPDF.",
     summaryEn: "Enterprise heavy machinery rental marketplace featuring Domain-Driven Design (DDD), pessimistic lock reservation concurrency, and automated PDF invoice generation.",
-    image: "img/acme-bank.png", // Stand-in image
+    image: "img/rentatools.png",
     gallery: [
-      "img/acme-bank.png",
-      "img/ecommerce.png"
+      "img/rentatools.png"
     ],
     tags: ["Java 21 LTS", "Spring Boot", "Arquitectura Hexagonal", "DDD", "PostgreSQL 4FN", "Spring Security 6"],
     repoUrl: "https://github.com/Leonardo4516/Proyecto_RentaHerramientas",
@@ -81,9 +79,9 @@ export const projectsData = [
     subtitle: "Motor de Búsqueda Semántica 3072D & Análisis Asistido por IA",
     summaryEs: "Plataforma de Fórmula 1 orientada a captura de opiniones, clasificación objetiva de percepciones con Gemini v1beta, persistencia atómica en disco y motor de búsqueda vectorial con embeddings de 3072 dimensiones.",
     summaryEn: "Formula 1 motorsport analytics and conversational chatbot featuring a 3072-dimensional vector embedding search engine and Gemini v1beta contextual reasoning.",
-    image: "img/swappy-20260924_185956.png",
+    image: "img/paddock-global.png",
     gallery: [
-      "img/swappy-20260924_185956.png"
+      "img/paddock-global.png"
     ],
     tags: ["Python 3.12", "Streamlit", "LangChain", "Gemini API v1beta", "Embeddings 3072D", "Pydantic V2"],
     repoUrl: "https://github.com/Cristixn04",
