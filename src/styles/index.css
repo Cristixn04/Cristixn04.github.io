@@ -1102,9 +1102,35 @@ button:active, .btn:active, a.btn:active {
   }
 }
 
-/* ── Intro Splash CTA Feedback ── */
+/* ── Intro Splash CTA Feedback & Responsive Polish ── */
 .intro-enter-btn:hover {
   background-color: #00ff83 !important;
   box-shadow: 0 0 45px rgba(0, 229, 117, 0.65) !important;
   transform: scale(1.02);
+}
+
+.intro-enter-btn:active {
+  transform: scale(0.97) !important;
+}
+
+@media (max-width: 600px) {
+  .intro-headline {
+    font-size: clamp(26px, 7.5vw, 42px) !important;
+  }
+  .intro-subtitle {
+    font-size: 11.5px !important;
+    letter-spacing: 0.05em !important;
+    margin-bottom: 28px !important;
+  }
+  .intro-enter-btn {
+    padding: 13px 26px !important;
+    font-size: 13px !important;
+    max-width: 290px !important;
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  .intro-caption {
+    font-size: 9.5px !important;
+    padding: 0 10px !important;
+  }
 }
