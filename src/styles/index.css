@@ -161,46 +161,75 @@ button:active, .btn:active, a.btn:active {
   padding: 0 clamp(20px, 3.5vw, 48px);
 }
 
-/* ── Responsive Rules: Tablet & Medium Screens (<= 900px) ── */
-@media (max-width: 900px) {
+/* ── Responsive Rules: Tablet Screens (601px to 900px) ── */
+@media (max-width: 900px) and (min-width: 601px) {
   .hero-layout {
-    grid-template-columns: 1fr !important;
-    gap: 32px !important;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr) !important;
+    gap: 28px !important;
   }
 
   .hero-visual-col {
-    order: -1 !important;
+    order: 0 !important;
     display: flex !important;
     justify-content: center !important;
     width: 100% !important;
-    margin: 0 auto !important;
   }
 
   .profile-craft-card {
     max-width: 320px !important;
     width: 100% !important;
-    margin: 0 auto !important;
   }
 
   .about-grid {
-    grid-template-columns: 1fr !important;
-    gap: 28px !important;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) !important;
+    gap: 24px !important;
   }
 
   .carousel-slide-grid {
-    grid-template-columns: 1fr !important;
-    gap: 22px !important;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) !important;
+    gap: 24px !important;
   }
 
   .carousel-stage {
     min-height: auto !important;
   }
+
+  .soft-skills-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 14px !important;
+  }
+
+  .skills-bento-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 14px !important;
+  }
+
+  .skills-principles-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 18px !important;
+  }
+
+  .contact-capsules-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+
+  .contact-channels-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 12px !important;
+  }
 }
 
-/* ── Responsive Rules: Smartphones & Mobile Screens (<= 768px) ── */
-@media (max-width: 768px) {
+/* ── Responsive Rules: Smartphones & Mobile Screens (<= 600px) ── */
+@media (max-width: 600px) {
   .container {
-    padding: 0 16px !important;
+    padding: 0 12px !important;
   }
 
   .section,
@@ -210,7 +239,7 @@ button:active, .btn:active, a.btn:active {
   .skills-section,
   .education-section,
   .contact-section {
-    padding: 68px 0 !important;
+    padding: 48px 0 !important;
   }
 
   /* Navigation Mobile Toggle */
@@ -223,13 +252,13 @@ button:active, .btn:active, a.btn:active {
     display: flex !important;
     align-items: center;
     justify-content: center;
-    min-width: 44px;
-    min-height: 44px;
+    min-width: 42px;
+    min-height: 42px;
   }
 
   .nav-capsule {
-    height: 48px !important;
-    padding: 0 14px !important;
+    height: 44px !important;
+    padding: 0 12px !important;
   }
 
   /* Mobile Drawer Overlay */
@@ -237,138 +266,346 @@ button:active, .btn:active, a.btn:active {
     height: 100dvh !important;
     overscroll-behavior: contain !important;
     overflow-y: auto !important;
-    padding: calc(76px + env(safe-area-inset-top, 0px)) 20px calc(24px + env(safe-area-inset-bottom, 0px)) !important;
+    padding: calc(68px + env(safe-area-inset-top, 0px)) 16px calc(24px + env(safe-area-inset-bottom, 0px)) !important;
   }
 
-  /* Hero Section */
+  /* Hero Section: Keep 2 Columns Matching PC */
   .hero-section {
-    padding-top: 86px !important;
-    padding-bottom: 44px !important;
+    padding-top: 76px !important;
+    padding-bottom: 36px !important;
     min-height: auto !important;
   }
 
-  .hero-headline {
-    font-size: clamp(28px, 7.5vw, 44px) !important;
-  }
-
-  .hero-metrics-grid {
-    grid-template-columns: 1fr 1fr !important;
+  .hero-layout {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr) !important;
     gap: 12px !important;
-    padding-top: 18px !important;
+    align-items: center !important;
   }
 
-  /* Grids Collapse to 1 Column */
-  .projects-grid {
-    grid-template-columns: 1fr !important;
-    gap: 20px !important;
-  }
-
-  .soft-skills-grid {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
-  }
-
-  .skills-bento-grid {
-    grid-template-columns: 1fr !important;
-    gap: 20px !important;
-  }
-
-  .skills-principles-grid {
-    grid-template-columns: 1fr !important;
-    gap: 14px !important;
-  }
-
-  .skills-principles-card {
-    padding: 20px 16px !important;
-  }
-
-  .project-carousel-container {
-    padding: 20px 16px !important;
-    border-radius: 18px !important;
-    margin-bottom: 40px !important;
-  }
-
-  /* Timeline */
-  .timeline-track {
-    gap: 20px !important;
-  }
-
-  .timeline-item-row {
-    gap: 12px !important;
-  }
-
-  .timeline-card {
-    padding: 18px 16px !important;
-  }
-
-  /* Contact */
-  .contact-card-wrap {
-    padding: 24px 16px !important;
-  }
-
-  .email-action-capsule {
-    flex-direction: column !important;
-    align-items: stretch !important;
-    width: 100% !important;
-  }
-
-  .email-action-capsule > div:last-child {
-    margin-left: 0 !important;
-    width: 100% !important;
-    flex-wrap: wrap !important;
-    gap: 8px !important;
-  }
-
-  .email-action-capsule > div:last-child > * {
-    flex: 1 1 auto !important;
+  .hero-visual-col {
+    order: 0 !important;
+    display: flex !important;
     justify-content: center !important;
-    text-align: center !important;
-  }
-}
-
-/* ── Responsive Rules: Small Phones (<= 480px) ── */
-@media (max-width: 480px) {
-  .container {
-    padding: 0 14px !important;
+    width: 100% !important;
   }
 
-  .section,
-  .about-section,
-  .soft-skills-section,
-  .projects-section,
-  .skills-section,
-  .education-section,
-  .contact-section {
-    padding: 54px 0 !important;
+  .hero-text-col {
+    min-width: 0 !important;
+  }
+
+  .status-pill {
+    padding: 3px 8px !important;
+    font-size: 9px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .hero-headline {
+    font-size: clamp(16px, 4.4vw, 22px) !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.03em !important;
+    margin-bottom: 6px !important;
+  }
+
+  .hero-subrole {
+    font-size: 10.5px !important;
+    line-height: 1.3 !important;
+    margin-bottom: 8px !important;
+  }
+
+  .hero-bio-desc {
+    font-size: 10px !important;
+    line-height: 1.4 !important;
+    margin-bottom: 12px !important;
   }
 
   .hero-buttons-group {
-    flex-direction: column !important;
-    align-items: stretch !important;
-    width: 100% !important;
-    gap: 10px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    margin-bottom: 14px !important;
   }
 
   .hero-buttons-group > * {
-    width: 100% !important;
+    padding: 6px 10px !important;
+    font-size: 9.5px !important;
+    border-radius: 6px !important;
+    gap: 4px !important;
+    flex: 1 1 auto !important;
+    min-height: 32px !important;
     justify-content: center !important;
     text-align: center !important;
   }
 
   .hero-metrics-grid {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 10px !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+    padding-top: 10px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+  }
+
+  .hero-metrics-grid .metric-cell {
+    padding: 4px 2px !important;
+  }
+
+  .hero-metrics-grid .metric-cell > div:nth-child(1) {
+    font-size: 8px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .hero-metrics-grid .metric-cell > div:nth-child(2) {
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    margin-bottom: 2px !important;
+  }
+
+  .hero-metrics-grid .metric-cell > div:nth-child(3) {
+    font-size: 8px !important;
+    line-height: 1.2 !important;
   }
 
   .profile-craft-card {
-    max-width: 290px !important;
-    padding: 14px !important;
+    max-width: 100% !important;
+    padding: 8px !important;
+    border-radius: 12px !important;
   }
 
+  .hud-corner-bracket {
+    width: 10px !important;
+    height: 10px !important;
+  }
+
+  .hud-header {
+    padding-bottom: 6px !important;
+    margin-bottom: 6px !important;
+    font-size: 8px !important;
+  }
+
+  .hud-photo-container {
+    max-height: 135px !important;
+    border-radius: 10px !important;
+  }
+
+  .hud-bottom-badge {
+    padding: 6px 8px !important;
+    margin-top: 6px !important;
+    border-radius: 6px !important;
+  }
+
+  .hud-bottom-badge span:first-child {
+    font-size: 9px !important;
+  }
+
+  .hud-bottom-badge span:last-child {
+    font-size: 7.5px !important;
+  }
+
+  /* Featured Project Carousel: Keep 2 Columns Matching PC */
   .project-carousel-container {
-    padding: 16px 12px !important;
-    margin-bottom: 32px !important;
-    border-radius: 14px !important;
+    padding: 12px 10px !important;
+    border-radius: 12px !important;
+    margin-bottom: 28px !important;
+  }
+
+  .carousel-header {
+    margin-bottom: 10px !important;
+  }
+
+  .carousel-stage {
+    min-height: auto !important;
+  }
+
+  .carousel-slide-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) !important;
+    gap: 10px !important;
+    align-items: center !important;
+  }
+
+  .carousel-info-col {
+    min-width: 0 !important;
+  }
+
+  .carousel-title {
+    font-size: clamp(12.5px, 3.2vw, 15px) !important;
+    margin-bottom: 3px !important;
+    line-height: 1.2 !important;
+  }
+
+  .carousel-subtitle {
+    font-size: 9px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .carousel-desc {
+    font-size: 8.5px !important;
+    line-height: 1.35 !important;
+    margin-bottom: 8px !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .carousel-actions-row {
+    gap: 5px !important;
+  }
+
+  .carousel-actions-row > * {
+    padding: 5px 8px !important;
+    font-size: 8.5px !important;
+    border-radius: 6px !important;
+  }
+
+  /* About Section: Keep 2 Columns Matching PC */
+  .about-grid {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr) !important;
+    gap: 10px !important;
+    align-items: start !important;
+  }
+
+  .about-bio-col {
+    gap: 10px !important;
+    min-width: 0 !important;
+  }
+
+  .about-bio-col p {
+    font-size: 9.5px !important;
+    line-height: 1.4 !important;
+  }
+
+  .about-languages-card {
+    padding: 8px !important;
+    border-radius: 8px !important;
+  }
+
+  .about-quality-bar {
+    padding: 8px !important;
+    border-radius: 8px !important;
+    gap: 8px !important;
+  }
+
+  .about-quality-bar svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .about-quality-bar div > div:first-child {
+    font-size: 9.5px !important;
+  }
+
+  .about-quality-bar div > div:last-child {
+    font-size: 8px !important;
+  }
+
+  .about-focus-col {
+    gap: 8px !important;
+    min-width: 0 !important;
+  }
+
+  .about-focus-col > div {
+    padding: 8px 10px !important;
+    border-radius: 8px !important;
+    gap: 6px !important;
+  }
+
+  .about-focus-col h3 {
+    font-size: 10px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .about-focus-col p {
+    font-size: 8px !important;
+    line-height: 1.3 !important;
+  }
+
+  /* Soft Skills Bento: Keep 2 Columns Grid */
+  .soft-skills-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .soft-skill-card {
+    padding: 8px 8px !important;
+    border-radius: 10px !important;
+    min-width: 0 !important;
+  }
+
+  .soft-skill-card h3 {
+    font-size: 10px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .soft-skill-card p {
+    font-size: 8.5px !important;
+    line-height: 1.3 !important;
+  }
+
+  .soft-skills-synergy-banner {
+    padding: 10px 12px !important;
+    border-radius: 10px !important;
+    font-size: 9px !important;
+    flex-direction: row !important;
+    align-items: center !important;
+  }
+
+  /* Skills Bento: Keep 3 Columns Matching PC */
+  .skills-bento-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .skills-bento-grid > div {
+    padding: 8px 6px !important;
+    border-radius: 10px !important;
+    min-width: 0 !important;
+  }
+
+  .skills-bento-grid h3 {
+    font-size: 9.5px !important;
+  }
+
+  .skills-principles-card {
+    padding: 10px 8px !important;
+    border-radius: 10px !important;
+  }
+
+  .skills-principles-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+  }
+
+  .skills-principles-grid > div {
+    gap: 6px !important;
+    font-size: 8px !important;
+    line-height: 1.25 !important;
+  }
+
+  /* Projects Grid: Keep 2 Columns */
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .project-card {
+    border-radius: 10px !important;
+    min-width: 0 !important;
+  }
+
+  .project-card h3 {
+    font-size: 10.5px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .project-card p {
+    font-size: 8px !important;
+    line-height: 1.3 !important;
+    margin-bottom: 6px !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .project-filters {
@@ -378,21 +615,150 @@ button:active, .btn:active, a.btn:active {
     flex-wrap: nowrap !important;
     padding-bottom: 6px !important;
     -webkit-overflow-scrolling: touch !important;
+    gap: 5px !important;
   }
 
   .filter-btn {
     white-space: nowrap !important;
     flex-shrink: 0 !important;
+    padding: 4px 8px !important;
+    font-size: 9px !important;
   }
 
+  /* Timeline */
+  .timeline-track {
+    gap: 16px !important;
+  }
+
+  .timeline-item-row {
+    gap: 10px !important;
+  }
+
+  .timeline-card {
+    padding: 12px 10px !important;
+    border-radius: 10px !important;
+  }
+
+  .timeline-card h3 {
+    font-size: 11px !important;
+  }
+
+  .timeline-card span {
+    font-size: 9px !important;
+  }
+
+  .timeline-card p {
+    font-size: 8.5px !important;
+    line-height: 1.35 !important;
+  }
+
+  /* Contact: Keep 2 Columns for Action Capsules & 3 Columns for Channels */
+  .contact-card-wrap {
+    padding: 16px 12px !important;
+    border-radius: 12px !important;
+  }
+
+  .contact-capsules-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .email-action-capsule {
+    padding: 8px 6px !important;
+    border-radius: 8px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 6px !important;
+    min-width: 0 !important;
+  }
+
+  .email-action-capsule span {
+    font-size: 9px !important;
+    word-break: break-all !important;
+  }
+
+  .email-action-capsule > div:last-child {
+    margin-left: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    gap: 4px !important;
+  }
+
+  .email-action-capsule > div:last-child > * {
+    flex: 1 1 auto !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 4px 6px !important;
+    font-size: 8px !important;
+  }
+
+  .contact-channels-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+    padding-top: 14px !important;
+  }
+
+  .contact-channels-grid > a {
+    padding: 8px 4px !important;
+    border-radius: 8px !important;
+    min-width: 0 !important;
+    text-align: center !important;
+  }
+
+  .contact-channels-grid svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .contact-channels-grid span:first-child {
+    font-size: 9px !important;
+  }
+
+  .contact-channels-grid span:last-child {
+    font-size: 7.5px !important;
+  }
+
+  /* Modals */
   .modal-backdrop {
-    padding: 10px !important;
+    padding: 8px !important;
   }
 
   .modal-dialog {
-    padding: 18px 14px !important;
-    border-radius: 16px !important;
-    max-height: calc(100dvh - 20px) !important;
+    padding: 14px 10px !important;
+    border-radius: 12px !important;
+    max-height: calc(100dvh - 16px) !important;
+  }
+}
+
+/* ── Responsive Rules: Ultra-Compact Phones (<= 380px) ── */
+@media (max-width: 380px) {
+  .container {
+    padding: 0 8px !important;
+  }
+
+  .hero-layout {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.9fr) !important;
+    gap: 8px !important;
+  }
+
+  .hero-headline {
+    font-size: 15px !important;
+  }
+
+  .hero-bio-desc {
+    font-size: 9px !important;
+  }
+
+  .carousel-slide-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .about-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    gap: 8px !important;
   }
 }
 

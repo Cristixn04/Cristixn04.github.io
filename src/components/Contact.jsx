@@ -86,6 +86,7 @@ export default function Contact() {
 
           {/* Primary Action Rows: Email & Phone Capsules */}
           <div
+            className="contact-capsules-grid"
             style={{
               display: 'flex',
               flexWrap: 'wrap',
@@ -248,6 +249,7 @@ export default function Contact() {
 
           {/* Channels Grid */}
           <div
+            className="contact-channels-grid"
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',

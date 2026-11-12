@@ -147,6 +147,7 @@ export default function Hero() {
             {/* Sub-role */}
             <motion.div
               variants={itemVariants}
+              className="hero-subrole"
               style={{
                 fontFamily: 'var(--font-main)',
                 fontSize: 'clamp(18px, 2.2vw, 24px)',
@@ -162,6 +163,7 @@ export default function Hero() {
             {/* Detailed statement */}
             <motion.p
               variants={itemVariants}
+              className="hero-bio-desc"
               style={{
                 fontSize: 'clamp(15px, 1.1vw, 17px)',
                 lineHeight: 1.65,
@@ -345,21 +347,22 @@ export default function Hero() {
               }}
             >
               {/* HUD Corner Brackets */}
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style={{ position: 'absolute', top: '-1px', left: '-1px', pointerEvents: 'none' }}>
+              <svg className="hud-corner-bracket" width="18" height="18" viewBox="0 0 18 18" fill="none" style={{ position: 'absolute', top: '-1px', left: '-1px', pointerEvents: 'none' }}>
                 <path d="M0 12V0H12" stroke="#00e575" strokeWidth="2.5" />
               </svg>
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style={{ position: 'absolute', top: '-1px', right: '-1px', pointerEvents: 'none' }}>
+              <svg className="hud-corner-bracket" width="18" height="18" viewBox="0 0 18 18" fill="none" style={{ position: 'absolute', top: '-1px', right: '-1px', pointerEvents: 'none' }}>
                 <path d="M18 12V0H6" stroke="#00e575" strokeWidth="2.5" />
               </svg>
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style={{ position: 'absolute', bottom: '-1px', left: '-1px', pointerEvents: 'none' }}>
+              <svg className="hud-corner-bracket" width="18" height="18" viewBox="0 0 18 18" fill="none" style={{ position: 'absolute', bottom: '-1px', left: '-1px', pointerEvents: 'none' }}>
                 <path d="M0 6V18H12" stroke="#00e575" strokeWidth="2.5" />
               </svg>
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style={{ position: 'absolute', bottom: '-1px', right: '-1px', pointerEvents: 'none' }}>
+              <svg className="hud-corner-bracket" width="18" height="18" viewBox="0 0 18 18" fill="none" style={{ position: 'absolute', bottom: '-1px', right: '-1px', pointerEvents: 'none' }}>
                 <path d="M18 6V18H6" stroke="#00e575" strokeWidth="2.5" />
               </svg>
 
               {/* HUD Top Metadata Header */}
               <div
+                className="hud-header"
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -409,6 +412,7 @@ export default function Hero() {
 
               {/* Photo Frame Container with Inner HUD Frame */}
               <div
+                className="hud-photo-container"
                 style={{
                   position: 'relative',
                   width: '100%',
@@ -475,6 +479,7 @@ export default function Hero() {
 
               {/* Technical Badge Overlay Bottom */}
               <div
+                className="hud-bottom-badge"
                 style={{
                   marginTop: '16px',
                   display: 'flex',

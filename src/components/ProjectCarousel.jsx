@@ -231,7 +231,7 @@ export default function ProjectCarousel({ projects, onSelectProject }) {
             </div>
 
             {/* Slide Information */}
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <div className="carousel-info-col" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               {/* Tags */}
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '14px' }}>
                 {currentProject.tags.map((tag, idx) => (
@@ -253,6 +253,7 @@ export default function ProjectCarousel({ projects, onSelectProject }) {
               </div>
 
               <h3
+                className="carousel-title"
                 style={{
                   fontFamily: 'var(--font-main)',
                   fontSize: 'clamp(24px, 2.5vw, 34px)',
@@ -266,6 +267,7 @@ export default function ProjectCarousel({ projects, onSelectProject }) {
               </h3>
 
               <div
+                className="carousel-subtitle"
                 style={{
                   fontFamily: 'var(--font-mono)',
                   fontSize: '13px',
@@ -277,6 +279,7 @@ export default function ProjectCarousel({ projects, onSelectProject }) {
               </div>
 
               <p
+                className="carousel-desc"
                 style={{
                   fontSize: '15px',
                   lineHeight: 1.6,
@@ -288,7 +291,7 @@ export default function ProjectCarousel({ projects, onSelectProject }) {
               </p>
 
               {/* Action Buttons */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
+              <div className="carousel-actions-row" style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
                 <button
                   type="button"
                   onClick={() => onSelectProject(currentProject)}

@@ -70,6 +70,7 @@ export default function About() {
         >
           {/* Left Column: Bio Narrative & Languages */}
           <motion.div
+            className="about-bio-col"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
@@ -99,6 +100,7 @@ export default function About() {
 
             {/* Languages Card from CV */}
             <div
+              className="about-languages-card"
               style={{
                 marginTop: '6px',
                 padding: '20px 22px',
@@ -171,6 +173,7 @@ export default function About() {
 
             {/* Engineering Highlights Bar */}
             <div
+              className="about-quality-bar"
               style={{
                 padding: '18px',
                 borderRadius: '12px',
@@ -209,6 +212,7 @@ export default function About() {
 
           {/* Right Column: Focus Matrix */}
           <motion.div
+            className="about-focus-col"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}

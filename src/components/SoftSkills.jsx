@@ -131,6 +131,7 @@ export default function SoftSkills() {
               <motion.div
                 key={skill.id}
                 variants={itemVariants}
+                className="soft-skill-card"
                 onMouseEnter={() => setHoveredSkill(skill.id)}
                 onMouseLeave={() => setHoveredSkill(null)}
                 style={{
@@ -281,6 +282,7 @@ export default function SoftSkills() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.45 }}
+          className="soft-skills-synergy-banner"
           style={{
             padding: '24px 28px',
             borderRadius: '16px',
