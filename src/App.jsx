@@ -32,7 +32,7 @@ export default function App() {
         {/* Main Content Layout */}
         <Navbar />
         <main>
-          <Hero />
+          <Hero isIntroActive={showSplash} />
           <About />
           <Projects />
           <SoftSkills />

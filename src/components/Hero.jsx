@@ -4,7 +4,7 @@ import { useLanguage } from '../i18n/LanguageContext';
 import HeroScene from './HeroScene';
 import { ArrowDownRight, Users, FileText, CheckCircle2, ShieldCheck, Database, Cpu, MapPin } from 'lucide-react';
 
-export default function Hero() {
+export default function Hero({ isIntroActive = false }) {
   const { t } = useLanguage();
 
   const containerVariants = {
@@ -47,8 +47,8 @@ export default function Hero() {
         overflow: 'hidden'
       }}
     >
-      {/* Three.js Bespoke Kinetic Core with Scroll Disassembly/Reassembly */}
-      <HeroScene />
+      {/* Three.js Bespoke Kinetic Core with Scroll Disassembly/Reassembly (only active when intro is dismissed) */}
+      {!isIntroActive && <HeroScene />}
 
       {/* Grid Pattern Ground Accent */}
       <div

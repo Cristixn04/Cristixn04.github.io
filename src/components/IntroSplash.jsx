@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import * as THREE from 'three';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 
 export default function IntroSplash({ onEnter }) {
   const [isExiting, setIsExiting] = useState(false);
   const mountRef = useRef(null);
-  const triggerWarpRef = useRef(null);
+  const triggerExitRef = useRef(null);
 
   useEffect(() => {
     const mount = mountRef.current;
@@ -18,13 +18,13 @@ export default function IntroSplash({ onEnter }) {
     const scene = new THREE.Scene();
     const aspect = width / height;
 
-    const calculateCameraZ = (asp) => {
-      // Dynamic camera distance: keeps the full orb, outer halo and React atom 100% in view on any screen
-      return asp < 1.0 ? Math.max(4.6, 4.6 / Math.pow(asp, 0.88)) : 4.6;
+    const getCameraZ = (asp) => {
+      // Dynamic camera distance: ensures orb and React logo are 100% visible on mobile and desktop
+      return asp < 1.0 ? Math.max(5.1, 5.1 / Math.pow(asp, 0.88)) : 4.8;
     };
 
-    const camera = new THREE.PerspectiveCamera(50, aspect, 0.1, 100);
-    camera.position.z = calculateCameraZ(aspect);
+    const camera = new THREE.PerspectiveCamera(45, aspect, 0.1, 100);
+    camera.position.z = getCameraZ(aspect);
 
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
@@ -32,422 +32,401 @@ export default function IntroSplash({ onEnter }) {
       powerPreference: 'high-performance'
     });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     mount.appendChild(renderer.domElement);
 
-    // Main 3D Root Group
+    // Root Group
     const rootGroup = new THREE.Group();
     scene.add(rootGroup);
 
-    // Subgroup for the Outer Particle Orb (sways with organic rotation)
-    const orbGroup = new THREE.Group();
-    rootGroup.add(orbGroup);
-
-    // Subgroup for the Inner React Atom Logo
-    const reactLogoGroup = new THREE.Group();
-    rootGroup.add(reactLogoGroup);
+    // Soft round glowing particle texture (canvas generated)
+    const createCircleTexture = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 64;
+      canvas.height = 64;
+      const ctx = canvas.getContext('2d');
+      const grad = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+      grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
+      grad.addColorStop(0.25, 'rgba(224, 255, 245, 0.95)');
+      grad.addColorStop(0.65, 'rgba(0, 229, 117, 0.45)');
+      grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 64, 64);
+      const texture = new THREE.CanvasTexture(canvas);
+      return texture;
+    };
+    const circleTexture = createCircleTexture();
 
     // ─────────────────────────────────────────────────────────────
-    // 1. OUTER PARTICLE ORB (Fibonacci Sphere Shell with Rim Glow)
+    // PARTICLE GEOMETRY GENERATION (Outer Orb + Inner React Atom)
     // ─────────────────────────────────────────────────────────────
-    const orbCount = 8200;
-    const orbPositions = new Float32Array(orbCount * 3);
-    const orbRandoms = new Float32Array(orbCount);
-    const orbSizes = new Float32Array(orbCount);
+    // 1. Outer Orb Fibonacci Sphere Shell (2,400 points)
+    const orbCount = 2400;
+    // 2. React Nucleus (360 points)
+    const nucCount = 360;
+    // 3. React 3 Orbital Ellipses (3 * 700 = 2,100 points)
+    const ringsCount = 2100;
+    // 4. Subtle Outer Cosmic Dust (280 points)
+    const dustCount = 280;
 
-    const goldenRatio = (1 + Math.sqrt(5)) / 2;
-    const phi = 2 * Math.PI * (1 - 1 / goldenRatio); // ~2.39996 rad
+    const totalCount = orbCount + nucCount + ringsCount + dustCount;
 
+    const homePositions = new Float32Array(totalCount * 3);
+    const positions = new Float32Array(totalCount * 3);
+    const colors = new Float32Array(totalCount * 3);
+    const vx = new Float32Array(totalCount);
+    const vy = new Float32Array(totalCount);
+    const vz = new Float32Array(totalCount);
+    const randoms = new Float32Array(totalCount);
+
+    let ptr = 0;
+
+    // Palette:
+    const colorEmerald = new THREE.Color('#00e575');
+    const colorMint = new THREE.Color('#38fdb2');
+    const colorCyan = new THREE.Color('#00f5ff');
+    const colorRimWhite = new THREE.Color('#eafff7');
+
+    // 1. Generate Outer Orb Shell
+    const goldenAngle = Math.PI * (3 - Math.sqrt(5)); // ~2.39996 rad
     for (let i = 0; i < orbCount; i++) {
-      const y = 1 - (i / (orbCount - 1)) * 2; // from 1 to -1
+      const y = 1 - (i / (orbCount - 1)) * 2; // -1 to 1
       const radiusAtY = Math.sqrt(Math.max(0, 1 - y * y));
-      const theta = phi * i;
+      const theta = goldenAngle * i;
 
-      // Base radius ~1.78 with micro volumetric variations
-      const r = 1.78 + (Math.random() - 0.5) * 0.08;
-
+      const r = 1.72 + (Math.random() - 0.5) * 0.05;
       const x = Math.cos(theta) * radiusAtY * r;
       const z = Math.sin(theta) * radiusAtY * r;
       const py = y * r;
 
-      orbPositions[i * 3] = x;
-      orbPositions[i * 3 + 1] = py;
-      orbPositions[i * 3 + 2] = z;
+      homePositions[ptr * 3] = x;
+      homePositions[ptr * 3 + 1] = py;
+      homePositions[ptr * 3 + 2] = z;
 
-      orbRandoms[i] = Math.random();
-      orbSizes[i] = 0.75 + Math.random() * 0.55;
+      positions[ptr * 3] = x;
+      positions[ptr * 3 + 1] = py;
+      positions[ptr * 3 + 2] = z;
+
+      // Rim / Fresnel coloring: points on the silhouette edge glow brighter white-cyan
+      const distFromCenterXY = Math.sqrt(x * x + py * py) / r;
+      if (distFromCenterXY > 0.82) {
+        colors[ptr * 3] = colorRimWhite.r;
+        colors[ptr * 3 + 1] = colorRimWhite.g;
+        colors[ptr * 3 + 2] = colorRimWhite.b;
+      } else {
+        const c = distFromCenterXY > 0.6 ? colorMint : colorEmerald;
+        colors[ptr * 3] = c.r;
+        colors[ptr * 3 + 1] = c.g;
+        colors[ptr * 3 + 2] = c.b;
+      }
+
+      randoms[ptr] = Math.random();
+      ptr++;
     }
 
-    const orbGeometry = new THREE.BufferGeometry();
-    orbGeometry.setAttribute('position', new THREE.BufferAttribute(orbPositions, 3));
-    orbGeometry.setAttribute('aRandom', new THREE.BufferAttribute(orbRandoms, 1));
-    orbGeometry.setAttribute('aSize', new THREE.BufferAttribute(orbSizes, 1));
-
-    const orbShaderMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        uTime: { value: 0 },
-        uWarp: { value: 0 },
-        uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
-        uBaseSize: { value: 6.8 },
-        uColorBase: { value: new THREE.Color('#00e575') },
-        uColorRim: { value: new THREE.Color('#e0fff5') }
-      },
-      vertexShader: `
-        uniform float uTime;
-        uniform float uWarp;
-        uniform float uPixelRatio;
-        uniform float uBaseSize;
-
-        attribute float aRandom;
-        attribute float aSize;
-
-        varying float vRim;
-        varying float vAlpha;
-        varying float vRandom;
-
-        void main() {
-          vRandom = aRandom;
-          vec3 pos = position;
-          vec3 norm = normalize(pos);
-
-          // Multi-frequency organic wave ripple displacement
-          float w1 = sin(norm.x * 4.2 + uTime * 1.1) * cos(norm.y * 3.8 + uTime * 0.9);
-          float w2 = sin(norm.z * 5.2 - uTime * 1.3) * 0.45;
-          pos += norm * ((w1 + w2) * 0.05);
-
-          // Warp hyperdrive expansion on enter click
-          if (uWarp > 0.0) {
-            float burst = pow(uWarp, 2.2) * (15.0 + aRandom * 14.0);
-            pos += norm * burst;
-          }
-
-          vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-          gl_Position = projectionMatrix * mvPosition;
-
-          // Rim / Fresnel Lighting: grazing particles glow brighter (Motion Orb effect)
-          vec3 viewNorm = normalize(normalMatrix * norm);
-          vec3 viewDir = normalize(-mvPosition.xyz);
-          float rim = 1.0 - abs(dot(viewNorm, viewDir));
-          vRim = pow(rim, 2.3);
-
-          float sizeMultiplier = (1.0 + uWarp * 2.2);
-          gl_PointSize = (uBaseSize * aSize * sizeMultiplier * uPixelRatio) * (120.0 / -mvPosition.z);
-          vAlpha = (1.0 - smoothstep(0.70, 1.0, uWarp));
-        }
-      `,
-      fragmentShader: `
-        uniform vec3 uColorBase;
-        uniform vec3 uColorRim;
-        uniform float uWarp;
-
-        varying float vRim;
-        varying float vAlpha;
-        varying float vRandom;
-
-        void main() {
-          vec2 coord = gl_PointCoord - vec2(0.5);
-          float dist = length(coord);
-          if (dist > 0.5) discard;
-
-          float soft = smoothstep(0.5, 0.06, dist);
-          vec3 color = mix(uColorBase, uColorRim, vRim * 0.88);
-          float alphaRim = mix(0.38, 0.96, vRim);
-
-          gl_FragColor = vec4(color, soft * alphaRim * vAlpha);
-        }
-      `,
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending
-    });
-
-    const orbMesh = new THREE.Points(orbGeometry, orbShaderMaterial);
-    orbGroup.add(orbMesh);
-
-    // ─────────────────────────────────────────────────────────────
-    // 2. OUTER AMBIENT STARDUST HALO (Atmospheric depth mist)
-    // ─────────────────────────────────────────────────────────────
-    const haloCount = 1800;
-    const haloPositions = new Float32Array(haloCount * 3);
-    const haloRandoms = new Float32Array(haloCount);
-    const haloSizes = new Float32Array(haloCount);
-
-    for (let i = 0; i < haloCount; i++) {
-      const u = Math.random();
-      const v = Math.random();
-      const theta = u * 2.0 * Math.PI;
-      const phiH = Math.acos(2.0 * v - 1.0);
-      const r = 1.70 + Math.random() * 0.42;
-
-      const sinPhi = Math.sin(phiH);
-      haloPositions[i * 3] = r * sinPhi * Math.cos(theta);
-      haloPositions[i * 3 + 1] = r * sinPhi * Math.sin(theta);
-      haloPositions[i * 3 + 2] = r * Math.cos(phiH);
-
-      haloRandoms[i] = Math.random();
-      haloSizes[i] = 0.5 + Math.random() * 0.6;
-    }
-
-    const haloGeometry = new THREE.BufferGeometry();
-    haloGeometry.setAttribute('position', new THREE.BufferAttribute(haloPositions, 3));
-    haloGeometry.setAttribute('aRandom', new THREE.BufferAttribute(haloRandoms, 1));
-    haloGeometry.setAttribute('aSize', new THREE.BufferAttribute(haloSizes, 1));
-
-    const haloMesh = new THREE.Points(haloGeometry, orbShaderMaterial);
-    orbGroup.add(haloMesh);
-
-    // ─────────────────────────────────────────────────────────────
-    // 3. INNER REACT ATOM LOGO (Luminous Central Nucleus + 3 Orbitals)
-    // ─────────────────────────────────────────────────────────────
-    // A) Central Nucleus cluster
-    const nucCount = 650;
-    const nucPositions = new Float32Array(nucCount * 3);
-    const nucRandoms = new Float32Array(nucCount);
-    const nucProgress = new Float32Array(nucCount);
-
+    // 2. Generate Inner React Logo: Nucleus
     for (let i = 0; i < nucCount; i++) {
       const u = Math.random();
       const v = Math.random();
       const theta = u * 2.0 * Math.PI;
-      const phiN = Math.acos(2.0 * v - 1.0);
-      const r = Math.cbrt(Math.random()) * 0.28;
+      const phi = Math.acos(2.0 * v - 1.0);
+      const r = Math.cbrt(Math.random()) * 0.26;
 
-      const sinPhi = Math.sin(phiN);
-      nucPositions[i * 3] = r * sinPhi * Math.cos(theta);
-      nucPositions[i * 3 + 1] = r * sinPhi * Math.sin(theta);
-      nucPositions[i * 3 + 2] = r * Math.cos(phiN);
+      const sinPhi = Math.sin(phi);
+      const x = r * sinPhi * Math.cos(theta);
+      const y = r * sinPhi * Math.sin(theta);
+      const z = r * Math.cos(phi);
 
-      nucRandoms[i] = Math.random();
-      nucProgress[i] = Math.random();
+      homePositions[ptr * 3] = x;
+      homePositions[ptr * 3 + 1] = y;
+      homePositions[ptr * 3 + 2] = z;
+
+      positions[ptr * 3] = x;
+      positions[ptr * 3 + 1] = y;
+      positions[ptr * 3 + 2] = z;
+
+      colors[ptr * 3] = colorCyan.r;
+      colors[ptr * 3 + 1] = colorCyan.g;
+      colors[ptr * 3 + 2] = colorCyan.b;
+
+      randoms[ptr] = Math.random();
+      ptr++;
     }
 
-    // B) 3 Orbital Elliptical Rings (0°, 60°, 120°)
-    const ringPointsPerOrbital = 1100;
-    const totalRingPoints = ringPointsPerOrbital * 3;
-    const ringPositions = new Float32Array(totalRingPoints * 3);
-    const ringRandoms = new Float32Array(totalRingPoints);
-    const ringProgress = new Float32Array(totalRingPoints);
-
-    const orbitAngles = [0, Math.PI / 3, (2 * Math.PI) / 3];
-    let ringPtr = 0;
+    // 3. Generate Inner React Logo: 3 Orbital Ellipses (0°, 60°, 120°)
+    const pointsPerRing = 700;
+    const angles = [0, Math.PI / 3, (2 * Math.PI) / 3];
 
     for (let rIdx = 0; rIdx < 3; rIdx++) {
-      const rotZ = orbitAngles[rIdx];
-      const cosRot = Math.cos(rotZ);
-      const sinRot = Math.sin(rotZ);
+      const rotZ = angles[rIdx];
+      const cosR = Math.cos(rotZ);
+      const sinR = Math.sin(rotZ);
 
-      for (let i = 0; i < ringPointsPerOrbital; i++) {
-        const t = (i / ringPointsPerOrbital) * Math.PI * 2 + (Math.random() - 0.5) * 0.035;
+      for (let i = 0; i < pointsPerRing; i++) {
+        const t = (i / pointsPerRing) * Math.PI * 2;
         const a = 0.88;
-        const b = 0.36;
+        const b = 0.35;
 
         const x0 = a * Math.cos(t);
         const y0 = b * Math.sin(t);
 
-        // Subtle 3D thickness and volumetric jitter
-        const jitter = (Math.random() - 0.5) * 0.04;
-        const zJitter = (Math.random() - 0.5) * 0.04;
+        // Volumetric thickness
+        const jitter = (Math.random() - 0.5) * 0.035;
+        const zJitter = (Math.random() - 0.5) * 0.035;
 
-        const x = (x0 + jitter) * cosRot - (y0 + jitter) * sinRot;
-        const y = (x0 + jitter) * sinRot + (y0 + jitter) * cosRot;
+        const x = (x0 + jitter) * cosR - (y0 + jitter) * sinR;
+        const y = (x0 + jitter) * sinR + (y0 + jitter) * cosR;
         const z = zJitter;
 
-        ringPositions[ringPtr * 3] = x;
-        ringPositions[ringPtr * 3 + 1] = y;
-        ringPositions[ringPtr * 3 + 2] = z;
+        homePositions[ptr * 3] = x;
+        homePositions[ptr * 3 + 1] = y;
+        homePositions[ptr * 3 + 2] = z;
 
-        ringRandoms[ringPtr] = Math.random();
-        ringProgress[ringPtr] = i / ringPointsPerOrbital;
-        ringPtr++;
+        positions[ptr * 3] = x;
+        positions[ptr * 3 + 1] = y;
+        positions[ptr * 3 + 2] = z;
+
+        // Alternating cyan and bright emerald
+        const c = i % 2 === 0 ? colorCyan : colorMint;
+        colors[ptr * 3] = c.r;
+        colors[ptr * 3 + 1] = c.g;
+        colors[ptr * 3 + 2] = c.b;
+
+        randoms[ptr] = Math.random();
+        ptr++;
       }
     }
 
-    // Combine Nucleus + 3 Orbitals into one unified React BufferGeometry
-    const totalReactCount = nucCount + totalRingPoints;
-    const reactPositions = new Float32Array(totalReactCount * 3);
-    const reactRandoms = new Float32Array(totalReactCount);
-    const reactProgressArray = new Float32Array(totalReactCount);
+    // 4. Subtle Outer Cosmic Dust
+    for (let i = 0; i < dustCount; i++) {
+      const u = Math.random();
+      const v = Math.random();
+      const theta = u * 2.0 * Math.PI;
+      const phi = Math.acos(2.0 * v - 1.0);
+      const r = 1.76 + Math.random() * 0.35;
 
-    reactPositions.set(nucPositions, 0);
-    reactPositions.set(ringPositions, nucPositions.length);
+      const sinPhi = Math.sin(phi);
+      const x = r * sinPhi * Math.cos(theta);
+      const y = r * sinPhi * Math.sin(theta);
+      const z = r * Math.cos(phi);
 
-    reactRandoms.set(nucRandoms, 0);
-    reactRandoms.set(ringRandoms, nucRandoms.length);
+      homePositions[ptr * 3] = x;
+      homePositions[ptr * 3 + 1] = y;
+      homePositions[ptr * 3 + 2] = z;
 
-    reactProgressArray.set(nucProgress, 0);
-    reactProgressArray.set(ringProgress, nucProgress.length);
+      positions[ptr * 3] = x;
+      positions[ptr * 3 + 1] = y;
+      positions[ptr * 3 + 2] = z;
 
-    const reactGeometry = new THREE.BufferGeometry();
-    reactGeometry.setAttribute('position', new THREE.BufferAttribute(reactPositions, 3));
-    reactGeometry.setAttribute('aRandom', new THREE.BufferAttribute(reactRandoms, 1));
-    reactGeometry.setAttribute('aProgress', new THREE.BufferAttribute(reactProgressArray, 1));
+      colors[ptr * 3] = colorRimWhite.r * 0.6;
+      colors[ptr * 3 + 1] = colorRimWhite.g * 0.6;
+      colors[ptr * 3 + 2] = colorRimWhite.b * 0.6;
 
-    const reactShaderMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        uTime: { value: 0 },
-        uWarp: { value: 0 },
-        uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
-        uBaseSize: { value: 6.6 },
-        uColorCore: { value: new THREE.Color('#00f5ff') },
-        uColorAccent: { value: new THREE.Color('#00e575') }
-      },
-      vertexShader: `
-        uniform float uTime;
-        uniform float uWarp;
-        uniform float uPixelRatio;
-        uniform float uBaseSize;
+      randoms[ptr] = Math.random();
+      ptr++;
+    }
 
-        attribute float aRandom;
-        attribute float aProgress;
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-        varying float vAlpha;
-        varying float vProgress;
-
-        void main() {
-          vProgress = aProgress;
-          vec3 pos = position;
-          vec3 dir = normalize(pos);
-          if (length(pos) < 0.001) dir = vec3(0.0, 0.0, 1.0);
-
-          // Subtle harmonic breathing along orbit
-          pos += dir * (sin(uTime * 2.4 + aProgress * 6.28318) * 0.016);
-
-          // Warp burst outwards during exit
-          if (uWarp > 0.0) {
-            float burst = pow(uWarp, 2.0) * (18.0 + aRandom * 14.0);
-            pos += dir * burst;
-          }
-
-          vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-          gl_Position = projectionMatrix * mvPosition;
-
-          float sizeMultiplier = (1.0 + uWarp * 2.8);
-          gl_PointSize = (uBaseSize * (0.8 + 0.4 * aRandom) * sizeMultiplier * uPixelRatio) * (120.0 / -mvPosition.z);
-          vAlpha = (1.0 - smoothstep(0.68, 1.0, uWarp));
-        }
-      `,
-      fragmentShader: `
-        uniform vec3 uColorCore;
-        uniform vec3 uColorAccent;
-        uniform float uWarp;
-
-        varying float vAlpha;
-        varying float vProgress;
-
-        void main() {
-          vec2 coord = gl_PointCoord - vec2(0.5);
-          float dist = length(coord);
-          if (dist > 0.5) discard;
-
-          float soft = smoothstep(0.5, 0.06, dist);
-          vec3 col = mix(uColorCore, uColorAccent, sin(vProgress * 3.14159) * 0.45);
-
-          gl_FragColor = vec4(col, soft * 0.96 * vAlpha);
-        }
-      `,
+    const isMobile = window.innerWidth < 600;
+    const material = new THREE.PointsMaterial({
+      size: isMobile ? 0.052 : 0.044,
+      map: circleTexture,
+      vertexColors: true,
       transparent: true,
       depthWrite: false,
-      blending: THREE.AdditiveBlending
+      blending: THREE.AdditiveBlending,
+      opacity: 0.96
     });
 
-    const reactMesh = new THREE.Points(reactGeometry, reactShaderMaterial);
-    reactLogoGroup.add(reactMesh);
+    const particlesMesh = new THREE.Points(geometry, material);
+    rootGroup.add(particlesMesh);
 
     // ─────────────────────────────────────────────────────────────
-    // 4. INTERACTION, INERTIA & RESIZE HANDLING
+    // INTERACTIVE CURSOR REPULSION & SPRING REUNITE PHYSICS
     // ─────────────────────────────────────────────────────────────
-    let targetX = 0;
-    let targetY = 0;
-    let currentX = 0;
-    let currentY = 0;
+    const raycaster = new THREE.Raycaster();
+    const planeZ = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+    const mouseWorld = new THREE.Vector3(-9999, -9999, 0);
+    const mouseLocal = new THREE.Vector3(-9999, -9999, 0);
+    const invMatrix = new THREE.Matrix4();
+    let isMouseActive = false;
+
+    // Pointer Inertia Tilt
+    let tiltX = 0;
+    let tiltY = 0;
+    let currentTiltX = 0;
+    let currentTiltY = 0;
+
+    const updatePointerCoords = (clientX, clientY) => {
+      const ndcX = (clientX / window.innerWidth) * 2 - 1;
+      const ndcY = -(clientY / window.innerHeight) * 2 + 1;
+
+      tiltX = ndcX * 0.45;
+      tiltY = ndcY * 0.45;
+
+      raycaster.setFromCamera(new THREE.Vector2(ndcX, ndcY), camera);
+      raycaster.ray.intersectPlane(planeZ, mouseWorld);
+      isMouseActive = true;
+    };
 
     const handlePointerMove = (e) => {
-      const x = (e.clientX / window.innerWidth) * 2 - 1;
-      const y = -(e.clientY / window.innerHeight) * 2 + 1;
-      targetX = x * 0.65;
-      targetY = y * 0.65;
+      updatePointerCoords(e.clientX, e.clientY);
+    };
+
+    const handlePointerLeave = () => {
+      isMouseActive = false;
+      mouseWorld.set(-9999, -9999, 0);
+      tiltX = 0;
+      tiltY = 0;
     };
 
     const handleTouchMove = (e) => {
       if (e.touches && e.touches[0]) {
-        const touch = e.touches[0];
-        const x = (touch.clientX / window.innerWidth) * 2 - 1;
-        const y = -(touch.clientY / window.innerHeight) * 2 + 1;
-        targetX = x * 0.65;
-        targetY = y * 0.65;
+        updatePointerCoords(e.touches[0].clientX, e.touches[0].clientY);
       }
     };
 
+    const handleTouchEnd = () => {
+      isMouseActive = false;
+      mouseWorld.set(-9999, -9999, 0);
+      tiltX = 0;
+      tiltY = 0;
+    };
+
     window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    window.addEventListener('pointerleave', handlePointerLeave, { passive: true });
     window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
 
     const handleResize = () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
       const asp = w / h;
       camera.aspect = asp;
-      camera.position.z = calculateCameraZ(asp);
+      camera.position.z = getCameraZ(asp);
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
-      const pr = Math.min(window.devicePixelRatio, 2);
-      renderer.setPixelRatio(pr);
-      orbShaderMaterial.uniforms.uPixelRatio.value = pr;
-      reactShaderMaterial.uniforms.uPixelRatio.value = pr;
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     };
     window.addEventListener('resize', handleResize);
 
     // ─────────────────────────────────────────────────────────────
-    // 5. ANIMATION LOOP & HYPERDRIVE WARP TRANSITION
+    // ANIMATION LOOP WITH CURSOR DISASSEMBLY & REUNITE
     // ─────────────────────────────────────────────────────────────
     let animId;
-    let isWarping = false;
-    let warpProgress = 0;
-    const WARP_DURATION = 0.72; // Duration of radial particle expansion
+    let isWarpExit = false;
+    let exitTime = 0;
+    const EXIT_DURATION = 0.68;
 
-    triggerWarpRef.current = () => {
-      if (isWarping) return;
-      isWarping = true;
+    triggerExitRef.current = () => {
+      if (isWarpExit) return;
+      isWarpExit = true;
     };
 
     const clock = new THREE.Clock();
 
+    // Physics parameters (calibrated for organic particle spring feel)
+    const REPEL_RADIUS = isMobile ? 0.85 : 0.72;
+    const REPEL_RADIUS_SQ = REPEL_RADIUS * REPEL_RADIUS;
+    const REPEL_STRENGTH = isMobile ? 0.18 : 0.15;
+    const SPRING = 0.075;
+    const DAMPING = 0.87;
+
     const animate = () => {
       animId = requestAnimationFrame(animate);
       const delta = clock.getDelta();
-      const elapsedTime = clock.getElapsedTime();
 
-      // Update shader time uniforms for wave dynamics
-      orbShaderMaterial.uniforms.uTime.value = elapsedTime;
-      reactShaderMaterial.uniforms.uTime.value = elapsedTime;
+      // Continuous gentle orb rotation + pointer tilt
+      currentTiltX += (tiltX - currentTiltX) * 0.08;
+      currentTiltY += (tiltY - currentTiltY) * 0.08;
 
-      // Smooth inertia following pointer / touch
-      currentX += (targetX - currentX) * 0.08;
-      currentY += (targetY - currentY) * 0.08;
+      rootGroup.rotation.y += delta * 0.22;
+      rootGroup.rotation.x = currentTiltY * 0.4;
+      rootGroup.rotation.z = -currentTiltX * 0.2;
 
-      // Outer Orb organic rotation
-      orbGroup.rotation.y = elapsedTime * 0.22 + currentX * 0.45;
-      orbGroup.rotation.x = currentY * 0.4;
+      // Transform 3D mouse into group's local coordinates
+      invMatrix.copy(rootGroup.matrixWorld).invert();
+      mouseLocal.copy(mouseWorld).applyMatrix4(invMatrix);
 
-      // Inner React Logo independent orbit & gentle 3D tilt
-      reactLogoGroup.rotation.y = -elapsedTime * 0.18 + currentX * 0.35;
-      reactLogoGroup.rotation.z = Math.sin(elapsedTime * 0.4) * 0.12;
-      reactLogoGroup.rotation.x = currentY * 0.35;
+      const posArr = geometry.attributes.position.array;
 
-      // Position centering with responsive dampening
-      const isPortrait = window.innerWidth / window.innerHeight < 1.0;
-      rootGroup.position.x = currentX * (isPortrait ? 0.3 : 0.85);
-      rootGroup.position.y = currentY * (isPortrait ? 0.35 : 0.85);
+      if (!isWarpExit) {
+        // Normal interactive physics: cursor repels & particles spring back
+        for (let i = 0; i < totalCount; i++) {
+          const i3 = i * 3;
+          const px = posArr[i3];
+          const py = posArr[i3 + 1];
+          const pz = posArr[i3 + 2];
 
-      // Hyperjump Warp Transition Progress
-      if (isWarping) {
-        warpProgress = Math.min(1.0, warpProgress + delta / WARP_DURATION);
-        // Exponential acceleration curve for cinematic warp feel
-        const warpEased = Math.pow(warpProgress, 1.85);
-        orbShaderMaterial.uniforms.uWarp.value = warpEased;
-        reactShaderMaterial.uniforms.uWarp.value = warpEased;
-        camera.position.z -= delta * (warpEased * 4.2);
+          const hx = homePositions[i3];
+          const hy = homePositions[i3 + 1];
+          const hz = homePositions[i3 + 2];
+
+          // 1. Repulsion from cursor (disassembles only around cursor)
+          if (isMouseActive) {
+            const dx = px - mouseLocal.x;
+            const dy = py - mouseLocal.y;
+            const dz = pz - mouseLocal.z;
+
+            // Fast bounding-box precheck
+            if (Math.abs(dx) < REPEL_RADIUS && Math.abs(dy) < REPEL_RADIUS && Math.abs(dz) < REPEL_RADIUS) {
+              const dSq = dx * dx + dy * dy + dz * dz;
+              if (dSq < REPEL_RADIUS_SQ && dSq > 0.0001) {
+                const dist = Math.sqrt(dSq);
+                const normDist = 1.0 - dist / REPEL_RADIUS;
+                const force = normDist * normDist * REPEL_STRENGTH;
+
+                vx[i] += (dx / dist) * force;
+                vy[i] += (dy / dist) * force;
+                vz[i] += (dz / dist || 0.6) * force * 1.3;
+              }
+            }
+          }
+
+          // 2. Elastic spring returning to home position (reunites when cursor moves away)
+          vx[i] += (hx - px) * SPRING;
+          vy[i] += (hy - py) * SPRING;
+          vz[i] += (hz - pz) * SPRING;
+
+          // 3. Friction damping
+          vx[i] *= DAMPING;
+          vy[i] *= DAMPING;
+          vz[i] *= DAMPING;
+
+          posArr[i3] = px + vx[i];
+          posArr[i3 + 1] = py + vy[i];
+          posArr[i3 + 2] = pz + vz[i];
+        }
+      } else {
+        // Exit Transition: Hyperdrive Radial Burst past the camera
+        exitTime += delta;
+        const progress = Math.min(1.0, exitTime / EXIT_DURATION);
+        const burstSpeed = Math.pow(progress, 1.9) * 22.0;
+
+        for (let i = 0; i < totalCount; i++) {
+          const i3 = i * 3;
+          const px = posArr[i3];
+          const py = posArr[i3 + 1];
+          const pz = posArr[i3 + 2];
+
+          const len = Math.sqrt(px * px + py * py + pz * pz) || 1.0;
+          const dirX = px / len;
+          const dirY = py / len;
+          const dirZ = pz / len;
+
+          posArr[i3] += dirX * burstSpeed * delta * 60 * (0.8 + randoms[i] * 0.6);
+          posArr[i3 + 1] += dirY * burstSpeed * delta * 60 * (0.8 + randoms[i] * 0.6);
+          posArr[i3 + 2] += dirZ * burstSpeed * delta * 60 * (1.0 + randoms[i] * 0.8);
+        }
+
+        camera.position.z -= delta * 3.6;
+        material.opacity = Math.max(0, 1.0 - Math.pow(progress, 2.2));
       }
 
+      geometry.attributes.position.needsUpdate = true;
       renderer.render(scene, camera);
     };
 
@@ -456,18 +435,18 @@ export default function IntroSplash({ onEnter }) {
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerleave', handlePointerLeave);
       window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
       window.removeEventListener('resize', handleResize);
 
       if (mount && renderer.domElement) {
         mount.removeChild(renderer.domElement);
       }
 
-      orbGeometry.dispose();
-      haloGeometry.dispose();
-      reactGeometry.dispose();
-      orbShaderMaterial.dispose();
-      reactShaderMaterial.dispose();
+      geometry.dispose();
+      material.dispose();
+      circleTexture.dispose();
       renderer.dispose();
     };
   }, []);
@@ -476,15 +455,13 @@ export default function IntroSplash({ onEnter }) {
     if (isExiting) return;
     setIsExiting(true);
 
-    // Trigger Three.js hyperdrive particle dispersion
-    if (triggerWarpRef.current) {
-      triggerWarpRef.current();
+    if (triggerExitRef.current) {
+      triggerExitRef.current();
     }
 
-    // Smooth UI exit with clean handoff to portfolio Hero
     setTimeout(() => {
       onEnter();
-    }, 700);
+    }, 660);
   };
 
   return (
@@ -493,23 +470,25 @@ export default function IntroSplash({ onEnter }) {
       initial={{ opacity: 1 }}
       animate={{
         opacity: isExiting ? 0 : 1,
-        scale: isExiting ? 1.07 : 1,
+        scale: isExiting ? 1.06 : 1,
         filter: isExiting ? 'blur(16px)' : 'blur(0px)'
       }}
-      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.66, ease: [0.16, 1, 0.3, 1] }}
       style={{
         position: 'fixed',
         inset: 0,
         zIndex: 9999,
-        background: '#040605',
+        background: '#030504',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
+        padding: '32px 20px 40px',
+        boxSizing: 'border-box',
         overflow: 'hidden'
       }}
     >
-      {/* Interactive 3D WebGL Canvas Anchor */}
+      {/* Interactive 3D WebGL Canvas Layer (Full viewport, catches mouse/touch) */}
       <div
         ref={mountRef}
         onClick={handleTriggerEnter}
@@ -518,43 +497,15 @@ export default function IntroSplash({ onEnter }) {
           inset: 0,
           cursor: 'pointer'
         }}
-        title="Haz clic en la esfera de partículas para ingresar al sistema"
+        title="Pasa el cursor por las partículas para desarmarlas o haz clic para ingresar"
       />
 
-      {/* Subtle Atmospheric Grid Background */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          backgroundImage: `
-            linear-gradient(to right, rgba(0, 229, 117, 0.025) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(0, 229, 117, 0.025) 1px, transparent 1px)
-          `,
-          backgroundSize: '40px 40px',
-          pointerEvents: 'none'
-        }}
-      />
-
-      {/* Technical HUD Overlay Content */}
-      <div
-        style={{
-          position: 'relative',
-          zIndex: 1,
-          textAlign: 'center',
-          pointerEvents: 'none',
-          padding: '0 20px',
-          maxWidth: '680px',
-          width: '100%',
-          boxSizing: 'border-box'
-        }}
-      >
-        {/* Status Pill */}
+      {/* TOP HEADER: Status Pill */}
+      <div style={{ position: 'relative', zIndex: 2, pointerEvents: 'none' }}>
         <motion.div
-          initial={{ opacity: 0, y: -14 }}
+          initial={{ opacity: 0, y: -12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.4 }}
-          style={{ marginBottom: '18px' }}
         >
           <span
             className="intro-status-pill"
@@ -585,21 +536,33 @@ export default function IntroSplash({ onEnter }) {
             KERNEL BOOT // READY
           </span>
         </motion.div>
+      </div>
 
+      {/* BOTTOM CONTROLS & IDENTITY: Elegantly below the central Particle Orb */}
+      <div
+        style={{
+          position: 'relative',
+          zIndex: 2,
+          textAlign: 'center',
+          pointerEvents: 'none',
+          maxWidth: '560px',
+          width: '100%'
+        }}
+      >
         {/* Name Headline */}
         <motion.h1
           className="intro-headline"
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2, duration: 0.45 }}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.4 }}
           style={{
             fontFamily: 'var(--font-main)',
-            fontSize: 'clamp(30px, 6vw, 62px)',
+            fontSize: 'clamp(26px, 5vw, 42px)',
             fontWeight: 700,
             color: 'var(--text-primary)',
-            letterSpacing: '-0.035em',
-            lineHeight: 1.05,
-            marginBottom: '12px'
+            letterSpacing: '-0.03em',
+            lineHeight: 1.1,
+            marginBottom: '6px'
           }}
         >
           Cristian Camilo Muñoz
@@ -608,15 +571,15 @@ export default function IntroSplash({ onEnter }) {
         {/* Role Subtitle */}
         <motion.p
           className="intro-subtitle"
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.4 }}
+          transition={{ delay: 0.25, duration: 0.4 }}
           style={{
             fontFamily: 'var(--font-mono)',
-            fontSize: 'clamp(12px, 1.6vw, 15px)',
+            fontSize: 'clamp(11px, 1.4vw, 13px)',
             color: 'var(--accent-emerald)',
-            letterSpacing: '0.04em',
-            marginBottom: '36px'
+            letterSpacing: '0.06em',
+            marginBottom: '22px'
           }}
         >
           SOFTWARE ENGINEER & AI SYSTEMS ARCHITECT
@@ -624,9 +587,9 @@ export default function IntroSplash({ onEnter }) {
 
         {/* Interactive Enter CTA Button */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.45 }}
+          transition={{ delay: 0.35, duration: 0.4 }}
           style={{ pointerEvents: 'auto' }}
         >
           <button
@@ -637,12 +600,12 @@ export default function IntroSplash({ onEnter }) {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '10px',
-              padding: '14px 34px',
+              padding: '13px 32px',
               borderRadius: '12px',
               background: 'var(--accent-emerald)',
-              color: '#040605',
+              color: '#030504',
               fontFamily: 'var(--font-mono)',
-              fontSize: '14px',
+              fontSize: '13.5px',
               fontWeight: 700,
               letterSpacing: '0.04em',
               border: 'none',
@@ -658,18 +621,19 @@ export default function IntroSplash({ onEnter }) {
           <div
             className="intro-caption"
             style={{
-              marginTop: '16px',
+              marginTop: '12px',
               fontFamily: 'var(--font-mono)',
-              fontSize: '11px',
+              fontSize: '10.5px',
               color: 'var(--text-muted)',
-              letterSpacing: '0.02em'
+              letterSpacing: '0.03em'
             }}
           >
-            [INTERACTÚA CON LA ESFERA O HAZ CLIC PARA DESPLEGAR]
+            [PASA EL CURSOR POR LA ESFERA PARA DESARMAR · CLIC PARA INICIAR]
           </div>
         </motion.div>
       </div>
     </motion.div>
   );
 }
+
 
