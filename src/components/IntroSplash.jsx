@@ -16,8 +16,10 @@ export default function IntroSplash({ onEnter }) {
     const height = window.innerHeight;
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 100);
-    camera.position.z = 5.2;
+    const aspect = width / height;
+    const camera = new THREE.PerspectiveCamera(50, aspect, 0.1, 100);
+    // On portrait screens (phones & tablets), position camera so the entire sphere and rings are 100% visible
+    camera.position.z = aspect < 1.0 ? Math.max(5.2, 5.2 / Math.pow(aspect, 0.95)) : 5.2;
 
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
@@ -88,7 +90,9 @@ export default function IntroSplash({ onEnter }) {
     const handleResize = () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
-      camera.aspect = w / h;
+      const asp = w / h;
+      camera.aspect = asp;
+      camera.position.z = asp < 1.0 ? Math.max(5.2, 5.2 / Math.pow(asp, 0.95)) : 5.2;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
     };
@@ -110,8 +114,9 @@ export default function IntroSplash({ onEnter }) {
       mouseX += (targetX - mouseX) * 0.06;
       mouseY += (targetY - mouseY) * 0.06;
 
-      group.position.x = mouseX * 1.2;
-      group.position.y = mouseY * 1.2;
+      const isPortrait = (window.innerWidth / window.innerHeight) < 1.0;
+      group.position.x = mouseX * (isPortrait ? 0.35 : 1.2);
+      group.position.y = mouseY * (isPortrait ? 0.45 : 1.2);
 
       renderer.render(scene, camera);
     };

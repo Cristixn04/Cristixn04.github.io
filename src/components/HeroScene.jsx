@@ -16,8 +16,10 @@ export default function HeroScene() {
     const height = mount.clientHeight;
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-    camera.position.z = 6.2;
+    const aspect = width / height;
+    const camera = new THREE.PerspectiveCamera(45, aspect, 0.1, 100);
+    // On portrait viewports (smartphones & tablets), position camera so the entire 3D sphere and particle clouds fit comfortably
+    camera.position.z = aspect < 1.0 ? Math.max(6.2, 6.2 / Math.pow(aspect, 0.95)) : 6.2;
 
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
@@ -198,7 +200,9 @@ export default function HeroScene() {
       if (!mount) return;
       const w = mount.clientWidth;
       const h = mount.clientHeight;
-      camera.aspect = w / h;
+      const asp = w / h;
+      camera.aspect = asp;
+      camera.position.z = asp < 1.0 ? Math.max(6.2, 6.2 / Math.pow(asp, 0.95)) : 6.2;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
     };
@@ -275,8 +279,11 @@ export default function HeroScene() {
 
       // Mouse tracking influence smoothly reduces as it disassembles and returns 100% when reassembled
       const mouseWeight = Math.max(0.1, 1.0 - currentScrollProgress * 0.7);
-      group.position.x = mouseX * 0.8 * mouseWeight;
-      group.position.y = mouseY * 0.8 * mouseWeight;
+      const isPortrait = mount ? (mount.clientWidth / mount.clientHeight < 1.0) : false;
+      const mouseRangeX = isPortrait ? 0.35 : 0.8;
+      const mouseRangeY = isPortrait ? 0.45 : 0.8;
+      group.position.x = mouseX * mouseRangeX * mouseWeight;
+      group.position.y = mouseY * mouseRangeY * mouseWeight;
       group.rotation.z = mouseX * 0.2 * mouseWeight;
 
       renderer.render(scene, camera);
