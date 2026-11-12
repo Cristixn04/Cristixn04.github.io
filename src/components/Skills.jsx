@@ -206,7 +206,7 @@ export default function Skills() {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
             gap: '24px',
             marginBottom: '40px'
           }}
@@ -326,6 +326,7 @@ export default function Skills() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-40px' }}
           transition={{ duration: 0.45, ease: [0.23, 1, 0.32, 1] }}
+          className="skills-principles-card"
           style={{
             padding: '28px',
             borderRadius: '16px',
@@ -347,6 +348,7 @@ export default function Skills() {
           </div>
 
           <div
+            className="skills-principles-grid"
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',

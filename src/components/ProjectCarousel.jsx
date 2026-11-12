@@ -155,7 +155,7 @@ export default function ProjectCarousel({ projects, onSelectProject }) {
       </div>
 
       {/* Main Slide Animated Stage */}
-      <div style={{ position: 'relative', overflow: 'hidden', minHeight: '420px' }}>
+      <div className="carousel-stage" style={{ position: 'relative', overflow: 'hidden', minHeight: '420px' }}>
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
             key={currentIndex}
@@ -168,7 +168,8 @@ export default function ProjectCarousel({ projects, onSelectProject }) {
               display: 'grid',
               gridTemplateColumns: 'minmax(0, 1.35fr) minmax(0, 1fr)',
               gap: '36px',
-              alignItems: 'center'
+              alignItems: 'center',
+              touchAction: 'pan-y'
             }}
             className="carousel-slide-grid"
           >
