@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { projectsData } from '../data/projects';
@@ -11,6 +11,34 @@ export default function Projects() {
   const { lang, t } = useLanguage();
   const [activeFilter, setActiveFilter] = useState('all');
   const [selectedProject, setSelectedProject] = useState(null);
+
+  const filtersRef = useRef(null);
+  const isDraggingRef = useRef(false);
+  const startXRef = useRef(0);
+  const scrollLeftRef = useRef(0);
+  const movedRef = useRef(false);
+
+  const handlePointerDown = (e) => {
+    if (!filtersRef.current) return;
+    isDraggingRef.current = true;
+    startXRef.current = e.pageX - filtersRef.current.offsetLeft;
+    scrollLeftRef.current = filtersRef.current.scrollLeft;
+    movedRef.current = false;
+  };
+
+  const handlePointerMove = (e) => {
+    if (!isDraggingRef.current || !filtersRef.current) return;
+    const x = e.pageX - filtersRef.current.offsetLeft;
+    const walk = x - startXRef.current;
+    if (Math.abs(walk) > 5) {
+      movedRef.current = true;
+    }
+    filtersRef.current.scrollLeft = scrollLeftRef.current - walk;
+  };
+
+  const handlePointerUp = () => {
+    isDraggingRef.current = false;
+  };
 
   const filters = [
     { id: 'all', label: t.projects.filterAll },
@@ -130,7 +158,7 @@ export default function Projects() {
             </div>
           </div>
 
-          {/* Filter Pills with Horizontal Scroll & No Edge Clipping */}
+          {/* Filter Pills with Smooth Horizontal Scroll & Drag Support */}
           <div
             className="project-filters-track"
             style={{
@@ -139,6 +167,11 @@ export default function Projects() {
             }}
           >
             <div
+              ref={filtersRef}
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+              onPointerLeave={handlePointerUp}
               className="project-filters"
               style={{
                 display: 'flex',
@@ -147,9 +180,12 @@ export default function Projects() {
                 background: 'rgba(255, 255, 255, 0.02)',
                 border: '1px solid rgba(255, 255, 255, 0.06)',
                 borderRadius: '12px',
-                overflowX: 'auto',
+                overflowX: 'scroll',
                 scrollbarWidth: 'none',
-                WebkitOverflowScrolling: 'touch'
+                WebkitOverflowScrolling: 'touch',
+                touchAction: 'pan-x pan-y',
+                overscrollBehaviorX: 'contain',
+                cursor: 'grab'
               }}
             >
               {filters.map((f) => {
@@ -158,7 +194,10 @@ export default function Projects() {
                   <button
                     key={f.id}
                     type="button"
-                    onClick={() => setActiveFilter(f.id)}
+                    onClick={() => {
+                      if (movedRef.current) return;
+                      setActiveFilter(f.id);
+                    }}
                     className={`filter-btn ${isActive ? 'active' : ''}`}
                     style={{
                       position: 'relative',
@@ -173,10 +212,13 @@ export default function Projects() {
                       cursor: 'pointer',
                       whiteSpace: 'nowrap',
                       flexShrink: 0,
+                      touchAction: 'pan-x pan-y',
+                      userSelect: 'none',
+                      WebkitUserSelect: 'none',
                       transition: 'color 160ms ease'
                     }}
                   >
-                    <span style={{ position: 'relative', zIndex: 1 }}>{f.label}</span>
+                    <span style={{ position: 'relative', zIndex: 1, pointerEvents: 'none' }}>{f.label}</span>
                     {isActive && (
                       <motion.div
                         layoutId="activeFilterTab"
