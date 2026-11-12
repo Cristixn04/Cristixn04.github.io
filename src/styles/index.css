@@ -229,7 +229,7 @@ button:active, .btn:active, a.btn:active {
 /* ── Responsive Rules: Smartphones & Mobile Screens (<= 600px) ── */
 @media (max-width: 600px) {
   .container {
-    padding: 0 12px !important;
+    padding: 0 14px !important;
   }
 
   .section,
@@ -239,7 +239,7 @@ button:active, .btn:active, a.btn:active {
   .skills-section,
   .education-section,
   .contact-section {
-    padding: 48px 0 !important;
+    padding: 56px 0 !important;
   }
 
   /* Navigation Mobile Toggle */
@@ -252,13 +252,13 @@ button:active, .btn:active, a.btn:active {
     display: flex !important;
     align-items: center;
     justify-content: center;
-    min-width: 42px;
-    min-height: 42px;
+    min-width: 44px;
+    min-height: 44px;
   }
 
   .nav-capsule {
-    height: 44px !important;
-    padding: 0 12px !important;
+    height: 46px !important;
+    padding: 0 14px !important;
   }
 
   /* Mobile Drawer Overlay */
@@ -266,20 +266,19 @@ button:active, .btn:active, a.btn:active {
     height: 100dvh !important;
     overscroll-behavior: contain !important;
     overflow-y: auto !important;
-    padding: calc(68px + env(safe-area-inset-top, 0px)) 16px calc(24px + env(safe-area-inset-bottom, 0px)) !important;
+    padding: calc(72px + env(safe-area-inset-top, 0px)) 18px calc(24px + env(safe-area-inset-bottom, 0px)) !important;
   }
 
-  /* Hero Section: Keep 2 Columns Matching PC */
+  /* Hero Section: Clean Vertical Stacking with Generous Space */
   .hero-section {
-    padding-top: 76px !important;
-    padding-bottom: 36px !important;
+    padding-top: 88px !important;
+    padding-bottom: 44px !important;
     min-height: auto !important;
   }
 
   .hero-layout {
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr) !important;
-    gap: 12px !important;
-    align-items: center !important;
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
   }
 
   .hero-visual-col {
@@ -290,125 +289,131 @@ button:active, .btn:active, a.btn:active {
   }
 
   .hero-text-col {
-    min-width: 0 !important;
+    width: 100% !important;
   }
 
   .status-pill {
-    padding: 3px 8px !important;
-    font-size: 9px !important;
-    margin-bottom: 10px !important;
+    padding: 4px 10px !important;
+    font-size: 10.5px !important;
+    margin-bottom: 14px !important;
   }
 
   .hero-headline {
-    font-size: clamp(16px, 4.4vw, 22px) !important;
+    font-size: clamp(26px, 7vw, 38px) !important;
     line-height: 1.15 !important;
     letter-spacing: -0.03em !important;
-    margin-bottom: 6px !important;
-  }
-
-  .hero-subrole {
-    font-size: 10.5px !important;
-    line-height: 1.3 !important;
     margin-bottom: 8px !important;
   }
 
-  .hero-bio-desc {
-    font-size: 10px !important;
+  .hero-subrole {
+    font-size: 13.5px !important;
     line-height: 1.4 !important;
     margin-bottom: 12px !important;
+  }
+
+  .hero-bio-desc {
+    font-size: 13.5px !important;
+    line-height: 1.6 !important;
+    margin-bottom: 20px !important;
   }
 
   .hero-buttons-group {
     display: flex !important;
     flex-direction: row !important;
     flex-wrap: wrap !important;
-    gap: 6px !important;
-    margin-bottom: 14px !important;
+    gap: 10px !important;
+    margin-bottom: 24px !important;
   }
 
   .hero-buttons-group > * {
-    padding: 6px 10px !important;
-    font-size: 9.5px !important;
-    border-radius: 6px !important;
-    gap: 4px !important;
+    padding: 10px 16px !important;
+    font-size: 12px !important;
+    border-radius: 8px !important;
+    gap: 6px !important;
     flex: 1 1 auto !important;
-    min-height: 32px !important;
+    min-height: 42px !important;
     justify-content: center !important;
     text-align: center !important;
   }
 
   .hero-metrics-grid {
     grid-template-columns: repeat(3, 1fr) !important;
-    gap: 6px !important;
-    padding-top: 10px !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+    gap: 8px !important;
+    padding-top: 16px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
   }
 
   .hero-metrics-grid .metric-cell {
-    padding: 4px 2px !important;
+    padding: 6px 4px !important;
   }
 
   .hero-metrics-grid .metric-cell > div:nth-child(1) {
-    font-size: 8px !important;
+    font-size: 9px !important;
     margin-bottom: 2px !important;
   }
 
   .hero-metrics-grid .metric-cell > div:nth-child(2) {
-    font-size: 13.5px !important;
+    font-size: 16px !important;
     font-weight: 700 !important;
     margin-bottom: 2px !important;
   }
 
   .hero-metrics-grid .metric-cell > div:nth-child(3) {
-    font-size: 8px !important;
-    line-height: 1.2 !important;
+    font-size: 9.5px !important;
+    line-height: 1.25 !important;
   }
 
+  /* Profile Card HUD: Generous Dimensions, No Text Broken */
   .profile-craft-card {
-    max-width: 100% !important;
-    padding: 8px !important;
-    border-radius: 12px !important;
+    width: 100% !important;
+    max-width: 340px !important;
+    margin: 0 auto !important;
+    padding: 16px !important;
+    border-radius: 16px !important;
   }
 
   .hud-corner-bracket {
-    width: 10px !important;
-    height: 10px !important;
+    width: 14px !important;
+    height: 14px !important;
   }
 
   .hud-header {
-    padding-bottom: 6px !important;
-    margin-bottom: 6px !important;
-    font-size: 8px !important;
+    padding-bottom: 10px !important;
+    margin-bottom: 12px !important;
+    gap: 8px !important;
   }
 
   .hud-photo-container {
-    max-height: 135px !important;
-    border-radius: 10px !important;
+    width: 100% !important;
+    max-height: 240px !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 12px !important;
   }
 
   .hud-bottom-badge {
-    padding: 6px 8px !important;
-    margin-top: 6px !important;
-    border-radius: 6px !important;
+    padding: 10px 12px !important;
+    margin-top: 12px !important;
+    border-radius: 8px !important;
+    gap: 8px !important;
   }
 
   .hud-bottom-badge span:first-child {
-    font-size: 9px !important;
+    font-size: 11px !important;
   }
 
   .hud-bottom-badge span:last-child {
-    font-size: 7.5px !important;
+    font-size: 10px !important;
   }
 
-  /* Featured Project Carousel: Keep 2 Columns Matching PC */
+  /* Featured Project Carousel: Image Top, Info Bottom, No Overlap */
   .project-carousel-container {
-    padding: 12px 10px !important;
-    border-radius: 12px !important;
-    margin-bottom: 28px !important;
+    padding: 18px 14px !important;
+    border-radius: 16px !important;
+    margin-bottom: 32px !important;
   }
 
   .carousel-header {
-    margin-bottom: 10px !important;
+    margin-bottom: 14px !important;
   }
 
   .carousel-stage {
@@ -416,266 +421,332 @@ button:active, .btn:active, a.btn:active {
   }
 
   .carousel-slide-grid {
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) !important;
-    gap: 10px !important;
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+    align-items: stretch !important;
+  }
+
+  .carousel-img-wrap {
+    width: 100% !important;
+    border-radius: 12px !important;
+  }
+
+  .carousel-img-overlay {
+    display: flex !important;
     align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    padding: 6px 10px !important;
+    bottom: 8px !important;
+    left: 8px !important;
+    right: 8px !important;
+    font-size: 9.5px !important;
+  }
+
+  .carousel-img-overlay span {
+    white-space: nowrap !important;
+    font-size: 9px !important;
   }
 
   .carousel-info-col {
-    min-width: 0 !important;
+    width: 100% !important;
   }
 
   .carousel-title {
-    font-size: clamp(12.5px, 3.2vw, 15px) !important;
-    margin-bottom: 3px !important;
-    line-height: 1.2 !important;
-  }
-
-  .carousel-subtitle {
-    font-size: 9px !important;
-    margin-bottom: 6px !important;
-  }
-
-  .carousel-desc {
-    font-size: 8.5px !important;
-    line-height: 1.35 !important;
-    margin-bottom: 8px !important;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .carousel-actions-row {
-    gap: 5px !important;
-  }
-
-  .carousel-actions-row > * {
-    padding: 5px 8px !important;
-    font-size: 8.5px !important;
-    border-radius: 6px !important;
-  }
-
-  /* About Section: Keep 2 Columns Matching PC */
-  .about-grid {
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr) !important;
-    gap: 10px !important;
-    align-items: start !important;
-  }
-
-  .about-bio-col {
-    gap: 10px !important;
-    min-width: 0 !important;
-  }
-
-  .about-bio-col p {
-    font-size: 9.5px !important;
-    line-height: 1.4 !important;
-  }
-
-  .about-languages-card {
-    padding: 8px !important;
-    border-radius: 8px !important;
-  }
-
-  .about-quality-bar {
-    padding: 8px !important;
-    border-radius: 8px !important;
-    gap: 8px !important;
-  }
-
-  .about-quality-bar svg {
-    width: 20px !important;
-    height: 20px !important;
-  }
-
-  .about-quality-bar div > div:first-child {
-    font-size: 9.5px !important;
-  }
-
-  .about-quality-bar div > div:last-child {
-    font-size: 8px !important;
-  }
-
-  .about-focus-col {
-    gap: 8px !important;
-    min-width: 0 !important;
-  }
-
-  .about-focus-col > div {
-    padding: 8px 10px !important;
-    border-radius: 8px !important;
-    gap: 6px !important;
-  }
-
-  .about-focus-col h3 {
-    font-size: 10px !important;
-    margin-bottom: 2px !important;
-  }
-
-  .about-focus-col p {
-    font-size: 8px !important;
-    line-height: 1.3 !important;
-  }
-
-  /* Soft Skills Bento: Keep 2 Columns Grid */
-  .soft-skills-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 8px !important;
-    margin-bottom: 20px !important;
-  }
-
-  .soft-skill-card {
-    padding: 8px 8px !important;
-    border-radius: 10px !important;
-    min-width: 0 !important;
-  }
-
-  .soft-skill-card h3 {
-    font-size: 10px !important;
+    font-size: clamp(18px, 4.5vw, 22px) !important;
     margin-bottom: 4px !important;
-  }
-
-  .soft-skill-card p {
-    font-size: 8.5px !important;
-    line-height: 1.3 !important;
-  }
-
-  .soft-skills-synergy-banner {
-    padding: 10px 12px !important;
-    border-radius: 10px !important;
-    font-size: 9px !important;
-    flex-direction: row !important;
-    align-items: center !important;
-  }
-
-  /* Skills Bento: Keep 3 Columns Matching PC */
-  .skills-bento-grid {
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 6px !important;
-    margin-bottom: 20px !important;
-  }
-
-  .skills-bento-grid > div {
-    padding: 8px 6px !important;
-    border-radius: 10px !important;
-    min-width: 0 !important;
-  }
-
-  .skills-bento-grid h3 {
-    font-size: 9.5px !important;
-  }
-
-  .skills-principles-card {
-    padding: 10px 8px !important;
-    border-radius: 10px !important;
-  }
-
-  .skills-principles-grid {
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 6px !important;
-  }
-
-  .skills-principles-grid > div {
-    gap: 6px !important;
-    font-size: 8px !important;
     line-height: 1.25 !important;
   }
 
-  /* Projects Grid: Keep 2 Columns */
-  .projects-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
+  .carousel-subtitle {
+    font-size: 11.5px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .carousel-desc {
+    font-size: 12.5px !important;
+    line-height: 1.55 !important;
+    margin-bottom: 16px !important;
+    display: block !important;
+    -webkit-line-clamp: unset !important;
+    overflow: visible !important;
+  }
+
+  .carousel-actions-row {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
     gap: 8px !important;
   }
 
+  .carousel-actions-row > * {
+    flex: 1 1 auto !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 10px 16px !important;
+    font-size: 12px !important;
+    border-radius: 8px !important;
+  }
+
+  /* About Section: Clean 1 Column */
+  .about-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  .about-bio-col {
+    gap: 16px !important;
+    width: 100% !important;
+  }
+
+  .about-bio-col p {
+    font-size: 13.5px !important;
+    line-height: 1.6 !important;
+  }
+
+  .about-languages-card {
+    padding: 16px !important;
+    border-radius: 12px !important;
+  }
+
+  .about-quality-bar {
+    padding: 14px !important;
+    border-radius: 12px !important;
+    gap: 12px !important;
+  }
+
+  .about-quality-bar svg {
+    width: 24px !important;
+    height: 24px !important;
+  }
+
+  .about-quality-bar div > div:first-child {
+    font-size: 13px !important;
+  }
+
+  .about-quality-bar div > div:last-child {
+    font-size: 11px !important;
+  }
+
+  .about-focus-col {
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  .about-focus-col > div {
+    padding: 16px !important;
+    border-radius: 12px !important;
+    gap: 8px !important;
+  }
+
+  .about-focus-col h3 {
+    font-size: 14px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .about-focus-col p {
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Soft Skills Bento: 1 Column Full Width Cards with Generous Spacing */
+  .soft-skills-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    margin-bottom: 24px !important;
+  }
+
+  .soft-skill-card {
+    padding: 18px 16px !important;
+    border-radius: 14px !important;
+    width: 100% !important;
+  }
+
+  .soft-skill-top-bar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .soft-skill-card h3 {
+    font-size: 15.5px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .soft-skill-card p {
+    font-size: 12.5px !important;
+    line-height: 1.55 !important;
+  }
+
+  .soft-skill-bottom-bar {
+    margin-top: 14px !important;
+    padding-top: 10px !important;
+    gap: 8px !important;
+  }
+
+  .soft-skills-synergy-banner {
+    padding: 14px 16px !important;
+    border-radius: 12px !important;
+    font-size: 11.5px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  /* Skills Bento: 1 Column Full Width */
+  .skills-bento-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    margin-bottom: 24px !important;
+  }
+
+  .skills-bento-grid > div {
+    padding: 18px 16px !important;
+    border-radius: 14px !important;
+  }
+
+  .skills-bento-grid h3 {
+    font-size: 14px !important;
+  }
+
+  .skills-principles-card {
+    padding: 18px 16px !important;
+    border-radius: 14px !important;
+  }
+
+  .skills-principles-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .skills-principles-grid > div {
+    gap: 10px !important;
+    font-size: 12px !important;
+    line-height: 1.45 !important;
+  }
+
+  /* Projects Grid: 1 Column Full Width */
+  .projects-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
   .project-card {
-    border-radius: 10px !important;
-    min-width: 0 !important;
+    border-radius: 14px !important;
+    width: 100% !important;
   }
 
   .project-card h3 {
-    font-size: 10.5px !important;
-    margin-bottom: 2px !important;
+    font-size: 16px !important;
+    margin-bottom: 4px !important;
   }
 
   .project-card p {
-    font-size: 8px !important;
-    line-height: 1.3 !important;
-    margin-bottom: 6px !important;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    font-size: 12.5px !important;
+    line-height: 1.55 !important;
+    margin-bottom: 10px !important;
+    display: block !important;
+    -webkit-line-clamp: 3 !important;
+    overflow: hidden !important;
+  }
+
+  /* Filter Controls: Smooth Horizontal Scroll Without Hard Cuts */
+  .projects-filter-wrapper {
+    margin-bottom: 24px !important;
+  }
+
+  .projects-filter-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-bottom: 10px !important;
+    width: 100% !important;
+  }
+
+  .project-filters-track {
+    position: relative !important;
+    width: 100% !important;
+    overflow: hidden !important;
+    border-radius: 12px !important;
   }
 
   .project-filters {
     width: 100% !important;
-    justify-content: flex-start !important;
-    overflow-x: auto !important;
+    display: flex !important;
     flex-wrap: nowrap !important;
-    padding-bottom: 6px !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
     -webkit-overflow-scrolling: touch !important;
-    gap: 5px !important;
+    padding: 6px 16px 6px 6px !important;
+    gap: 6px !important;
+  }
+
+  .project-filters::-webkit-scrollbar {
+    display: none !important;
   }
 
   .filter-btn {
     white-space: nowrap !important;
     flex-shrink: 0 !important;
-    padding: 4px 8px !important;
-    font-size: 9px !important;
+    padding: 6px 12px !important;
+    font-size: 11.5px !important;
+    border-radius: 8px !important;
   }
 
   /* Timeline */
   .timeline-track {
-    gap: 16px !important;
+    gap: 20px !important;
   }
 
   .timeline-item-row {
-    gap: 10px !important;
+    gap: 14px !important;
   }
 
   .timeline-card {
-    padding: 12px 10px !important;
-    border-radius: 10px !important;
-  }
-
-  .timeline-card h3 {
-    font-size: 11px !important;
-  }
-
-  .timeline-card span {
-    font-size: 9px !important;
-  }
-
-  .timeline-card p {
-    font-size: 8.5px !important;
-    line-height: 1.35 !important;
-  }
-
-  /* Contact: Keep 2 Columns for Action Capsules & 3 Columns for Channels */
-  .contact-card-wrap {
-    padding: 16px 12px !important;
+    padding: 16px 14px !important;
     border-radius: 12px !important;
   }
 
+  .timeline-card h3 {
+    font-size: 14px !important;
+  }
+
+  .timeline-card span {
+    font-size: 11px !important;
+  }
+
+  .timeline-card p {
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Contact: 1 Column for Action Capsules & 3 Columns for Channels */
+  .contact-card-wrap {
+    padding: 24px 16px !important;
+    border-radius: 16px !important;
+  }
+
   .contact-capsules-grid {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 8px !important;
-    margin-bottom: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    margin-bottom: 24px !important;
   }
 
   .email-action-capsule {
-    padding: 8px 6px !important;
-    border-radius: 8px !important;
+    padding: 14px 16px !important;
+    border-radius: 12px !important;
     flex-direction: column !important;
     align-items: flex-start !important;
-    gap: 6px !important;
-    min-width: 0 !important;
+    gap: 10px !important;
+    width: 100% !important;
   }
 
   .email-action-capsule span {
-    font-size: 9px !important;
+    font-size: 12px !important;
     word-break: break-all !important;
   }
 
@@ -683,81 +754,87 @@ button:active, .btn:active, a.btn:active {
     margin-left: 0 !important;
     width: 100% !important;
     display: flex !important;
-    gap: 4px !important;
+    gap: 8px !important;
   }
 
   .email-action-capsule > div:last-child > * {
     flex: 1 1 auto !important;
     justify-content: center !important;
     text-align: center !important;
-    padding: 4px 6px !important;
-    font-size: 8px !important;
+    padding: 8px 12px !important;
+    font-size: 11px !important;
   }
 
   .contact-channels-grid {
     grid-template-columns: repeat(3, 1fr) !important;
-    gap: 6px !important;
-    padding-top: 14px !important;
+    gap: 8px !important;
+    padding-top: 20px !important;
   }
 
   .contact-channels-grid > a {
-    padding: 8px 4px !important;
-    border-radius: 8px !important;
-    min-width: 0 !important;
+    padding: 10px 6px !important;
+    border-radius: 10px !important;
     text-align: center !important;
   }
 
   .contact-channels-grid svg {
-    width: 16px !important;
-    height: 16px !important;
+    width: 18px !important;
+    height: 18px !important;
   }
 
   .contact-channels-grid span:first-child {
-    font-size: 9px !important;
+    font-size: 11px !important;
   }
 
   .contact-channels-grid span:last-child {
-    font-size: 7.5px !important;
+    font-size: 9px !important;
   }
 
-  /* Modals */
+  /* Modals: Elevated Z-Index, Centered, No Navbar Overlap */
   .modal-backdrop {
-    padding: 8px !important;
+    z-index: 99999 !important;
+    padding: 16px 12px !important;
+    align-items: center !important;
   }
 
   .modal-dialog {
-    padding: 14px 10px !important;
-    border-radius: 12px !important;
-    max-height: calc(100dvh - 16px) !important;
+    padding: 22px 16px !important;
+    border-radius: 16px !important;
+    max-height: calc(100dvh - 36px) !important;
+    width: 100% !important;
+    margin: auto !important;
+    overflow-y: auto !important;
   }
 }
 
 /* ── Responsive Rules: Ultra-Compact Phones (<= 380px) ── */
 @media (max-width: 380px) {
   .container {
-    padding: 0 8px !important;
-  }
-
-  .hero-layout {
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.9fr) !important;
-    gap: 8px !important;
+    padding: 0 10px !important;
   }
 
   .hero-headline {
-    font-size: 15px !important;
+    font-size: 24px !important;
+  }
+
+  .hero-subrole {
+    font-size: 12px !important;
   }
 
   .hero-bio-desc {
-    font-size: 9px !important;
+    font-size: 12px !important;
   }
 
-  .carousel-slide-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
-    gap: 8px !important;
+  .profile-craft-card {
+    padding: 12px !important;
   }
 
-  .about-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  .hud-photo-container {
+    max-height: 200px !important;
+  }
+
+  .contact-channels-grid {
+    grid-template-columns: 1fr !important;
     gap: 8px !important;
   }
 }

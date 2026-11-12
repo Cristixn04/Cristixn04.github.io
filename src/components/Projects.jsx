@@ -88,82 +88,113 @@ export default function Projects() {
 
         {/* Filter Tabs with Motion Layout Animation */}
         <div
+          className="projects-filter-wrapper"
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: '16px',
             marginBottom: '32px'
           }}
         >
+          {/* Header Row: Filter Label and Project Count Badge */}
           <div
-            className="project-filters"
+            className="projects-filter-header"
             style={{
               display: 'flex',
-              flexWrap: 'wrap',
-              gap: '8px',
-              padding: '4px',
-              background: 'rgba(255, 255, 255, 0.02)',
-              border: '1px solid rgba(255, 255, 255, 0.05)',
-              borderRadius: '12px',
-              width: 'fit-content'
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '12px'
             }}
           >
-            {filters.map((f) => {
-              const isActive = activeFilter === f.id;
-              return (
-                <button
-                  key={f.id}
-                  type="button"
-                  onClick={() => setActiveFilter(f.id)}
-                  className={`filter-btn ${isActive ? 'active' : ''}`}
-                  style={{
-                    position: 'relative',
-                    background: 'transparent',
-                    border: 'none',
-                    padding: '8px 16px',
-                    borderRadius: '8px',
-                    fontSize: '13px',
-                    fontWeight: 500,
-                    fontFamily: 'var(--font-main)',
-                    color: isActive ? 'var(--accent-emerald)' : 'var(--text-secondary)',
-                    cursor: 'pointer',
-                    transition: 'color 160ms ease'
-                  }}
-                >
-                  <span style={{ position: 'relative', zIndex: 1 }}>{f.label}</span>
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeFilterTab"
-                      style={{
-                        position: 'absolute',
-                        inset: 0,
-                        background: 'rgba(0, 229, 117, 0.1)',
-                        border: '1px solid rgba(0, 229, 117, 0.28)',
-                        borderRadius: '8px',
-                        zIndex: 0
-                      }}
-                      transition={{ type: 'spring', stiffness: 400, damping: 32 }}
-                    />
-                  )}
-                </button>
-              );
-            })}
+            <span
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: '11px',
+                color: 'var(--accent-emerald)',
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase'
+              }}
+            >
+              // {lang === 'es' ? 'FILTRAR POR CATEGORÍA' : 'FILTER BY CATEGORY'}
+            </span>
+
+            <div
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: '11px',
+                color: 'var(--accent-emerald)',
+                background: 'rgba(0, 229, 117, 0.06)',
+                border: '1px solid rgba(0, 229, 117, 0.18)',
+                padding: '4px 10px',
+                borderRadius: '6px'
+              }}
+            >
+              [0{filteredProjects.length} PROYECTOS]
+            </div>
           </div>
 
+          {/* Filter Pills with Horizontal Scroll & No Edge Clipping */}
           <div
+            className="project-filters-track"
             style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '11px',
-              color: 'var(--accent-emerald)',
-              background: 'rgba(0, 229, 117, 0.06)',
-              border: '1px solid rgba(0, 229, 117, 0.18)',
-              padding: '4px 10px',
-              borderRadius: '6px'
+              position: 'relative',
+              width: '100%'
             }}
           >
-            [0{filteredProjects.length} PROYECTOS]
+            <div
+              className="project-filters"
+              style={{
+                display: 'flex',
+                gap: '8px',
+                padding: '6px 8px',
+                background: 'rgba(255, 255, 255, 0.02)',
+                border: '1px solid rgba(255, 255, 255, 0.06)',
+                borderRadius: '12px',
+                overflowX: 'auto',
+                scrollbarWidth: 'none',
+                WebkitOverflowScrolling: 'touch'
+              }}
+            >
+              {filters.map((f) => {
+                const isActive = activeFilter === f.id;
+                return (
+                  <button
+                    key={f.id}
+                    type="button"
+                    onClick={() => setActiveFilter(f.id)}
+                    className={`filter-btn ${isActive ? 'active' : ''}`}
+                    style={{
+                      position: 'relative',
+                      background: 'transparent',
+                      border: 'none',
+                      padding: '8px 16px',
+                      borderRadius: '8px',
+                      fontSize: '13px',
+                      fontWeight: 500,
+                      fontFamily: 'var(--font-main)',
+                      color: isActive ? 'var(--accent-emerald)' : 'var(--text-secondary)',
+                      cursor: 'pointer',
+                      whiteSpace: 'nowrap',
+                      flexShrink: 0,
+                      transition: 'color 160ms ease'
+                    }}
+                  >
+                    <span style={{ position: 'relative', zIndex: 1 }}>{f.label}</span>
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeFilterTab"
+                        style={{
+                          position: 'absolute',
+                          inset: 0,
+                          background: 'rgba(0, 229, 117, 0.1)',
+                          border: '1px solid rgba(0, 229, 117, 0.28)',
+                          borderRadius: '8px',
+                          zIndex: 0
+                        }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+                      />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 

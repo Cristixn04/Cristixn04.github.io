@@ -206,6 +206,7 @@ export default function ProjectCarousel({ projects, onSelectProject }) {
 
                 {/* Stand-in Overlay Notice */}
                 <div
+                  className="carousel-img-overlay"
                   style={{
                     position: 'absolute',
                     bottom: '12px',
@@ -221,11 +222,12 @@ export default function ProjectCarousel({ projects, onSelectProject }) {
                     justifyContent: 'space-between',
                     fontFamily: 'var(--font-mono)',
                     fontSize: '11px',
-                    color: 'var(--text-secondary)'
+                    color: 'var(--text-secondary)',
+                    gap: '8px'
                   }}
                 >
-                  <span>{lang === 'es' ? 'VISTA ARQUITECTURA' : 'SYSTEM ARCHITECTURE'}</span>
-                  <span style={{ color: 'var(--accent-emerald)', fontWeight: 600 }}>{lang === 'es' ? 'CLIC PARA DETALLES TÉCNICOS' : 'CLICK FOR TECHNICAL DETAILS'}</span>
+                  <span style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>{lang === 'es' ? 'VISTA ARQUITECTURA' : 'SYSTEM ARCHITECTURE'}</span>
+                  <span style={{ color: 'var(--accent-emerald)', fontWeight: 600, whiteSpace: 'nowrap', flexShrink: 0 }}>{lang === 'es' ? 'CLIC PARA DETALLES TÉCNICOS' : 'CLICK FOR TECHNICAL DETAILS'}</span>
                 </div>
               </div>
             </div>

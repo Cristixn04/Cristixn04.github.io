@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { X, ExternalLink, CheckCircle2, Layers, Cpu, Database } from 'lucide-react';
@@ -27,14 +28,14 @@ export default function ProjectModal({ project, onClose }) {
   const highlights = lang === 'es' ? project.architecture.highlightsEs : project.architecture.highlightsEn;
   const summary = lang === 'es' ? project.summaryEs : project.summaryEn;
 
-  return (
+  return createPortal(
     <AnimatePresence>
       <div
         className="modal-backdrop"
         style={{
           position: 'fixed',
           inset: 0,
-          zIndex: 200,
+          zIndex: 99999,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -322,6 +323,7 @@ export default function ProjectModal({ project, onClose }) {
           </div>
         </motion.div>
       </div>
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }

@@ -155,11 +155,13 @@ export default function SoftSkills() {
                 <div>
                   {/* Top Bar: Icon + Index + Tag */}
                   <div
+                    className="soft-skill-top-bar"
                     style={{
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                      marginBottom: '18px'
+                      marginBottom: '18px',
+                      gap: '8px'
                     }}
                   >
                     <div
@@ -172,13 +174,14 @@ export default function SoftSkills() {
                         alignItems: 'center',
                         justifyContent: 'center',
                         boxShadow: isHovered ? '0 0 12px rgba(0, 229, 117, 0.25)' : 'none',
-                        transition: 'box-shadow 200ms ease'
+                        transition: 'box-shadow 200ms ease',
+                        flexShrink: 0
                       }}
                     >
                       {iconMap[skill.id] || <Sparkles size={20} color="var(--accent-emerald)" />}
                     </div>
 
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flexShrink: 0 }}>
                       <span
                         style={{
                           fontFamily: 'var(--font-mono)',
@@ -189,7 +192,8 @@ export default function SoftSkills() {
                           padding: '3px 8px',
                           borderRadius: '4px',
                           fontWeight: 600,
-                          letterSpacing: '0.04em'
+                          letterSpacing: '0.04em',
+                          whiteSpace: 'nowrap'
                         }}
                       >
                         {skill.tag}
@@ -198,7 +202,8 @@ export default function SoftSkills() {
                         style={{
                           fontFamily: 'var(--font-mono)',
                           fontSize: '12px',
-                          color: 'var(--text-muted)'
+                          color: 'var(--text-muted)',
+                          whiteSpace: 'nowrap'
                         }}
                       >
                         [{indexFormatted}]
@@ -236,13 +241,15 @@ export default function SoftSkills() {
 
                 {/* Subtle Bottom Accent Indicator */}
                 <div
+                  className="soft-skill-bottom-bar"
                   style={{
                     marginTop: '20px',
                     paddingTop: '12px',
                     borderTop: '1px solid rgba(255, 255, 255, 0.04)',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'space-between'
+                    justifyContent: 'space-between',
+                    gap: '8px'
                   }}
                 >
                   <span
@@ -253,10 +260,11 @@ export default function SoftSkills() {
                       display: 'inline-flex',
                       alignItems: 'center',
                       gap: '5px',
-                      transition: 'color 160ms ease'
+                      transition: 'color 160ms ease',
+                      whiteSpace: 'nowrap'
                     }}
                   >
-                    <CheckCircle2 size={12} color={isHovered ? 'var(--accent-emerald)' : 'var(--text-muted)'} />
+                    <CheckCircle2 size={12} color={isHovered ? 'var(--accent-emerald)' : 'var(--text-muted)'} style={{ flexShrink: 0 }} />
                     PERFIL VERIFICADO
                   </span>
 
@@ -267,7 +275,8 @@ export default function SoftSkills() {
                       borderRadius: '50%',
                       background: isHovered ? 'var(--accent-emerald)' : 'rgba(255, 255, 255, 0.15)',
                       boxShadow: isHovered ? '0 0 8px var(--accent-emerald)' : 'none',
-                      transition: 'all 200ms ease'
+                      transition: 'all 200ms ease',
+                      flexShrink: 0
                     }}
                   />
                 </div>

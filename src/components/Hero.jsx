@@ -369,17 +369,19 @@ export default function Hero() {
                   justifyContent: 'space-between',
                   paddingBottom: '14px',
                   marginBottom: '14px',
-                  borderBottom: '1px solid rgba(255, 255, 255, 0.06)'
+                  borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+                  gap: '8px'
                 }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flexShrink: 0 }}>
                   <span
                     style={{
                       width: '7px',
                       height: '7px',
                       borderRadius: '50%',
                       background: 'var(--accent-emerald)',
-                      boxShadow: '0 0 8px var(--accent-emerald)'
+                      boxShadow: '0 0 8px var(--accent-emerald)',
+                      flexShrink: 0
                     }}
                   />
                   <span
@@ -388,7 +390,8 @@ export default function Hero() {
                       fontSize: '11px',
                       fontWeight: 600,
                       color: 'var(--text-primary)',
-                      letterSpacing: '0.04em'
+                      letterSpacing: '0.04em',
+                      whiteSpace: 'nowrap'
                     }}
                   >
                     SYS_ID // CCM-04
@@ -403,7 +406,9 @@ export default function Hero() {
                     background: 'rgba(0, 229, 117, 0.08)',
                     padding: '2px 8px',
                     borderRadius: '4px',
-                    border: '1px solid rgba(0, 229, 117, 0.2)'
+                    border: '1px solid rgba(0, 229, 117, 0.2)',
+                    whiteSpace: 'nowrap',
+                    flexShrink: 0
                   }}
                 >
                   7°04'N 73°07'W
@@ -488,16 +493,18 @@ export default function Hero() {
                   padding: '10px 14px',
                   borderRadius: '10px',
                   background: 'rgba(255, 255, 255, 0.03)',
-                  border: '1px solid rgba(255, 255, 255, 0.06)'
+                  border: '1px solid rgba(255, 255, 255, 0.06)',
+                  gap: '8px'
                 }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <ShieldCheck size={16} color="var(--accent-emerald)" />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flexShrink: 0 }}>
+                  <ShieldCheck size={16} color="var(--accent-emerald)" style={{ flexShrink: 0 }} />
                   <span
                     style={{
                       fontFamily: 'var(--font-mono)',
                       fontSize: '12px',
-                      color: 'var(--text-secondary)'
+                      color: 'var(--text-secondary)',
+                      whiteSpace: 'nowrap'
                     }}
                   >
                     Backend & Docker
@@ -512,7 +519,9 @@ export default function Hero() {
                     padding: '3px 10px',
                     borderRadius: '9999px',
                     fontWeight: 600,
-                    border: '1px solid rgba(0, 229, 117, 0.25)'
+                    border: '1px solid rgba(0, 229, 117, 0.25)',
+                    whiteSpace: 'nowrap',
+                    flexShrink: 0
                   }}
                 >
                   STATUS: VERIFIED
