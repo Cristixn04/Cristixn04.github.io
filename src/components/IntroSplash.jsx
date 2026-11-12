@@ -319,7 +319,11 @@ export default function IntroSplash({ onEnter }) {
     let animId;
     let isWarpExit = false;
     let exitTime = 0;
-    const EXIT_DURATION = 0.68;
+
+    // Choreography timings:
+    const DURATION_EXPLODE = 0.44; // Phase 1: Supernova explosion & particle expansion
+    const DURATION_UNITE = 0.46;   // Phase 2: Gravitational reunion / convergence
+    const DURATION_FORM = 0.35;    // Phase 3: Web forms as particles disperse into Hero
 
     triggerExitRef.current = () => {
       if (isWarpExit) return;
@@ -401,29 +405,74 @@ export default function IntroSplash({ onEnter }) {
           posArr[i3 + 2] = pz + vz[i];
         }
       } else {
-        // Exit Transition: Hyperdrive Radial Burst past the camera
+        // ── EXIT CHOREOGRAPHY: EXPLOSION -> REUNION -> WEB FORMATION ──
         exitTime += delta;
-        const progress = Math.min(1.0, exitTime / EXIT_DURATION);
-        const burstSpeed = Math.pow(progress, 1.9) * 22.0;
 
-        for (let i = 0; i < totalCount; i++) {
-          const i3 = i * 3;
-          const px = posArr[i3];
-          const py = posArr[i3 + 1];
-          const pz = posArr[i3 + 2];
+        if (exitTime < DURATION_EXPLODE) {
+          // PHASE 1: Supernova explosion & particle expansion outward
+          const p1 = exitTime / DURATION_EXPLODE;
+          const burstSpeed = Math.sin((1.0 - p1) * Math.PI * 0.5) * 22.0;
 
-          const len = Math.sqrt(px * px + py * py + pz * pz) || 1.0;
-          const dirX = px / len;
-          const dirY = py / len;
-          const dirZ = pz / len;
+          for (let i = 0; i < totalCount; i++) {
+            const i3 = i * 3;
+            const px = posArr[i3];
+            const py = posArr[i3 + 1];
+            const pz = posArr[i3 + 2];
 
-          posArr[i3] += dirX * burstSpeed * delta * 60 * (0.8 + randoms[i] * 0.6);
-          posArr[i3 + 1] += dirY * burstSpeed * delta * 60 * (0.8 + randoms[i] * 0.6);
-          posArr[i3 + 2] += dirZ * burstSpeed * delta * 60 * (1.0 + randoms[i] * 0.8);
+            const len = Math.sqrt(px * px + py * py + pz * pz) || 1.0;
+            const dirX = px / len;
+            const dirY = py / len;
+            const dirZ = pz / len;
+
+            posArr[i3] += dirX * burstSpeed * delta * 60 * (0.85 + randoms[i] * 0.6);
+            posArr[i3 + 1] += dirY * burstSpeed * delta * 60 * (0.85 + randoms[i] * 0.6);
+            posArr[i3 + 2] += dirZ * burstSpeed * delta * 60 * (0.9 + randoms[i] * 0.7);
+          }
+          camera.position.z += delta * 1.2;
+
+        } else if (exitTime < DURATION_EXPLODE + DURATION_UNITE) {
+          // PHASE 2: Inward gravitational pull & particle reunion in center
+          const p2 = (exitTime - DURATION_EXPLODE) / DURATION_UNITE;
+          const pullFactor = Math.pow(p2, 1.8) * 28.0;
+
+          for (let i = 0; i < totalCount; i++) {
+            const i3 = i * 3;
+            const px = posArr[i3];
+            const py = posArr[i3 + 1];
+            const pz = posArr[i3 + 2];
+
+            // Target position: tight radiant focal core in center
+            const targetX = homePositions[i3] * 0.16;
+            const targetY = homePositions[i3 + 1] * 0.16;
+            const targetZ = homePositions[i3 + 2] * 0.16;
+
+            const toX = targetX - px;
+            const toY = targetY - py;
+            const toZ = targetZ - pz;
+            const dist = Math.sqrt(toX * toX + toY * toY + toZ * toZ) || 1.0;
+
+            posArr[i3] += (toX / dist) * pullFactor * delta * 60;
+            posArr[i3 + 1] += (toY / dist) * pullFactor * delta * 60;
+            posArr[i3 + 2] += (toZ / dist) * pullFactor * delta * 60;
+          }
+          camera.position.z -= delta * 2.0;
+
+        } else {
+          // PHASE 3: United core blooms as initial web page forms
+          const p3 = (exitTime - DURATION_EXPLODE - DURATION_UNITE) / DURATION_FORM;
+          for (let i = 0; i < totalCount; i++) {
+            const i3 = i * 3;
+            const px = posArr[i3];
+            const py = posArr[i3 + 1];
+            const pz = posArr[i3 + 2];
+
+            const len = Math.sqrt(px * px + py * py + pz * pz) || 1.0;
+            posArr[i3] += (px / len) * 4.5 * delta * 60;
+            posArr[i3 + 1] += (py / len) * 4.5 * delta * 60;
+            posArr[i3 + 2] += (pz / len) * 4.5 * delta * 60;
+          }
+          material.opacity = Math.max(0, 1.0 - Math.pow(p3, 2.0));
         }
-
-        camera.position.z -= delta * 3.6;
-        material.opacity = Math.max(0, 1.0 - Math.pow(progress, 2.2));
       }
 
       geometry.attributes.position.needsUpdate = true;
@@ -459,9 +508,11 @@ export default function IntroSplash({ onEnter }) {
       triggerExitRef.current();
     }
 
+    // Call onEnter at the moment of particle reunion (~880ms)
+    // so the initial web layout seamlessly forms out of the united core!
     setTimeout(() => {
       onEnter();
-    }, 660);
+    }, 880);
   };
 
   return (
@@ -469,11 +520,13 @@ export default function IntroSplash({ onEnter }) {
       className="intro-splash-overlay"
       initial={{ opacity: 1 }}
       animate={{
-        opacity: isExiting ? 0 : 1,
-        scale: isExiting ? 1.06 : 1,
-        filter: isExiting ? 'blur(16px)' : 'blur(0px)'
+        opacity: isExiting ? 0 : 1
       }}
-      transition={{ duration: 0.66, ease: [0.16, 1, 0.3, 1] }}
+      transition={{
+        delay: isExiting ? 0.8 : 0,
+        duration: 0.42,
+        ease: [0.16, 1, 0.3, 1]
+      }}
       style={{
         position: 'fixed',
         inset: 0,
@@ -501,45 +554,53 @@ export default function IntroSplash({ onEnter }) {
       />
 
       {/* TOP HEADER: Status Pill */}
-      <div style={{ position: 'relative', zIndex: 2, pointerEvents: 'none' }}>
-        <motion.div
-          initial={{ opacity: 0, y: -12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.4 }}
+      <motion.div
+        animate={{
+          opacity: isExiting ? 0 : 1,
+          y: isExiting ? -14 : 0,
+          filter: isExiting ? 'blur(8px)' : 'blur(0px)'
+        }}
+        transition={{ duration: 0.22, ease: 'easeOut' }}
+        style={{ position: 'relative', zIndex: 2, pointerEvents: 'none' }}
+      >
+        <span
+          className="intro-status-pill"
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '11px',
+            fontWeight: 600,
+            letterSpacing: '0.12em',
+            color: 'var(--accent-emerald)',
+            background: 'rgba(0, 229, 117, 0.08)',
+            border: '1px solid rgba(0, 229, 117, 0.25)',
+            padding: '6px 16px',
+            borderRadius: '9999px',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px'
+          }}
         >
           <span
-            className="intro-status-pill"
             style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '11px',
-              fontWeight: 600,
-              letterSpacing: '0.12em',
-              color: 'var(--accent-emerald)',
-              background: 'rgba(0, 229, 117, 0.08)',
-              border: '1px solid rgba(0, 229, 117, 0.25)',
-              padding: '6px 16px',
-              borderRadius: '9999px',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px'
+              width: '6px',
+              height: '6px',
+              borderRadius: '50%',
+              background: 'var(--accent-emerald)',
+              boxShadow: '0 0 8px var(--accent-emerald)'
             }}
-          >
-            <span
-              style={{
-                width: '6px',
-                height: '6px',
-                borderRadius: '50%',
-                background: 'var(--accent-emerald)',
-                boxShadow: '0 0 8px var(--accent-emerald)'
-              }}
-            />
-            KERNEL BOOT // READY
-          </span>
-        </motion.div>
-      </div>
+          />
+          KERNEL BOOT // READY
+        </span>
+      </motion.div>
 
-      {/* BOTTOM CONTROLS & IDENTITY: Elegantly below the central Particle Orb */}
-      <div
+      {/* BOTTOM CONTROLS & IDENTITY */}
+      <motion.div
+        animate={{
+          opacity: isExiting ? 0 : 1,
+          y: isExiting ? 14 : 0,
+          filter: isExiting ? 'blur(8px)' : 'blur(0px)'
+        }}
+        transition={{ duration: 0.22, ease: 'easeOut' }}
         style={{
           position: 'relative',
           zIndex: 2,
@@ -550,11 +611,8 @@ export default function IntroSplash({ onEnter }) {
         }}
       >
         {/* Name Headline */}
-        <motion.h1
+        <h1
           className="intro-headline"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.4 }}
           style={{
             fontFamily: 'var(--font-main)',
             fontSize: 'clamp(26px, 5vw, 42px)',
@@ -566,14 +624,11 @@ export default function IntroSplash({ onEnter }) {
           }}
         >
           Cristian Camilo Muñoz
-        </motion.h1>
+        </h1>
 
         {/* Role Subtitle */}
-        <motion.p
+        <p
           className="intro-subtitle"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25, duration: 0.4 }}
           style={{
             fontFamily: 'var(--font-mono)',
             fontSize: 'clamp(11px, 1.4vw, 13px)',
@@ -583,15 +638,10 @@ export default function IntroSplash({ onEnter }) {
           }}
         >
           SOFTWARE ENGINEER & AI SYSTEMS ARCHITECT
-        </motion.p>
+        </p>
 
         {/* Interactive Enter CTA Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35, duration: 0.4 }}
-          style={{ pointerEvents: 'auto' }}
-        >
+        <div style={{ pointerEvents: 'auto' }}>
           <button
             type="button"
             onClick={handleTriggerEnter}
@@ -630,10 +680,11 @@ export default function IntroSplash({ onEnter }) {
           >
             [PASA EL CURSOR POR LA ESFERA PARA DESARMAR · CLIC PARA INICIAR]
           </div>
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
     </motion.div>
   );
 }
+
 
 
