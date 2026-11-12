@@ -350,42 +350,95 @@ button:active, .btn:active, a.btn:active {
     width: 100% !important;
     align-self: center !important;
     min-width: 0 !important;
+    max-width: 100% !important;
   }
 
   .profile-craft-card {
     width: 100% !important;
     max-width: 100% !important;
-    margin: 0 !important;
+    min-width: 0 !important;
+    margin: 0 auto !important;
     padding: 8px 6px !important;
     border-radius: 12px !important;
     box-sizing: border-box !important;
+    position: relative !important;
+    background: rgba(11, 15, 13, 0.94) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
   }
 
   .hud-corner-bracket {
-    width: 10px !important;
-    height: 10px !important;
+    width: 11px !important;
+    height: 11px !important;
+    position: absolute !important;
+    pointer-events: none !important;
   }
 
   .hud-header {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 3px !important;
     padding-bottom: 5px !important;
     margin-bottom: 6px !important;
-    gap: 4px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
   }
 
-  .hud-header span {
-    font-size: 7.5px !important;
+  .hud-id-wrap {
+    display: flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .hud-id-wrap span:first-child {
+    width: 5px !important;
+    height: 5px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .hud-id-wrap span:last-child {
+    font-size: 8px !important;
+    font-family: var(--font-mono) !important;
+    color: var(--text-primary) !important;
     white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: inline-block !important;
+    min-width: 0 !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  .hud-coords-wrap {
+    font-size: 7px !important;
+    font-family: var(--font-mono) !important;
+    color: var(--accent-emerald) !important;
+    background: rgba(0, 229, 117, 0.08) !important;
+    border: 1px solid rgba(0, 229, 117, 0.2) !important;
+    padding: 1px 5px !important;
+    border-radius: 4px !important;
+    white-space: nowrap !important;
+    align-self: flex-start !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    flex-shrink: 0 !important;
   }
 
   .hud-photo-container {
     width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
     aspect-ratio: 1 / 1 !important;
     max-height: 140px !important;
     border-radius: 8px !important;
     overflow: hidden !important;
+    box-sizing: border-box !important;
   }
 
   .hud-photo-container img {
@@ -393,32 +446,65 @@ button:active, .btn:active, a.btn:active {
     height: 100% !important;
     object-fit: cover !important;
     object-position: center 20% !important;
+    display: block !important;
   }
 
   .hud-bottom-badge {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
     padding: 5px 6px !important;
     margin-top: 6px !important;
     border-radius: 6px !important;
-    gap: 4px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
   }
 
-  .hud-bottom-badge svg {
+  .hud-badge-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .hud-badge-left svg {
     width: 11px !important;
     height: 11px !important;
     flex-shrink: 0 !important;
   }
 
-  .hud-bottom-badge span:first-child {
-    font-size: 7px !important;
+  .hud-badge-left span {
+    font-size: 8px !important;
+    font-family: var(--font-mono) !important;
+    color: var(--text-secondary) !important;
     white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: inline-block !important;
+    min-width: 0 !important;
   }
 
-  .hud-bottom-badge span:last-child {
+  .hud-badge-status {
     font-size: 6.5px !important;
+    font-family: var(--font-mono) !important;
+    color: var(--accent-emerald) !important;
+    background: rgba(0, 229, 117, 0.1) !important;
+    border: 1px solid rgba(0, 229, 117, 0.25) !important;
+    padding: 2px 6px !important;
+    border-radius: 9999px !important;
     white-space: nowrap !important;
+    align-self: flex-start !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    flex-shrink: 0 !important;
   }
 
   /* Full Width Action Buttons below text + card */
@@ -954,11 +1040,19 @@ button:active, .btn:active, a.btn:active {
     max-height: 120px !important;
   }
 
-  .hud-header span {
+  .hud-id-wrap span:last-child {
+    font-size: 7px !important;
+  }
+
+  .hud-coords-wrap {
     font-size: 6.5px !important;
   }
 
-  .hud-bottom-badge span {
+  .hud-badge-left span {
+    font-size: 7px !important;
+  }
+
+  .hud-badge-status {
     font-size: 6px !important;
   }
 

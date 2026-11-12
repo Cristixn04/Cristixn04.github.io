@@ -373,7 +373,7 @@ export default function Hero() {
                   gap: '8px'
                 }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flexShrink: 0 }}>
+                <div className="hud-id-wrap" style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flexShrink: 0 }}>
                   <span
                     style={{
                       width: '7px',
@@ -399,6 +399,7 @@ export default function Hero() {
                 </div>
 
                 <div
+                  className="hud-coords-wrap"
                   style={{
                     fontFamily: 'var(--font-mono)',
                     fontSize: '10.5px',
@@ -497,7 +498,7 @@ export default function Hero() {
                   gap: '8px'
                 }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flexShrink: 0 }}>
+                <div className="hud-badge-left" style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flexShrink: 0 }}>
                   <ShieldCheck size={16} color="var(--accent-emerald)" style={{ flexShrink: 0 }} />
                   <span
                     style={{
@@ -511,6 +512,7 @@ export default function Hero() {
                   </span>
                 </div>
                 <span
+                  className="hud-badge-status"
                   style={{
                     fontFamily: 'var(--font-mono)',
                     fontSize: '10.5px',
