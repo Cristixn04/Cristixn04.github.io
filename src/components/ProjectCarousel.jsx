@@ -1,18 +1,29 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { useLanguage } from '../i18n/LanguageContext';
-import { ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { GithubIcon } from './Icons';
 
 export default function ProjectCarousel({ projects, onSelectProject }) {
   const { lang, t } = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [dragX, setDragX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
   const shouldReduceMotion = useReducedMotion();
+
+  const startXRef = useRef(0);
+  const dragDistanceRef = useRef(0);
+  const dragStartTimeRef = useRef(0);
+  const isDraggingRef = useRef(false);
+  const rafIdRef = useRef(null);
+  const wheelCooldownRef = useRef(false);
 
   const featuredProjects = projects.filter((p) => p.featured);
   const total = featuredProjects.length || 1;
   const currentProject = featuredProjects[currentIndex] || featuredProjects[0];
+
+  const stepSize = isMobile ? 150 : 340;
 
   // Mobile detection for dynamic 3D perspective & offsets
   useEffect(() => {
@@ -77,32 +88,96 @@ export default function ProjectCarousel({ projects, onSelectProject }) {
     return diff;
   };
 
-  const getX = (offset) => {
-    if (offset === 0) return 0;
-    if (isMobile) {
-      return offset > 0 ? 135 : -135;
+  // Continuous offset tracking cursor displacement
+  const getContinuousOffset = (index) => {
+    const baseOffset = getCircularOffset(index);
+    return baseOffset + dragX / stepSize;
+  };
+
+  const getX = (dCont) => {
+    return dCont * stepSize;
+  };
+
+  const getZ = (dCont) => {
+    return Math.max(isMobile ? -90 : -140, -Math.abs(dCont) * (isMobile ? 80 : 130));
+  };
+
+  const getRotateY = (dCont) => {
+    if (shouldReduceMotion) return 0;
+    return Math.max(-42, Math.min(42, -dCont * (isMobile ? 32 : 38)));
+  };
+
+  const getScale = (dCont) => {
+    return Math.max(isMobile ? 0.74 : 0.8, 1 - Math.abs(dCont) * (isMobile ? 0.24 : 0.18));
+  };
+
+  const getOpacity = (dCont) => {
+    return Math.max(isMobile ? 0.45 : 0.55, 1 - Math.abs(dCont) * 0.45);
+  };
+
+  const handlePointerDown = (e) => {
+    if (e.target.closest('button.btn, a.btn, .cue-cell')) return;
+    isDraggingRef.current = true;
+    setIsDragging(true);
+    startXRef.current = e.clientX;
+    dragDistanceRef.current = 0;
+    dragStartTimeRef.current = performance.now();
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch (_) {}
+  };
+
+  const handlePointerMove = (e) => {
+    if (!isDraggingRef.current) return;
+    const diff = e.clientX - startXRef.current;
+    dragDistanceRef.current = Math.abs(diff);
+
+    if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+    rafIdRef.current = requestAnimationFrame(() => {
+      setDragX(diff);
+    });
+  };
+
+  const handlePointerUp = (e) => {
+    if (!isDraggingRef.current) return;
+    isDraggingRef.current = false;
+    setIsDragging(false);
+
+    if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+
+    const diff = e.clientX - startXRef.current;
+    const elapsed = Math.max(1, performance.now() - dragStartTimeRef.current);
+    const velocity = (diff / elapsed) * 1000;
+
+    setDragX(0);
+
+    const threshold = isMobile ? 30 : 55;
+    const velocityThreshold = 250;
+
+    if (diff < -threshold || velocity < -velocityThreshold) {
+      paginate(1);
+    } else if (diff > threshold || velocity > velocityThreshold) {
+      paginate(-1);
     }
-    return offset > 0 ? 330 : -330;
+
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    } catch (_) {}
   };
 
-  const getZ = (offset) => {
-    if (offset === 0) return 0;
-    return isMobile ? -80 : -140;
-  };
-
-  const getRotateY = (offset) => {
-    if (offset === 0 || shouldReduceMotion) return 0;
-    return offset > 0 ? (isMobile ? -32 : -38) : (isMobile ? 32 : 38);
-  };
-
-  const getScale = (offset) => {
-    if (offset === 0) return 1;
-    return isMobile ? 0.76 : 0.82;
-  };
-
-  const getOpacity = (offset) => {
-    if (offset === 0) return 1;
-    return isMobile ? 0.5 : 0.58;
+  const handleWheel = (e) => {
+    const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : (e.shiftKey ? e.deltaY : 0);
+    if (Math.abs(delta) > 18 && !wheelCooldownRef.current) {
+      wheelCooldownRef.current = true;
+      if (delta > 0) {
+        paginate(1);
+      } else {
+        paginate(-1);
+      }
+      setTimeout(() => {
+        wheelCooldownRef.current = false;
+      }, 350);
+    }
   };
 
   return (
@@ -110,14 +185,14 @@ export default function ProjectCarousel({ projects, onSelectProject }) {
       className="project-carousel-container coverflow-container"
       style={{
         width: '100%',
-        borderRadius: '24px',
-        background: 'linear-gradient(180deg, rgba(14, 20, 16, 0.75) 0%, rgba(8, 12, 10, 0.92) 100%)',
-        border: '1px solid rgba(0, 229, 117, 0.2)',
-        padding: 'clamp(18px, 3vw, 36px)',
-        marginBottom: '56px',
-        boxShadow: '0 24px 60px -20px rgba(0,0,0,0.85), 0 0 30px -10px rgba(0, 229, 117, 0.08)',
+        background: 'transparent',
+        border: 'none',
+        borderRadius: 0,
+        boxShadow: 'none',
+        padding: 0,
+        marginBottom: '48px',
         position: 'relative',
-        overflow: 'hidden'
+        overflow: 'visible'
       }}
     >
       {/* ── Top Header Section (matching media_1794532946949.png) ── */}
@@ -249,8 +324,14 @@ export default function ProjectCarousel({ projects, onSelectProject }) {
         </div>
       </div>
 
-      {/* ── 3D Coverflow Stage (Motion Spring Physical Reel) ── */}
+      {/* ── 3D Coverflow Stage (Interactive Drag-to-Scroll Reel) ── */}
       <div
+        className="coverflow-stage"
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+        onWheel={handleWheel}
         style={{
           position: 'relative',
           width: '100%',
@@ -261,301 +342,226 @@ export default function ProjectCarousel({ projects, onSelectProject }) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          userSelect: 'none'
+          userSelect: 'none',
+          cursor: isDragging ? 'grabbing' : 'grab',
+          touchAction: 'pan-y'
         }}
       >
-        {/* Prev Arrow Navigation Button */}
-        <button
-          type="button"
-          onClick={() => paginate(-1)}
-          aria-label="Proyecto anterior"
-          className="coverflow-nav-btn prev"
-          style={{
-            position: 'absolute',
-            left: '8px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            zIndex: 25,
-            width: isMobile ? '36px' : '42px',
-            height: isMobile ? '36px' : '42px',
-            borderRadius: '50%',
-            background: 'rgba(6, 8, 7, 0.78)',
-            backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255, 255, 255, 0.12)',
-            color: 'var(--text-primary)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            transition: 'background-color 160ms ease, border-color 160ms ease'
-          }}
-        >
-          <ChevronLeft size={isMobile ? 18 : 20} />
-        </button>
+        {featuredProjects.map((project, idx) => {
+          const dCont = getContinuousOffset(idx);
+          const circularOffset = getCircularOffset(idx);
+          const isCenter = Math.abs(dCont) < 0.35;
 
-        {/* Next Arrow Navigation Button */}
-        <button
-          type="button"
-          onClick={() => paginate(1)}
-          aria-label="Proyecto siguiente"
-          className="coverflow-nav-btn next"
-          style={{
-            position: 'absolute',
-            right: '8px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            zIndex: 25,
-            width: isMobile ? '36px' : '42px',
-            height: isMobile ? '36px' : '42px',
-            borderRadius: '50%',
-            background: 'rgba(6, 8, 7, 0.78)',
-            backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255, 255, 255, 0.12)',
-            color: 'var(--text-primary)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            transition: 'background-color 160ms ease, border-color 160ms ease'
-          }}
-        >
-          <ChevronRight size={isMobile ? 18 : 20} />
-        </button>
+          return (
+            <motion.div
+              key={project.id}
+              animate={{
+                x: getX(dCont),
+                z: getZ(dCont),
+                rotateY: getRotateY(dCont),
+                scale: getScale(dCont),
+                opacity: getOpacity(dCont),
+                filter: `brightness(${Math.max(0.45, 1 - Math.abs(dCont) * 0.45)})`
+              }}
+              transition={
+                isDragging
+                  ? { duration: 0 }
+                  : {
+                      type: 'spring',
+                      stiffness: 280,
+                      damping: 28,
+                      mass: 0.9
+                    }
+              }
+              onClick={() => {
+                if (dragDistanceRef.current > 6) return;
+                if (circularOffset !== 0) {
+                  setCurrentIndex(idx);
+                } else {
+                  onSelectProject(project);
+                }
+              }}
+              style={{
+                position: 'absolute',
+                width: isMobile ? 'clamp(270px, 78vw, 340px)' : 'clamp(460px, 50vw, 660px)',
+                aspectRatio: '16 / 10',
+                borderRadius: isMobile ? '14px' : '18px',
+                overflow: 'hidden',
+                background: '#040605',
+                border: isCenter
+                  ? '1px solid rgba(0, 229, 117, 0.45)'
+                  : '1px solid rgba(255, 255, 255, 0.08)',
+                boxShadow: isCenter
+                  ? '0 24px 60px -15px rgba(0, 0, 0, 0.92), 0 0 40px -10px rgba(0, 229, 117, 0.22)'
+                  : '0 12px 35px -10px rgba(0, 0, 0, 0.8)',
+                zIndex: Math.round(20 - Math.abs(dCont) * 10),
+                cursor: circularOffset === 0 ? (isDragging ? 'grabbing' : 'pointer') : 'pointer',
+                transformStyle: 'preserve-3d'
+              }}
+            >
+              {/* Project Screenshot Still */}
+              <img
+                src={project.image}
+                alt={project.title}
+                draggable={false}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  display: 'block'
+                }}
+              />
 
-        {/* Drag Surface for Touch / Mouse Gestures */}
-        <motion.div
-          drag="x"
-          dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.2}
-          onDragEnd={(_, { offset, velocity }) => {
-            const swipeThreshold = 35;
-            const velocityThreshold = 280;
-            if (offset.x < -swipeThreshold || velocity.x < -velocityThreshold) {
-              paginate(1);
-            } else if (offset.x > swipeThreshold || velocity.x > velocityThreshold) {
-              paginate(-1);
-            }
-          }}
-          style={{
-            position: 'absolute',
-            inset: 0,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            transformStyle: 'preserve-3d',
-            cursor: 'grab',
-            touchAction: 'pan-y'
-          }}
-          whileTap={{ cursor: 'grabbing' }}
-        >
-          {featuredProjects.map((project, idx) => {
-            const offset = getCircularOffset(idx);
-            const isCenter = offset === 0;
-
-            return (
-              <motion.div
-                key={project.id}
-                animate={{
-                  x: getX(offset),
-                  z: getZ(offset),
-                  rotateY: getRotateY(offset),
-                  scale: getScale(offset),
-                  opacity: getOpacity(offset),
-                  filter: isCenter ? 'brightness(1)' : 'brightness(0.55)'
-                }}
-                transition={{
-                  type: 'spring',
-                  stiffness: 280,
-                  damping: 28,
-                  mass: 0.9
-                }}
-                onClick={() => {
-                  if (!isCenter) {
-                    setCurrentIndex(idx);
-                  }
-                }}
+              {/* Ambient Film Reflection & Bottom Shade */}
+              <div
                 style={{
                   position: 'absolute',
-                  width: isMobile ? 'clamp(270px, 78vw, 340px)' : 'clamp(460px, 50vw, 660px)',
-                  aspectRatio: '16 / 10',
-                  borderRadius: isMobile ? '14px' : '18px',
-                  overflow: 'hidden',
-                  background: '#040605',
-                  border: isCenter
-                    ? '1px solid rgba(0, 229, 117, 0.45)'
-                    : '1px solid rgba(255, 255, 255, 0.08)',
-                  boxShadow: isCenter
-                    ? '0 24px 60px -15px rgba(0, 0, 0, 0.92), 0 0 40px -10px rgba(0, 229, 117, 0.22)'
-                    : '0 12px 35px -10px rgba(0, 0, 0, 0.8)',
-                  zIndex: isCenter ? 15 : 5,
-                  cursor: isCenter ? 'default' : 'pointer',
-                  transformStyle: 'preserve-3d'
+                  inset: 0,
+                  background: isCenter
+                    ? 'linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(4, 6, 5, 0.88) 100%)'
+                    : 'linear-gradient(180deg, rgba(4, 6, 5, 0.3) 0%, rgba(4, 6, 5, 0.8) 100%)',
+                  pointerEvents: 'none'
                 }}
-              >
-                {/* Project Screenshot Still */}
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  draggable={false}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    display: 'block'
-                  }}
-                />
+              />
 
-                {/* Ambient Film Reflection & Bottom Shade */}
+              {/* Center Slide Action Overlay */}
+              {isCenter && (
                 <div
                   style={{
                     position: 'absolute',
-                    inset: 0,
-                    background: isCenter
-                      ? 'linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(4, 6, 5, 0.88) 100%)'
-                      : 'linear-gradient(180deg, rgba(4, 6, 5, 0.3) 0%, rgba(4, 6, 5, 0.8) 100%)',
-                    pointerEvents: 'none'
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    padding: isMobile ? '10px 12px' : '14px 18px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    flexWrap: 'wrap',
+                    gap: '8px',
+                    zIndex: 20
                   }}
-                />
-
-                {/* Center Slide Action Overlay */}
-                {isCenter && (
+                  onPointerDownCapture={(e) => e.stopPropagation()}
+                >
+                  {/* Architecture Tag */}
                   <div
                     style={{
-                      position: 'absolute',
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      padding: isMobile ? '10px 12px' : '14px 18px',
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'space-between',
-                      flexWrap: 'wrap',
-                      gap: '8px',
-                      zIndex: 20
-                    }}
-                    onPointerDownCapture={(e) => e.stopPropagation()}
-                  >
-                    {/* Architecture Tag */}
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '6px'
-                      }}
-                    >
-                      <span
-                        style={{
-                          fontFamily: 'var(--font-mono)',
-                          fontSize: isMobile ? '9.5px' : '11px',
-                          color: 'var(--accent-emerald)',
-                          background: 'rgba(0, 229, 117, 0.1)',
-                          border: '1px solid rgba(0, 229, 117, 0.3)',
-                          padding: isMobile ? '2px 6px' : '3px 8px',
-                          borderRadius: '4px',
-                          letterSpacing: '0.04em',
-                          fontWeight: 600
-                        }}
-                      >
-                        {lang === 'es' ? 'VISTA ARQUITECTURA' : 'SYSTEM ARCHITECTURE'}
-                      </span>
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '8px'
-                      }}
-                    >
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onSelectProject(project);
-                        }}
-                        className="btn btn-primary"
-                        style={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '6px',
-                          padding: isMobile ? '7px 12px' : '9px 18px',
-                          borderRadius: '8px',
-                          background: 'var(--accent-emerald)',
-                          color: '#050706',
-                          fontSize: isMobile ? '11px' : '12.5px',
-                          fontWeight: 700,
-                          cursor: 'pointer',
-                          border: 'none',
-                          boxShadow: '0 0 15px rgba(0, 229, 117, 0.3)'
-                        }}
-                      >
-                        <span>{t.projects.inspectArch}</span>
-                        <ArrowUpRight size={isMobile ? 13 : 15} />
-                      </button>
-
-                      {project.repoUrl && (
-                        <a
-                          href={project.repoUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="btn btn-secondary"
-                          style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '6px',
-                            padding: isMobile ? '7px 10px' : '9px 14px',
-                            borderRadius: '8px',
-                            background: 'rgba(255, 255, 255, 0.08)',
-                            border: '1px solid rgba(255, 255, 255, 0.14)',
-                            color: 'var(--text-primary)',
-                            fontSize: isMobile ? '11px' : '12px',
-                            fontWeight: 600,
-                            textDecoration: 'none'
-                          }}
-                        >
-                          <GithubIcon size={isMobile ? 14 : 15} />
-                          <span>{t.projects.viewCode}</span>
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                )}
-
-                {/* Side Slide Click-to-Focus Indicator */}
-                {!isCenter && (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      background: 'rgba(4, 6, 5, 0.45)',
-                      transition: 'background 200ms ease'
+                      gap: '6px'
                     }}
                   >
                     <span
                       style={{
                         fontFamily: 'var(--font-mono)',
-                        fontSize: isMobile ? '10px' : '11.5px',
-                        color: 'var(--text-primary)',
-                        background: 'rgba(6, 8, 7, 0.85)',
-                        border: '1px solid rgba(255, 255, 255, 0.12)',
-                        padding: '4px 10px',
-                        borderRadius: '6px',
-                        letterSpacing: '0.05em'
+                        fontSize: isMobile ? '9.5px' : '11px',
+                        color: 'var(--accent-emerald)',
+                        background: 'rgba(0, 229, 117, 0.1)',
+                        border: '1px solid rgba(0, 229, 117, 0.3)',
+                        padding: isMobile ? '2px 6px' : '3px 8px',
+                        borderRadius: '4px',
+                        letterSpacing: '0.04em',
+                        fontWeight: 600
                       }}
                     >
-                      {project.title}
+                      {lang === 'es' ? 'VISTA ARQUITECTURA' : 'SYSTEM ARCHITECTURE'}
                     </span>
                   </div>
-                )}
-              </motion.div>
-            );
-          })}
-        </motion.div>
+
+                  {/* Action Buttons */}
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px'
+                    }}
+                  >
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onSelectProject(project);
+                      }}
+                      className="btn btn-primary"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        padding: isMobile ? '7px 12px' : '9px 18px',
+                        borderRadius: '8px',
+                        background: 'var(--accent-emerald)',
+                        color: '#050706',
+                        fontSize: isMobile ? '11px' : '12.5px',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                        border: 'none',
+                        boxShadow: '0 0 15px rgba(0, 229, 117, 0.3)'
+                      }}
+                    >
+                      <span>{t.projects.inspectArch}</span>
+                      <ArrowUpRight size={isMobile ? 13 : 15} />
+                    </button>
+
+                    {project.repoUrl && (
+                      <a
+                        href={project.repoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="btn btn-secondary"
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          padding: isMobile ? '7px 10px' : '9px 14px',
+                          borderRadius: '8px',
+                          background: 'rgba(255, 255, 255, 0.08)',
+                          border: '1px solid rgba(255, 255, 255, 0.14)',
+                          color: 'var(--text-primary)',
+                          fontSize: isMobile ? '11px' : '12px',
+                          fontWeight: 600,
+                          textDecoration: 'none'
+                        }}
+                      >
+                        <GithubIcon size={isMobile ? 14 : 15} />
+                        <span>{t.projects.viewCode}</span>
+                      </a>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Side Slide Click-to-Focus Indicator */}
+              {!isCenter && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'rgba(4, 6, 5, 0.45)',
+                    transition: 'background 200ms ease'
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: 'var(--font-mono)',
+                      fontSize: isMobile ? '10px' : '11.5px',
+                      color: 'var(--text-primary)',
+                      background: 'rgba(6, 8, 7, 0.85)',
+                      border: '1px solid rgba(255, 255, 255, 0.12)',
+                      padding: '4px 10px',
+                      borderRadius: '6px',
+                      letterSpacing: '0.05em'
+                    }}
+                  >
+                    {project.title}
+                  </span>
+                </div>
+              )}
+            </motion.div>
+          );
+        })}
       </div>
 
       {/* ── Bottom Cue Sheet / Filmstrip Table (matching media_1794532946949.png) ── */}
