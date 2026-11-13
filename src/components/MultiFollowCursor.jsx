@@ -110,8 +110,8 @@ export default function MultiFollowCursor() {
       size: 18,
       x: ring1X,
       y: ring1Y,
-      borderColor: '#ff2d75',
-      boxShadow: '0 0 8px rgba(255, 45, 117, 0.45)',
+      borderColor: '#00ff88',
+      boxShadow: '0 0 10px rgba(0, 255, 136, 0.5)',
       hoverScale: 1.25,
       zIndex: 999997,
     },
@@ -120,8 +120,8 @@ export default function MultiFollowCursor() {
       size: 28,
       x: ring2X,
       y: ring2Y,
-      borderColor: '#d946ef',
-      boxShadow: '0 0 10px rgba(217, 70, 239, 0.4)',
+      borderColor: '#00e575',
+      boxShadow: '0 0 12px rgba(0, 229, 117, 0.45)',
       hoverScale: 1.35,
       zIndex: 999996,
     },
@@ -130,8 +130,8 @@ export default function MultiFollowCursor() {
       size: 40,
       x: ring3X,
       y: ring3Y,
-      borderColor: '#8b5cf6',
-      boxShadow: '0 0 12px rgba(139, 92, 246, 0.4)',
+      borderColor: '#10b981',
+      boxShadow: '0 0 14px rgba(16, 185, 129, 0.4)',
       hoverScale: 1.45,
       zIndex: 999995,
     },
@@ -139,7 +139,7 @@ export default function MultiFollowCursor() {
 
   return (
     <div className="motion-multifollow-container" aria-hidden="true">
-      {/* 1. Lead Center Pointer (Instantaneous white dot) */}
+      {/* 1. Lead Center Pointer (Instantaneous white dot with emerald aura) */}
       <motion.div
         className="motion-cursor-lead-dot"
         style={{
@@ -154,7 +154,7 @@ export default function MultiFollowCursor() {
           marginTop: -3,
           borderRadius: '50%',
           backgroundColor: '#ffffff',
-          boxShadow: '0 0 8px rgba(255, 255, 255, 0.95), 0 0 2px rgba(255, 255, 255, 1)',
+          boxShadow: '0 0 8px rgba(255, 255, 255, 0.95), 0 0 4px rgba(0, 229, 117, 0.8)',
           pointerEvents: 'none',
           zIndex: 999999,
         }}

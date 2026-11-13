@@ -1236,7 +1236,7 @@ button:active, .btn:active, a.btn:active {
 
 .motion-cursor-lead-dot {
   will-change: transform, opacity;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.95), 0 0 2px rgba(255, 255, 255, 1);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.95), 0 0 4px rgba(0, 229, 117, 0.8);
 }
 
 .motion-cursor-ring {
