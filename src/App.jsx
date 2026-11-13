@@ -4,6 +4,7 @@ import { LanguageProvider } from './i18n/LanguageContext';
 import ScrollProgress from './components/ScrollProgress';
 import MultiFollowCursor from './components/MultiFollowCursor';
 import IntroSplash from './components/IntroSplash';
+import AmbientBackground from './components/AmbientBackground';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -36,6 +37,9 @@ export default function App() {
             />
           )}
         </AnimatePresence>
+
+        {/* Ambient Motion Background Particles (starts from Perfil Profesional down) */}
+        <AmbientBackground />
 
         {/* Main Content Layout */}
         <Navbar />

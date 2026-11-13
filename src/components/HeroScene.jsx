@@ -155,15 +155,35 @@ export default function HeroScene() {
       pIdx++;
     }
 
-    const pointsGeo = new THREE.BufferGeometry();
-    pointsGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+    // Generate soft circular glow texture for particles (replaces square point sprites)
+    const particleCanvas = document.createElement('canvas');
+    particleCanvas.width = 64;
+    particleCanvas.height = 64;
+    const pCtx = particleCanvas.getContext('2d');
+    const pGrad = pCtx.createRadialGradient(32, 32, 0, 32, 32, 32);
+    pGrad.addColorStop(0, 'rgba(255, 255, 255, 1)');
+    pGrad.addColorStop(0.25, 'rgba(0, 255, 144, 0.95)');
+    pGrad.addColorStop(0.6, 'rgba(0, 229, 117, 0.4)');
+    pGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    pCtx.fillStyle = pGrad;
+    pCtx.beginPath();
+    pCtx.arc(32, 32, 32, 0, Math.PI * 2);
+    pCtx.fill();
+
+    const particleTexture = new THREE.CanvasTexture(particleCanvas);
 
     const pointsMat = new THREE.PointsMaterial({
       color: 0x00ff90,
-      size: 0.075,
+      size: 0.13,
+      map: particleTexture,
       transparent: true,
-      opacity: 0.88
+      opacity: 0.92,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
     });
+    const pointsGeo = new THREE.BufferGeometry();
+    pointsGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+
     const points = new THREE.Points(pointsGeo, pointsMat);
     group.add(points);
 
@@ -308,6 +328,7 @@ export default function HeroScene() {
       outerMat.dispose();
       pointsGeo.dispose();
       pointsMat.dispose();
+      particleTexture.dispose();
       renderer.dispose();
     };
   }, []);

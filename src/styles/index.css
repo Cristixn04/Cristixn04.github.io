@@ -1244,3 +1244,23 @@ button:active, .btn:active, a.btn:active {
   box-sizing: border-box;
 }
 
+/* ==========================================================================
+   Ambient Background Layer Styles
+   ========================================================================== */
+.ambient-background-layer {
+  pointer-events: none;
+  user-select: none;
+  contain: strict;
+}
+
+main > section,
+.about-section,
+.projects-section,
+.soft-skills-section,
+.skills-section,
+.education-section,
+.contact-section {
+  position: relative;
+  z-index: 1;
+}
+
