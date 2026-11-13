@@ -15,6 +15,7 @@ import Footer from './components/Footer';
 
 export default function App() {
   const [showSplash, setShowSplash] = useState(true);
+  const [isIntroActive, setIsIntroActive] = useState(true);
 
   return (
     <LanguageProvider>
@@ -25,14 +26,17 @@ export default function App() {
         {/* Interactive 3D Intro Splash Screen */}
         <AnimatePresence>
           {showSplash && (
-            <IntroSplash onEnter={() => setShowSplash(false)} />
+            <IntroSplash
+              onStartFormation={() => setIsIntroActive(false)}
+              onComplete={() => setShowSplash(false)}
+            />
           )}
         </AnimatePresence>
 
         {/* Main Content Layout */}
         <Navbar />
         <main>
-          <Hero isIntroActive={showSplash} />
+          <Hero isIntroActive={isIntroActive} />
           <About />
           <Projects />
           <SoftSkills />

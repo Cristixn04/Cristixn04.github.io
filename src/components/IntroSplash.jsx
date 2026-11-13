@@ -3,10 +3,18 @@ import { motion } from 'motion/react';
 import * as THREE from 'three';
 import { ArrowRight, Sparkles } from 'lucide-react';
 
-export default function IntroSplash({ onEnter }) {
+export default function IntroSplash({ onEnter, onStartFormation, onComplete }) {
   const [isExiting, setIsExiting] = useState(false);
+  const [formationStarted, setFormationStarted] = useState(false);
   const mountRef = useRef(null);
   const triggerExitRef = useRef(null);
+  const onStartFormationRef = useRef(onStartFormation);
+  const onCompleteRef = useRef(onComplete || onEnter);
+
+  useEffect(() => {
+    onStartFormationRef.current = onStartFormation;
+    onCompleteRef.current = onComplete || onEnter;
+  }, [onStartFormation, onComplete, onEnter]);
 
   useEffect(() => {
     const mount = mountRef.current;
@@ -321,13 +329,42 @@ export default function IntroSplash({ onEnter }) {
     let exitTime = 0;
 
     // Choreography timings:
-    const DURATION_EXPLODE = 0.44; // Phase 1: Supernova explosion & particle expansion
-    const DURATION_UNITE = 0.46;   // Phase 2: Gravitational reunion / convergence
-    const DURATION_FORM = 0.35;    // Phase 3: Web forms as particles disperse into Hero
+    const DURATION_EXPLODE = 0.72; // Phase 1: Supernova explosion & particle expansion
+    const DURATION_UNITE = 0.68;   // Phase 2: Gravitational reunion / convergence
+    const DURATION_FORM = 0.80;    // Phase 3: Web forms as particles disperse into Hero
+
+    // Pre-allocated typed arrays for explosion and reunion
+    const startExitPositions = new Float32Array(totalCount * 3);
+    const explodeTargets = new Float32Array(totalCount * 3);
+
+    for (let i = 0; i < totalCount; i++) {
+      const i3 = i * 3;
+      const hx = homePositions[i3];
+      const hy = homePositions[i3 + 1];
+      const hz = homePositions[i3 + 2];
+      const dist = Math.sqrt(hx * hx + hy * hy + hz * hz) || 1.0;
+
+      const dirX = hx / dist;
+      const dirY = hy / dist;
+      const dirZ = hz / dist;
+
+      // Expand to fill the viewport gracefully without vanishing:
+      // Inner particles expand by ~1.3, outer particles by ~2.7
+      const spread = 1.35 + randoms[i] * 1.55;
+      const jitterX = (randoms[(i + 13) % totalCount] - 0.5) * 0.35;
+      const jitterY = (randoms[(i + 29) % totalCount] - 0.5) * 0.35;
+      const jitterZ = (randoms[(i + 47) % totalCount] - 0.5) * 0.45;
+
+      explodeTargets[i3] = hx + dirX * spread + jitterX;
+      explodeTargets[i3 + 1] = hy + dirY * spread + jitterY;
+      explodeTargets[i3 + 2] = hz + dirZ * spread + jitterZ;
+    }
 
     triggerExitRef.current = () => {
       if (isWarpExit) return;
       isWarpExit = true;
+      isMouseActive = false;
+      startExitPositions.set(geometry.attributes.position.array);
     };
 
     const clock = new THREE.Clock();
@@ -409,69 +446,78 @@ export default function IntroSplash({ onEnter }) {
         exitTime += delta;
 
         if (exitTime < DURATION_EXPLODE) {
-          // PHASE 1: Supernova explosion & particle expansion outward
-          const p1 = exitTime / DURATION_EXPLODE;
-          const burstSpeed = Math.sin((1.0 - p1) * Math.PI * 0.5) * 22.0;
+          // PHASE 1: Supernova explosion & particle expansion outward across the screen
+          const t1 = Math.min(1.0, exitTime / DURATION_EXPLODE);
+          // Decelerating ease-out curve so it starts with an explosive burst and smoothly settles
+          const ease1 = 1.0 - Math.pow(1.0 - t1, 3.2);
 
           for (let i = 0; i < totalCount; i++) {
             const i3 = i * 3;
-            const px = posArr[i3];
-            const py = posArr[i3 + 1];
-            const pz = posArr[i3 + 2];
+            const sx = startExitPositions[i3];
+            const sy = startExitPositions[i3 + 1];
+            const sz = startExitPositions[i3 + 2];
 
-            const len = Math.sqrt(px * px + py * py + pz * pz) || 1.0;
-            const dirX = px / len;
-            const dirY = py / len;
-            const dirZ = pz / len;
+            const ex = explodeTargets[i3];
+            const ey = explodeTargets[i3 + 1];
+            const ez = explodeTargets[i3 + 2];
 
-            posArr[i3] += dirX * burstSpeed * delta * 60 * (0.85 + randoms[i] * 0.6);
-            posArr[i3 + 1] += dirY * burstSpeed * delta * 60 * (0.85 + randoms[i] * 0.6);
-            posArr[i3 + 2] += dirZ * burstSpeed * delta * 60 * (0.9 + randoms[i] * 0.7);
+            posArr[i3] = sx + (ex - sx) * ease1;
+            posArr[i3 + 1] = sy + (ey - sy) * ease1;
+            posArr[i3 + 2] = sz + (ez - sz) * ease1;
           }
-          camera.position.z += delta * 1.2;
+
+          // Dynamic 3D rotation during blast
+          rootGroup.rotation.y += delta * 0.35;
+          rootGroup.rotation.z += delta * 0.12;
 
         } else if (exitTime < DURATION_EXPLODE + DURATION_UNITE) {
           // PHASE 2: Inward gravitational pull & particle reunion in center
-          const p2 = (exitTime - DURATION_EXPLODE) / DURATION_UNITE;
-          const pullFactor = Math.pow(p2, 1.8) * 28.0;
+          const t2 = Math.min(1.0, (exitTime - DURATION_EXPLODE) / DURATION_UNITE);
+          // Accelerating gravitational pull inward (easeIn / smooth suction)
+          const ease2 = Math.pow(t2, 2.4);
 
           for (let i = 0; i < totalCount; i++) {
             const i3 = i * 3;
-            const px = posArr[i3];
-            const py = posArr[i3 + 1];
-            const pz = posArr[i3 + 2];
+            const ex = explodeTargets[i3];
+            const ey = explodeTargets[i3 + 1];
+            const ez = explodeTargets[i3 + 2];
 
-            // Target position: tight radiant focal core in center
-            const targetX = homePositions[i3] * 0.16;
-            const targetY = homePositions[i3 + 1] * 0.16;
-            const targetZ = homePositions[i3 + 2] * 0.16;
+            // Singularity target at center (tight radiant focal point)
+            const tx = homePositions[i3] * 0.05;
+            const ty = homePositions[i3 + 1] * 0.05;
+            const tz = homePositions[i3 + 2] * 0.05;
 
-            const toX = targetX - px;
-            const toY = targetY - py;
-            const toZ = targetZ - pz;
-            const dist = Math.sqrt(toX * toX + toY * toY + toZ * toZ) || 1.0;
-
-            posArr[i3] += (toX / dist) * pullFactor * delta * 60;
-            posArr[i3 + 1] += (toY / dist) * pullFactor * delta * 60;
-            posArr[i3 + 2] += (toZ / dist) * pullFactor * delta * 60;
+            posArr[i3] = ex + (tx - ex) * ease2;
+            posArr[i3 + 1] = ey + (ty - ey) * ease2;
+            posArr[i3 + 2] = ez + (tz - ez) * ease2;
           }
-          camera.position.z -= delta * 2.0;
+
+          rootGroup.rotation.y += delta * 0.55;
 
         } else {
           // PHASE 3: United core blooms as initial web page forms
-          const p3 = (exitTime - DURATION_EXPLODE - DURATION_UNITE) / DURATION_FORM;
+          const t3 = Math.min(1.0, (exitTime - DURATION_EXPLODE - DURATION_UNITE) / DURATION_FORM);
+
+          const ease3 = Math.sqrt(t3);
           for (let i = 0; i < totalCount; i++) {
             const i3 = i * 3;
-            const px = posArr[i3];
-            const py = posArr[i3 + 1];
-            const pz = posArr[i3 + 2];
+            const tx = homePositions[i3] * 0.05;
+            const ty = homePositions[i3 + 1] * 0.05;
+            const tz = homePositions[i3 + 2] * 0.05;
 
-            const len = Math.sqrt(px * px + py * py + pz * pz) || 1.0;
-            posArr[i3] += (px / len) * 4.5 * delta * 60;
-            posArr[i3 + 1] += (py / len) * 4.5 * delta * 60;
-            posArr[i3 + 2] += (pz / len) * 4.5 * delta * 60;
+            const hx = homePositions[i3];
+            const hy = homePositions[i3 + 1];
+            const hz = homePositions[i3 + 2];
+            const dist = Math.sqrt(hx * hx + hy * hy + hz * hz) || 1.0;
+
+            const bloomDist = ease3 * (0.8 + randoms[i] * 1.1);
+            posArr[i3] = tx + (hx / dist) * bloomDist;
+            posArr[i3 + 1] = ty + (hy / dist) * bloomDist;
+            posArr[i3 + 2] = tz + (hz / dist) * bloomDist;
           }
-          material.opacity = Math.max(0, 1.0 - Math.pow(p3, 2.0));
+
+          // Smoothly fade particles out as Hero rises
+          material.opacity = Math.max(0, 0.96 * (1.0 - Math.pow(t3, 1.4)));
         }
       }
 
@@ -508,11 +554,21 @@ export default function IntroSplash({ onEnter }) {
       triggerExitRef.current();
     }
 
-    // Call onEnter at the moment of particle reunion (~880ms)
+    // Call onStartFormation at 1400ms (when particles are united in center)
     // so the initial web layout seamlessly forms out of the united core!
     setTimeout(() => {
-      onEnter();
-    }, 880);
+      setFormationStarted(true);
+      if (onStartFormationRef.current) {
+        onStartFormationRef.current();
+      }
+    }, 1400);
+
+    // Call onComplete at 2200ms when formation & fade is complete
+    setTimeout(() => {
+      if (onCompleteRef.current) {
+        onCompleteRef.current();
+      }
+    }, 2200);
   };
 
   return (
@@ -520,11 +576,10 @@ export default function IntroSplash({ onEnter }) {
       className="intro-splash-overlay"
       initial={{ opacity: 1 }}
       animate={{
-        opacity: isExiting ? 0 : 1
+        opacity: formationStarted ? 0 : 1
       }}
       transition={{
-        delay: isExiting ? 0.8 : 0,
-        duration: 0.42,
+        duration: 0.75,
         ease: [0.16, 1, 0.3, 1]
       }}
       style={{
@@ -538,19 +593,19 @@ export default function IntroSplash({ onEnter }) {
         justifyContent: 'space-between',
         padding: '32px 20px 40px',
         boxSizing: 'border-box',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        pointerEvents: isExiting ? 'none' : 'auto'
       }}
     >
-      {/* Interactive 3D WebGL Canvas Layer (Full viewport, catches mouse/touch) */}
+      {/* Interactive 3D WebGL Canvas Layer (Catches pointer/touch for elastic disassembly) */}
       <div
         ref={mountRef}
-        onClick={handleTriggerEnter}
         style={{
           position: 'absolute',
           inset: 0,
-          cursor: 'pointer'
+          cursor: isExiting ? 'default' : 'grab'
         }}
-        title="Pasa el cursor por las partículas para desarmarlas o haz clic para ingresar"
+        title="Pasa el cursor por las partículas para desarmarlas con retorno elástico"
       />
 
       {/* TOP HEADER: Status Pill */}

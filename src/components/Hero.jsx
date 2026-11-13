@@ -84,7 +84,7 @@ export default function Hero({ isIntroActive = false }) {
           className="hero-layout"
           variants={containerVariants}
           initial="hidden"
-          animate="visible"
+          animate={isIntroActive ? "hidden" : "visible"}
           style={{
             display: 'grid',
             gridTemplateColumns: 'minmax(0, 1.25fr) minmax(0, 0.85fr)',
