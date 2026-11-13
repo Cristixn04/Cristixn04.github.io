@@ -1,0 +1,242 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 340" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050806" />
+      <stop offset="50%" stop-color="#0a0f0d" />
+      <stop offset="100%" stop-color="#030504" />
+    </linearGradient>
+
+    <!-- Emerald Glow Filter -->
+    <filter id="emeraldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Core Dot Glow -->
+    <filter id="coreGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Linear Shimmer Gradient for Typography -->
+    <linearGradient id="shimmerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f2f5f3" />
+      <stop offset="45%" stop-color="#ffffff" />
+      <stop offset="50%" stop-color="#00ff88" />
+      <stop offset="55%" stop-color="#00e575" />
+      <stop offset="100%" stop-color="#f2f5f3" />
+    </linearGradient>
+
+    <!-- Accent Emerald Gradient -->
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00e575" />
+      <stop offset="100%" stop-color="#00ff88" />
+    </linearGradient>
+
+    <!-- Subtle Grid Pattern -->
+    <pattern id="cyberGrid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="rgba(0, 229, 117, 0.05)" stroke-width="1" />
+      <circle cx="32" cy="32" r="1" fill="rgba(0, 229, 117, 0.15)" />
+    </pattern>
+
+    <!-- Clip path to keep scanner line within card boundary -->
+    <clipPath id="cardClip">
+      <rect x="2" y="2" width="916" height="336" rx="16" />
+    </clipPath>
+  </defs>
+
+  <style>
+    .mono { font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, Menlo, monospace; }
+    .sans { font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+
+    /* Orbital Rotations */
+    @keyframes orbitClockwise {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes orbitCounter {
+      0% { transform: rotate(360deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    @keyframes pulseCore {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 16px #00ff88); }
+    }
+
+    @keyframes scanline {
+      0% { transform: translateY(-340px); }
+      100% { transform: translateY(340px); }
+    }
+
+    @keyframes blinkDot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    @keyframes shimmerMotion {
+      0% { stop-color: #f2f5f3; }
+      50% { stop-color: #00ff88; }
+      100% { stop-color: #f2f5f3; }
+    }
+
+    .orbit-1 {
+      transform-origin: 730px 170px;
+      animation: orbitClockwise 14s linear infinite;
+    }
+
+    .orbit-2 {
+      transform-origin: 730px 170px;
+      animation: orbitCounter 20s linear infinite;
+    }
+
+    .orbit-3 {
+      transform-origin: 730px 170px;
+      animation: orbitClockwise 28s linear infinite;
+    }
+
+    .pulsing-atom {
+      transform-origin: 730px 170px;
+      animation: pulseCore 3.5s ease-in-out infinite;
+    }
+
+    .status-dot {
+      animation: blinkDot 1.8s ease-in-out infinite;
+    }
+
+    .scanner {
+      animation: scanline 8s linear infinite;
+    }
+  </style>
+
+  <!-- Card Background with Chamfer / Rounded Corners -->
+  <rect x="2" y="2" width="916" height="336" rx="16" fill="url(#bgGrad)" stroke="rgba(0, 229, 117, 0.24)" stroke-width="1.5" />
+
+  <!-- Cyber Grid Pattern Fill -->
+  <rect x="2" y="2" width="916" height="336" rx="16" fill="url(#cyberGrid)" />
+
+  <!-- Soft Ambient Radial Lighting from Right -->
+  <circle cx="730" cy="170" r="160" fill="rgba(0, 229, 117, 0.06)" filter="url(#emeraldGlow)" />
+
+  <!-- Subtle Animated Scanning Line -->
+  <g clip-path="url(#cardClip)">
+    <line x1="2" y1="0" x2="918" y2="0" stroke="rgba(0, 229, 117, 0.15)" stroke-width="2" class="scanner" />
+  </g>
+
+  <!-- HUD Corner Brackets (Left & Right) -->
+  <path d="M 24 40 L 24 24 L 40 24" fill="none" stroke="#00e575" stroke-width="2" stroke-linecap="round" />
+  <path d="M 896 40 L 896 24 L 880 24" fill="none" stroke="#00e575" stroke-width="2" stroke-linecap="round" />
+  <path d="M 24 300 L 24 316 L 40 316" fill="none" stroke="rgba(0, 229, 117, 0.4)" stroke-width="2" stroke-linecap="round" />
+  <path d="M 896 300 L 896 316 L 880 316" fill="none" stroke="rgba(0, 229, 117, 0.4)" stroke-width="2" stroke-linecap="round" />
+
+  <!-- ==================== LEFT COLUMN: METADATA & TITLE ==================== -->
+
+  <!-- SYS_ID Metatag Badge -->
+  <g transform="translate(48, 54)">
+    <rect x="0" y="0" width="310" height="24" rx="4" fill="rgba(0, 229, 117, 0.08)" stroke="rgba(0, 229, 117, 0.28)" stroke-width="1" />
+    <circle cx="14" cy="12" r="4" fill="#00ff88" class="status-dot" />
+    <text x="26" y="16" fill="#00e575" font-size="11" font-weight="600" letter-spacing="1.5" class="mono">SYS_ID // CCM-04 · PORTFOLIO CORE</text>
+  </g>
+
+  <!-- Author Name (Large Display) -->
+  <g transform="translate(48, 122)">
+    <text x="0" y="0" fill="#f2f5f3" font-size="34" font-weight="800" letter-spacing="-0.5" class="sans">
+      Cristian Camilo Muñoz
+    </text>
+  </g>
+
+  <!-- Professional Role & Discipline -->
+  <g transform="translate(48, 154)">
+    <text x="0" y="0" fill="url(#accentGrad)" font-size="16" font-weight="600" letter-spacing="0.5" class="mono">
+      Full Stack Developer · Backend, Docker &amp; AI Agents
+    </text>
+  </g>
+
+  <!-- Engineering Architecture Brief -->
+  <g transform="translate(48, 186)">
+    <text x="0" y="0" fill="#8c9b92" font-size="13.5" font-weight="400" class="sans">
+      Crafting scalable software systems with robust Java &amp; Python backends,
+    </text>
+    <text x="0" y="20" fill="#8c9b92" font-size="13.5" font-weight="400" class="sans">
+      autonomous n8n AI workflows, and cinematic React 19 + Motion architectures.
+    </text>
+  </g>
+
+  <!-- Monospace Technology Pills (Bottom Left) -->
+  <g transform="translate(48, 252)">
+    <!-- Pill 1: JAVA & SPRING -->
+    <rect x="0" y="0" width="118" height="26" rx="6" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1" />
+    <text x="12" y="17" fill="#f2f5f3" font-size="11" font-weight="600" class="mono">JAVA · SPRING</text>
+
+    <!-- Pill 2: PYTHON & AI -->
+    <rect x="126" y="0" width="124" height="26" rx="6" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1" />
+    <text x="138" y="17" fill="#f2f5f3" font-size="11" font-weight="600" class="mono">PYTHON · AGENTS</text>
+
+    <!-- Pill 3: DOCKER -->
+    <rect x="258" y="0" width="86" height="26" rx="6" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1" />
+    <text x="270" y="17" fill="#f2f5f3" font-size="11" font-weight="600" class="mono">DOCKER</text>
+
+    <!-- Pill 4: REACT 19 & MOTION -->
+    <rect x="352" y="0" width="144" height="26" rx="6" fill="rgba(0, 229, 117, 0.08)" stroke="rgba(0, 229, 117, 0.35)" stroke-width="1" />
+    <text x="364" y="17" fill="#00ff88" font-size="11" font-weight="600" class="mono">REACT 19 · MOTION</text>
+  </g>
+
+  <!-- Status / Verification Footer Bar -->
+  <g transform="translate(48, 304)">
+    <text x="0" y="0" fill="#536158" font-size="10.5" font-weight="500" letter-spacing="1" class="mono">
+      BUCARAMANGA, COLOMBIA // LAT 7°04'N 73°07'W // CRAFT &amp; ANTI-AI DESIGN
+    </text>
+  </g>
+
+  <!-- ==================== RIGHT COLUMN: 3D MOTION ATOM ORB ==================== -->
+
+  <!-- Outer Dodecahedron Guide Ring (Faint) -->
+  <circle cx="730" cy="170" r="95" fill="none" stroke="rgba(0, 229, 117, 0.1)" stroke-width="1" stroke-dasharray="4 6" />
+
+  <!-- Orbit 1: Elliptical Electron Ring (45deg tilted) -->
+  <g class="orbit-1">
+    <ellipse cx="730" cy="170" rx="84" ry="32" fill="none" stroke="rgba(0, 229, 117, 0.75)" stroke-width="1.6" transform="rotate(45 730 170)" />
+    <!-- Orbiting Particle on Ring 1 -->
+    <circle cx="790" cy="190" r="3.2" fill="#00ff88" filter="url(#coreGlow)" />
+  </g>
+
+  <!-- Orbit 2: Elliptical Electron Ring (-45deg tilted) -->
+  <g class="orbit-2">
+    <ellipse cx="730" cy="170" rx="84" ry="32" fill="none" stroke="rgba(0, 255, 136, 0.6)" stroke-width="1.6" transform="rotate(-45 730 170)" />
+    <!-- Orbiting Particle on Ring 2 -->
+    <circle cx="670" cy="150" r="2.8" fill="#ffffff" filter="url(#coreGlow)" />
+  </g>
+
+  <!-- Orbit 3: Horizontal Radar Scanning Ring -->
+  <g class="orbit-3">
+    <ellipse cx="730" cy="170" rx="88" ry="24" fill="none" stroke="rgba(16, 185, 129, 0.45)" stroke-width="1.2" stroke-dasharray="6 4" />
+    <circle cx="730" cy="146" r="2.5" fill="#00e575" />
+    <circle cx="730" cy="194" r="2.5" fill="#00e575" />
+  </g>
+
+  <!-- Central Supernova Particle Core -->
+  <g class="pulsing-atom">
+    <!-- Outer Radiant Aura -->
+    <circle cx="730" cy="170" r="16" fill="rgba(0, 229, 117, 0.25)" filter="url(#emeraldGlow)" />
+    <!-- Mid Ring Core -->
+    <circle cx="730" cy="170" r="9" fill="#00e575" filter="url(#coreGlow)" />
+    <!-- Center Pure White Nucleus -->
+    <circle cx="730" cy="170" r="4.5" fill="#ffffff" />
+  </g>
+
+  <!-- Floating Satellite Dust Particles Around Nucleus -->
+  <circle cx="680" cy="100" r="1.5" fill="#00ff88" opacity="0.6" />
+  <circle cx="780" cy="95" r="1.8" fill="#ffffff" opacity="0.7" />
+  <circle cx="795" cy="235" r="1.4" fill="#00e575" opacity="0.5" />
+  <circle cx="665" cy="230" r="1.6" fill="#00ff88" opacity="0.6" />
+  <circle cx="640" cy="165" r="1.2" fill="#ffffff" opacity="0.4" />
+  <circle cx="820" cy="175" r="1.5" fill="#00e575" opacity="0.5" />
+</svg>
