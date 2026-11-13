@@ -1205,3 +1205,42 @@ button:active, .btn:active, a.btn:active {
   }
 }
 
+/* ==========================================================================
+   Motion Multi-Follow Cursor Styles
+   ========================================================================== */
+@media (hover: hover) and (pointer: fine) {
+  body,
+  a,
+  button,
+  [role="button"],
+  select,
+  .btn,
+  .action-btn,
+  .filter-btn,
+  .cue-cell,
+  .lang-option,
+  .coverflow-nav-btn {
+    cursor: none !important;
+  }
+
+  input,
+  textarea {
+    cursor: text !important;
+  }
+}
+
+.motion-multifollow-container {
+  pointer-events: none;
+  user-select: none;
+}
+
+.motion-cursor-lead-dot {
+  will-change: transform, opacity;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.95), 0 0 2px rgba(255, 255, 255, 1);
+}
+
+.motion-cursor-ring {
+  will-change: transform, opacity;
+  box-sizing: border-box;
+}
+

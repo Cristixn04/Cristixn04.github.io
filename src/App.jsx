@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AnimatePresence } from 'motion/react';
 import { LanguageProvider } from './i18n/LanguageContext';
 import ScrollProgress from './components/ScrollProgress';
+import MultiFollowCursor from './components/MultiFollowCursor';
 import IntroSplash from './components/IntroSplash';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -20,6 +21,9 @@ export default function App() {
   return (
     <LanguageProvider>
       <div className="portfolio-app-root">
+        {/* Motion Multi-Follow Cursor (Fine Pointer / Desktop) */}
+        <MultiFollowCursor />
+
         {/* Top Scroll-Linked Progress Bar */}
         <ScrollProgress />
 
